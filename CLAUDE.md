@@ -16,7 +16,7 @@ A private, online **Path of Exile 1 & 2** personal knowledge hub — a *freeze-e
 
 ## Content page layout
 ```
-content/<game>/<slug>/
+public/content/<game>/<slug>/     # under public/ so frozen bodies are served as static assets the iframe can load
   meta.json
   0.5.html        # a league snapshot: self-contained (inline CSS+JS, assets as files or data: URIs)
   0.4.html        # older frozen version, immutable
@@ -72,7 +72,7 @@ CLAUDE.md  AGENTS.md
 astro.config.mjs  package.json  wrangler.jsonc  schema.sql
 src/                   # Astro shell (hub chrome)
 functions/            # Cloudflare Pages Functions (/api/*)
-content/poe2/<slug>/…  content/poe1/<slug>/…
+public/content/poe2/<slug>/…  public/content/poe1/<slug>/…
 design/               # briefs, references
 ```
 

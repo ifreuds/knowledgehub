@@ -1,0 +1,52 @@
+---
+// The LIVING shell — hub chrome only (header, game toggle, search, footer).
+// Restyle this freely; it never touches frozen content bodies.
+import { GAMES, GAME_ORDER } from '../config';
+interface Props { game: string; title?: string }
+const { game, title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title ? `${title} · PoE Codex` : 'PoE Codex'}</title>
+  <style is:global>
+    :root {
+      --bg:#0e0f12; --panel:#16181d; --line:#2a2d35;
+      --gold:#c8a04f; --bone:#e8e2d0; --grey:#b8b3a7;
+      --green:#6bbf59; --amber:#e6b800;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--grey);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.55; }
+    a { color: var(--gold); text-decoration: none; }
+    header.shell { position:sticky; top:0; z-index:10; display:flex; gap:1rem; align-items:center;
+      padding:.7rem 1rem; background:rgba(14,15,18,.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+    .wordmark { color:var(--bone); font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    .toggle { display:flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+    .toggle a { padding:.25rem .7rem; color:var(--grey); }
+    .toggle a.active { background:var(--gold); color:#1a1205; font-weight:600; }
+    .search { margin-left:auto; }
+    .search input { background:var(--panel); border:1px solid var(--line); color:var(--bone);
+      padding:.35rem .6rem; border-radius:6px; min-width:12rem; }
+    main { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+    footer.shell { border-top:1px solid var(--line); color:#6b6a63; padding:1.5rem 1rem; text-align:center; font-size:.85rem; }
+    .badge.current { color: var(--green); }
+    .badge.needs-review { color: var(--amber); }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <span class="wordmark">⚔ PoE Codex</span>
+    <nav class="toggle">
+      {GAME_ORDER.map((g) => (
+        <a href={`/${g}`} class={g === game ? 'active' : ''}>{GAMES[g].label}</a>
+      ))}
+    </nav>
+    <span class="search"><input type="search" placeholder="Search…" id="hub-search" /></span>
+  </header>
+  <main><slot /></main>
+  <footer class="shell">PoE Codex · a personal knowledge hub · frozen per league</footer>
+</body>
+</html>

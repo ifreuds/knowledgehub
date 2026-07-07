@@ -1,0 +1,95 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { GAMES, GAME_ORDER, RARITY } from '../../config';
+import { getPages } from '../../lib/content';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const g of GAME_ORDER) {
+    for (const p of getPages(g)) {
+      paths.push({ params: { game: g, slug: p.slug }, props: { page: p } });
+    }
+  }
+  return paths;
+}
+
+const { game, slug } = Astro.params;
+const { page } = Astro.props;
+const gameMeta = GAMES[game];
+const cl = gameMeta.currentLeague;
+// newest league first (numeric-aware)
+const versions = [...page.versions].sort((a, b) =>
+  b.league.localeCompare(a.league, undefined, { numeric: true }));
+const current = page.currentVersion;
+const basePath = `/content/${game}/${slug}`;
+const activeVersion = versions.find((v) => v.league === current);
+---
+<Shell game={game} title={page.title}>
+  <nav class="crumbs"><a href={`/${game}`}>← {gameMeta.label} Hub</a></nav>
+
+  <header class="page-head">
+    <h1>{page.title}</h1>
+    <div class="meta-row">
+      <span class={`badge ${page.status}`}>
+        {page.status === 'current'
+          ? `🟢 Up to date · ${cl.league}`
+          : `🟡 Needs review · last ${page.updatedForLeague}`}
+      </span>
+      <label class="ver">Version
+        <select id="ver-select">
+          {versions.map((v) => (
+            <option value={v.league} selected={v.league === current}>
+              {v.league}{v.leagueName ? ` — ${v.leagueName}` : ''}{v.patch ? ` (${v.patch})` : ''}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
+    <div class="tags">{page.tags.map((t) => <span class="chip" style={`--c:${RARITY[t] ?? '#c8c8c8'}`}>{t}</span>)}</div>
+    {activeVersion?.changelog && <p class="changelog">{activeVersion.changelog}</p>}
+  </header>
+
+  <iframe id="body-frame" src={`${basePath}/${current}.html`} title={page.title}></iframe>
+</Shell>
+
+<style>
+  .crumbs { margin:.5rem 0 1rem; }
+  .page-head { border-bottom:1px solid var(--line); padding-bottom:1rem; margin-bottom:1rem; }
+  .page-head h1 { color:var(--bone); margin:.2rem 0; }
+  .meta-row { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  .ver select { background:var(--panel); color:var(--bone); border:1px solid var(--line);
+    border-radius:6px; padding:.2rem .4rem; margin-left:.4rem; }
+  .tags { margin-top:.6rem; display:flex; gap:.35rem; flex-wrap:wrap; }
+  .chip { font-size:.7rem; color:var(--c); border:1px solid var(--c); opacity:.85; padding:.05rem .45rem; border-radius:999px; }
+  .changelog { margin:.75rem 0 0; color:#8f8b81; font-size:.85rem; font-style:italic; }
+  #body-frame { width:100%; border:1px solid var(--line); border-radius:10px; min-height:320px; background:transparent; }
+</style>
+
+<script define:vars={{ basePath, current, leagues: versions.map((v) => v.league) }}>
+  const frame = document.getElementById('body-frame');
+  const select = document.getElementById('ver-select');
+
+  function resize() {
+    try {
+      const doc = frame.contentWindow.document;
+      frame.style.height = doc.documentElement.scrollHeight + 'px';
+    } catch (_) { /* same-origin expected; ignore if not ready */ }
+  }
+  frame.addEventListener('load', () => { resize(); setTimeout(resize, 200); });
+  window.addEventListener('resize', resize);
+
+  function load(league) {
+    frame.src = `${basePath}/${league}.html`;
+    const u = new URL(location.href);
+    if (league === current) u.searchParams.delete('v');
+    else u.searchParams.set('v', league);
+    history.replaceState(null, '', u);
+  }
+  select.addEventListener('change', () => load(select.value));
+
+  const want = new URL(location.href).searchParams.get('v');
+  if (want && leagues.includes(want) && want !== current) {
+    select.value = want;
+    load(want);
+  }
+</script>

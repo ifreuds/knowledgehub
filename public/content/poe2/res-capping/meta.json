@@ -1,0 +1,14 @@
+{
+  "title": "Resistance Capping",
+  "slug": "res-capping",
+  "game": "poe2",
+  "tags": ["mechanics", "tool"],
+  "type": "tool",
+  "interactive": false,
+  "currentVersion": "0.5",
+  "updatedForLeague": "0.5",
+  "versions": [
+    { "league": "0.5", "leagueName": "Rune of Aldurs", "patch": "0.5.4b", "file": "0.5.html", "updated": "2026-07-07", "changelog": "Updated for 0.5 — added shortfall calculator with max-res handling." },
+    { "league": "0.4", "leagueName": "Prior league", "patch": "0.4.x", "file": "0.4.html", "updated": "2026-03-01", "changelog": "Initial version — text only." }
+  ]
+}

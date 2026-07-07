@@ -1,0 +1,13 @@
+{
+  "title": "Atlas Strategy — Waystone Sustain",
+  "slug": "atlas-strategy",
+  "game": "poe2",
+  "tags": ["endgame", "note"],
+  "type": "article",
+  "interactive": false,
+  "currentVersion": "0.4",
+  "updatedForLeague": "0.4",
+  "versions": [
+    { "league": "0.4", "leagueName": "Prior league", "patch": "0.4.x", "file": "0.4.html", "updated": "2026-02-15", "changelog": "Initial notes — flagged for a 0.5 review pass." }
+  ]
+}

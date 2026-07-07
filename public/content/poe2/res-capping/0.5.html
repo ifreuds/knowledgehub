@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#0e0f12;--pan:#16181d;--line:#2a2d35;--gold:#c8a04f;--bone:#e8e2d0;--grey:#b8b3a7;--rare:#ffff77;}
+  html,body{margin:0;}
+  body{padding:1.25rem;background:var(--bg);color:var(--grey);
+    font-family:system-ui,"Segoe UI",Roboto,sans-serif;line-height:1.6;}
+  h1,h2{color:var(--bone);}
+  h1{font-size:1.5rem;margin:0 0 .25rem;}
+  h2{font-size:1rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin:1.4rem 0 .5rem;}
+  .lead{margin-bottom:1rem;}
+  b{color:var(--bone);}
+  .calc{background:var(--pan);border:1px solid var(--line);border-radius:10px;padding:1rem;max-width:420px;}
+  .calc label{display:block;margin:.5rem 0 .2rem;font-size:.78rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;}
+  .calc input{width:100%;background:#0e0f12;border:1px solid var(--line);color:var(--bone);padding:.45rem .6rem;border-radius:6px;font-size:1rem;}
+  .out{margin-top:1rem;font-size:1.05rem;color:var(--bone);}
+  .out b{color:var(--rare);}
+  .note{margin-top:1rem;font-size:.85rem;color:#8f8b81;}
+</style>
+</head>
+<body>
+  <h1>Resistance Capping</h1>
+  <p class="lead">In <b>0.5 — Rune of Aldurs</b>, elemental damage taken scales hard below the cap. Keep Fire / Cold / Lightning at the max (75% by default) before pushing damage.</p>
+
+  <h2>Shortfall calculator</h2>
+  <div class="calc">
+    <label for="cur">Current resistance (%)</label>
+    <input id="cur" type="number" value="41" min="-60" max="90">
+    <label for="max">Max resistance (%)</label>
+    <input id="max" type="number" value="75" min="0" max="90">
+    <div class="out" id="out"></div>
+  </div>
+  <p class="note">Each point below cap is a point of extra elemental hit taken. Overcapping protects against res-reducing maps and bosses.</p>
+
+  <script>
+    var cur=document.getElementById('cur'),max=document.getElementById('max'),out=document.getElementById('out');
+    function calc(){
+      var c=+cur.value||0,m=+max.value||0,gap=m-c;
+      out.innerHTML = gap>0
+        ? 'You need <b>'+gap+'%</b> more to reach the '+m+'% cap.'
+        : 'Capped — <b>'+Math.abs(gap)+'%</b> overcapped.';
+    }
+    cur.addEventListener('input',calc);max.addEventListener('input',calc);calc();
+  </script>
+</body>
+</html>

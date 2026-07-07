@@ -1,0 +1,119 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { GAMES, GAME_ORDER, RARITY } from '../../config';
+import { getPages, getReviewQueue, getTags } from '../../lib/content';
+
+export function getStaticPaths() {
+  return GAME_ORDER.map((g) => ({ params: { game: g } }));
+}
+
+const { game } = Astro.params;
+const meta = GAMES[game];
+const pages = getPages(game);
+const review = getReviewQueue(game);
+const tags = getTags(game);
+const upToDate = pages.length - review.length;
+const cl = meta.currentLeague;
+---
+<Shell game={game} title={`${meta.label} Hub`}>
+  <section class="hero">
+    <div class="hero-label">Current League</div>
+    <h1>{cl.league} — {cl.name}</h1>
+    {cl.patch && <span class="patch">patch {cl.patch}</span>}
+  </section>
+
+  <section class="status">
+    <span class="dot green"></span> {upToDate} up to date
+    <span class="sep">·</span>
+    <span class="dot amber"></span> {review.length} need review for {cl.league}
+    {review.length > 0 && <a class="review-btn" href="#review">⟳ Review Queue</a>}
+  </section>
+
+  {tags.length > 0 && (
+    <section class="tags">
+      <button class="tag active" data-tag="*">all</button>
+      {tags.map((t) => (
+        <button class="tag" data-tag={t} style={`--c:${RARITY[t] ?? '#c8c8c8'}`}>{t}</button>
+      ))}
+    </section>
+  )}
+
+  <section class="grid">
+    {pages.map((p) => (
+      <a class="card" href={p.url} data-tags={p.tags.join(',')}>
+        <div class="card-top">
+          <h3>{p.title}{(p.interactive || p.type === 'tool') && <span class="gear">⚙</span>}</h3>
+          <span class={`badge ${p.status}`}>
+            {p.status === 'current' ? `🟢 ${p.currentLeagueLabel}` : `🟡 last ${p.updatedForLeague}`}
+          </span>
+        </div>
+        <div class="card-tags">
+          {p.tags.map((t) => <span class="chip" style={`--c:${RARITY[t] ?? '#c8c8c8'}`}>{t}</span>)}
+        </div>
+      </a>
+    ))}
+    {pages.length === 0 && <p class="empty">No articles yet for {meta.label}. Add one and it appears here.</p>}
+  </section>
+
+  {review.length > 0 && (
+    <section id="review" class="review">
+      <h2>Review Queue — {cl.league}</h2>
+      <ul>
+        {review.map((p) => (
+          <li><a href={p.url}>{p.title}</a> — last updated for {p.updatedForLeague}</li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Shell>
+
+<style>
+  /* minimal engine styling — final look comes from the chosen mock */
+  .hero { padding:1.5rem 0 1rem; border-bottom:1px solid var(--line); margin-bottom:1rem; }
+  .hero-label { color:var(--gold); text-transform:uppercase; letter-spacing:.15em; font-size:.72rem; }
+  .hero h1 { color:var(--bone); font-size:2rem; margin:.2rem 0; display:inline-block; margin-right:.75rem; }
+  .patch { color:var(--grey); border:1px solid var(--line); padding:.1rem .5rem; border-radius:4px; font-size:.8rem; }
+  .status { display:flex; align-items:center; gap:.5rem; margin-bottom:1rem; font-size:.95rem; }
+  .dot { width:.6rem; height:.6rem; border-radius:50%; display:inline-block; }
+  .dot.green { background:var(--green); } .dot.amber { background:var(--amber); }
+  .sep { color:#555; }
+  .review-btn { margin-left:1rem; border:1px solid var(--gold); padding:.15rem .6rem; border-radius:6px; }
+  .tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.25rem; }
+  .tag { background:transparent; border:1px solid var(--line); color:var(--grey); padding:.2rem .6rem;
+    border-radius:999px; cursor:pointer; font-size:.8rem; }
+  .tag.active { border-color:var(--c, var(--gold)); color:var(--bone); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:1rem; display:block; }
+  .card:hover { border-color:var(--gold); }
+  .card-top { display:flex; justify-content:space-between; gap:.5rem; align-items:flex-start; }
+  .card h3 { color:var(--bone); margin:0 0 .5rem; font-size:1.05rem; }
+  .gear { color:var(--gold); margin-left:.35rem; }
+  .badge { font-size:.75rem; white-space:nowrap; }
+  .card-tags { display:flex; flex-wrap:wrap; gap:.35rem; }
+  .chip { font-size:.7rem; color:var(--c); border:1px solid var(--c); opacity:.85; padding:.05rem .45rem; border-radius:999px; }
+  .empty { color:var(--grey); }
+  .review { margin-top:2rem; border-top:1px solid var(--line); padding-top:1rem; }
+  .review h2 { color:var(--bone); font-size:1.2rem; }
+</style>
+
+<script>
+  const cards = [...document.querySelectorAll('.card')] as HTMLElement[];
+  document.querySelectorAll('.tag').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tag').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tag = btn.getAttribute('data-tag');
+      cards.forEach((c) => {
+        const tags = (c.getAttribute('data-tags') || '').split(',');
+        c.style.display = tag === '*' || tags.includes(tag!) ? '' : 'none';
+      });
+    });
+  });
+  const search = document.getElementById('hub-search') as HTMLInputElement | null;
+  search?.addEventListener('input', () => {
+    const q = search.value.toLowerCase();
+    cards.forEach((c) => {
+      c.style.display = (c.textContent || '').toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
