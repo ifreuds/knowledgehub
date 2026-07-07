@@ -1,15 +1,18 @@
 {
-  // Cloudflare Pages + Functions config for the PoE Knowledge Hub.
-  // D1 "poe-hub" is provisioned; id below. WRITE_KEY is a secret, set via:
-  //   wrangler pages secret put WRITE_KEY   (after the Pages project exists)
-  "name": "poe-knowledge-hub",
-  "pages_build_output_dir": "./dist",
+  // Cloudflare Workers "Static Assets" config for the PoE Knowledge Hub.
+  // Deployed by Workers Builds:  Build command: `npm run build`  ->  Deploy command: `npx wrangler deploy`
+  // "name" MUST match the Worker created in the dashboard.
+  "name": "knowledgehub",
   "compatibility_date": "2026-07-07",
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "poe-hub",
-      "database_id": "aa9ab8ed-72d0-4195-b11c-aab6a8922772"
-    }
-  ]
+  "assets": {
+    "directory": "./dist"
+  }
+
+  // --- Logging (deferred until the first logging tool ships) ---
+  // The D1 database "poe-hub" already exists. When we add persistence, introduce a
+  // Worker entry (e.g. "main": "worker/index.js") that handles /api/* and add:
+  //   "d1_databases": [
+  //     { "binding": "DB", "database_name": "poe-hub", "database_id": "aa9ab8ed-72d0-4195-b11c-aab6a8922772" }
+  //   ]
+  // (the ready-made handler currently lives in functions/api/log.js).
 }

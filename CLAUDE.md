@@ -12,7 +12,7 @@ A private, online **Path of Exile 1 & 2** personal knowledge hub — a *freeze-e
    - The **shell** (Astro) renders only hub chrome: nav, theme, game toggle, league banner, review queue, search. Restyle it freely, anytime.
    - A **content page** is a **self-contained HTML body** embedded in the shell via `<iframe>`. The shell must never re-render or restyle a frozen body.
 4. **Freeze everything, per league version** — text, images, icons, layout, AND interactive tool code. A saved version is immutable.
-5. **Hosting:** Cloudflare Pages. **Source:** GitHub. **Logging persistence:** Cloudflare D1 + Pages Functions. No Supabase.
+5. **Hosting:** Cloudflare **Workers static assets** (deployed by Workers Builds from GitHub — Build `npm run build` → Deploy `npx wrangler deploy`; static output in `dist/`). **Source:** GitHub. **Logging persistence:** Cloudflare D1 via a Worker route in `worker/index.js`, added when the first logging tool ships (the `poe-hub` DB already exists). No Supabase.
 
 ## Content page layout
 ```
