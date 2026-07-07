@@ -1,0 +1,15 @@
+{
+  // Cloudflare Pages + Functions config for the PoE Knowledge Hub.
+  // D1 "poe-hub" is provisioned; id below. WRITE_KEY is a secret, set via:
+  //   wrangler pages secret put WRITE_KEY   (after the Pages project exists)
+  "name": "poe-knowledge-hub",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-07-07",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "poe-hub",
+      "database_id": "aa9ab8ed-72d0-4195-b11c-aab6a8922772"
+    }
+  ]
+}
