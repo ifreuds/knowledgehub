@@ -1,0 +1,2351 @@
+[
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 10,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[1,2]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 9,
+    "ilvl": 5,
+    "weight": 1000,
+    "values": "[[2.1,3]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 11,
+    "weight": 1000,
+    "values": "[[3.1,4]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 17,
+    "weight": 1000,
+    "values": "[[4.1,6]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 26,
+    "weight": 1000,
+    "values": "[[6.1,9]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 35,
+    "weight": 1000,
+    "values": "[[9.1,13]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 47,
+    "weight": 1000,
+    "values": "[[13.1,18]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 58,
+    "weight": 1000,
+    "values": "[[18.1,23]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 68,
+    "weight": 1000,
+    "values": "[[23.1,29]]"
+  },
+  {
+    "mod": "# Life Regeneration per second",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 1000,
+    "values": "[[29.1,33]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 2,
+    "weight": 1000,
+    "values": "[[10,14]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[15,20]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[21,26]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[27,32]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 54,
+    "weight": 1000,
+    "values": "[[33,38]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 65,
+    "weight": 1000,
+    "values": "[[39,44]]"
+  },
+  {
+    "mod": "#% increased Armour",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 1000,
+    "values": "[[45,50]]"
+  },
+  {
+    "mod": "#% increased Cast Speed",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 1,
+    "weight": 800,
+    "values": "[[9,12]]"
+  },
+  {
+    "mod": "#% increased Cast Speed",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 18,
+    "weight": 800,
+    "values": "[[13,15]]"
+  },
+  {
+    "mod": "#% increased Cast Speed",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 35,
+    "weight": 800,
+    "values": "[[16,18]]"
+  },
+  {
+    "mod": "#% increased Cast Speed",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 51,
+    "weight": 800,
+    "values": "[[19,21]]"
+  },
+  {
+    "mod": "#% increased Cast Speed",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 60,
+    "weight": 800,
+    "values": "[[22,24]]"
+  },
+  {
+    "mod": "#% increased Cast Speed",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 66,
+    "weight": 800,
+    "values": "[[25,28]]"
+  },
+  {
+    "mod": "#% increased Critical Damage Bonus",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 8,
+    "weight": 1000,
+    "values": "[[10,14]]"
+  },
+  {
+    "mod": "#% increased Critical Damage Bonus",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 21,
+    "weight": 1000,
+    "values": "[[15,19]]"
+  },
+  {
+    "mod": "#% increased Critical Damage Bonus",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 31,
+    "weight": 1000,
+    "values": "[[20,24]]"
+  },
+  {
+    "mod": "#% increased Critical Damage Bonus",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 45,
+    "weight": 500,
+    "values": "[[25,29]]"
+  },
+  {
+    "mod": "#% increased Critical Damage Bonus",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 59,
+    "weight": 250,
+    "values": "[[30,34]]"
+  },
+  {
+    "mod": "#% increased Critical Damage Bonus",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 74,
+    "weight": 125,
+    "values": "[[35,39]]"
+  },
+  {
+    "mod": "#% increased Critical Hit Chance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 5,
+    "weight": 1000,
+    "values": "[[10,14]]"
+  },
+  {
+    "mod": "#% increased Critical Hit Chance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 20,
+    "weight": 1000,
+    "values": "[[15,19]]"
+  },
+  {
+    "mod": "#% increased Critical Hit Chance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 30,
+    "weight": 1000,
+    "values": "[[20,24]]"
+  },
+  {
+    "mod": "#% increased Critical Hit Chance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 44,
+    "weight": 500,
+    "values": "[[25,29]]"
+  },
+  {
+    "mod": "#% increased Critical Hit Chance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 58,
+    "weight": 250,
+    "values": "[[30,34]]"
+  },
+  {
+    "mod": "#% increased Critical Hit Chance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 72,
+    "weight": 125,
+    "values": "[[35,38]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 2,
+    "weight": 1000,
+    "values": "[[10,14]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[15,20]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[21,26]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[27,32]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 54,
+    "weight": 1000,
+    "values": "[[33,38]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 70,
+    "weight": 1000,
+    "values": "[[39,44]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 77,
+    "weight": 1000,
+    "values": "[[45,50]]"
+  },
+  {
+    "mod": "#% increased Mana Regeneration Rate",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[10,19]]"
+  },
+  {
+    "mod": "#% increased Mana Regeneration Rate",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 18,
+    "weight": 1000,
+    "values": "[[20,29]]"
+  },
+  {
+    "mod": "#% increased Mana Regeneration Rate",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 29,
+    "weight": 1000,
+    "values": "[[30,39]]"
+  },
+  {
+    "mod": "#% increased Mana Regeneration Rate",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 42,
+    "weight": 1000,
+    "values": "[[40,49]]"
+  },
+  {
+    "mod": "#% increased Mana Regeneration Rate",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 55,
+    "weight": 1000,
+    "values": "[[50,59]]"
+  },
+  {
+    "mod": "#% increased Mana Regeneration Rate",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 79,
+    "weight": 1000,
+    "values": "[[60,69]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 2,
+    "weight": 1000,
+    "values": "[[10,14]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[15,20]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[21,26]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[27,32]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 54,
+    "weight": 1000,
+    "values": "[[33,38]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 65,
+    "weight": 1000,
+    "values": "[[39,44]]"
+  },
+  {
+    "mod": "#% increased maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 1000,
+    "values": "[[45,50]]"
+  },
+  {
+    "mod": "#% increased maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 33,
+    "weight": 300,
+    "values": "[[3,4]]"
+  },
+  {
+    "mod": "#% increased maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 60,
+    "weight": 300,
+    "values": "[[5,6]]"
+  },
+  {
+    "mod": "#% increased maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 300,
+    "values": "[[7,8]]"
+  },
+  {
+    "mod": "#% increased maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 33,
+    "weight": 300,
+    "values": "[[3,4]]"
+  },
+  {
+    "mod": "#% increased maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 60,
+    "weight": 300,
+    "values": "[[5,6]]"
+  },
+  {
+    "mod": "#% increased maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 300,
+    "values": "[[7,8]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 3,
+    "weight": 1000,
+    "values": "[[6,10]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 24,
+    "weight": 1000,
+    "values": "[[11,14]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 40,
+    "weight": 1000,
+    "values": "[[15,18]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 10,
+    "weight": 1000,
+    "values": "[[8,11]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 29,
+    "weight": 1000,
+    "values": "[[12,15]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 47,
+    "weight": 1000,
+    "values": "[[16,19]]"
+  },
+  {
+    "mod": "#% increased Rarity of Items found",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[10,15]]"
+  },
+  {
+    "mod": "#% increased Spell Damage",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[3,7]]"
+  },
+  {
+    "mod": "#% increased Spell Damage",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[8,12]]"
+  },
+  {
+    "mod": "#% increased Spell Damage",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[13,17]]"
+  },
+  {
+    "mod": "#% increased Spell Damage",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[18,22]]"
+  },
+  {
+    "mod": "#% increased Spell Damage",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 60,
+    "weight": 1000,
+    "values": "[[23,26]]"
+  },
+  {
+    "mod": "#% increased Spell Damage",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 1000,
+    "values": "[[27,30]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Life",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 30,
+    "weight": 500,
+    "values": "[[10,12]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Life",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 44,
+    "weight": 500,
+    "values": "[[13,15]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Life",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 56,
+    "weight": 500,
+    "values": "[[16,18]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Life",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 68,
+    "weight": 500,
+    "values": "[[19,21]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Life",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 79,
+    "weight": 500,
+    "values": "[[22,24]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Mana",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 31,
+    "weight": 500,
+    "values": "[[10,12]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Mana",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 45,
+    "weight": 500,
+    "values": "[[13,15]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Mana",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 57,
+    "weight": 500,
+    "values": "[[16,18]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Mana",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 69,
+    "weight": 500,
+    "values": "[[19,21]]"
+  },
+  {
+    "mod": "#% of Damage taken Recouped as Mana",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 80,
+    "weight": 500,
+    "values": "[[22,24]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 800,
+    "values": "[[11,32]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 11,
+    "weight": 800,
+    "values": "[[33,60]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 18,
+    "weight": 800,
+    "values": "[[61,84]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 26,
+    "weight": 800,
+    "values": "[[85,123]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 36,
+    "weight": 800,
+    "values": "[[124,167]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 48,
+    "weight": 800,
+    "values": "[[168,236]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 58,
+    "weight": 800,
+    "values": "[[237,346]]"
+  },
+  {
+    "mod": "+# to Accuracy Rating",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 67,
+    "weight": 400,
+    "values": "[[347,450]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 9,
+    "ilvl": 1,
+    "weight": 800,
+    "values": "[[2,4]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 11,
+    "weight": 800,
+    "values": "[[5,7]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 22,
+    "weight": 800,
+    "values": "[[8,10]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 33,
+    "weight": 800,
+    "values": "[[11,13]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 44,
+    "weight": 800,
+    "values": "[[14,16]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 55,
+    "weight": 800,
+    "values": "[[17,18]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 66,
+    "weight": 800,
+    "values": "[[19,20]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 75,
+    "weight": 800,
+    "values": "[[21,22]]"
+  },
+  {
+    "mod": "+# to all Attributes",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 82,
+    "weight": 800,
+    "values": "[[23,24]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[5,8]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 11,
+    "weight": 1000,
+    "values": "[[9,12]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 22,
+    "weight": 1000,
+    "values": "[[13,16]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[17,20]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 44,
+    "weight": 1000,
+    "values": "[[21,24]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 55,
+    "weight": 1000,
+    "values": "[[25,27]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 66,
+    "weight": 1000,
+    "values": "[[28,30]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 74,
+    "weight": 1000,
+    "values": "[[31,33]]"
+  },
+  {
+    "mod": "+# to Dexterity",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[10,15]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[5,8]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 11,
+    "weight": 1000,
+    "values": "[[9,12]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 22,
+    "weight": 1000,
+    "values": "[[13,16]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[17,20]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 44,
+    "weight": 1000,
+    "values": "[[21,24]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 55,
+    "weight": 1000,
+    "values": "[[25,27]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 66,
+    "weight": 1000,
+    "values": "[[28,30]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 74,
+    "weight": 1000,
+    "values": "[[31,33]]"
+  },
+  {
+    "mod": "+# to Intelligence",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[10,15]]"
+  },
+  {
+    "mod": "+# to Level of all Melee Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 5,
+    "weight": 500,
+    "values": "[1]"
+  },
+  {
+    "mod": "+# to Level of all Melee Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 41,
+    "weight": 250,
+    "values": "[2]"
+  },
+  {
+    "mod": "+# to Level of all Melee Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 100,
+    "values": "[3]"
+  },
+  {
+    "mod": "+# to Level of all Minion Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 5,
+    "weight": 500,
+    "values": "[1]"
+  },
+  {
+    "mod": "+# to Level of all Minion Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 41,
+    "weight": 250,
+    "values": "[2]"
+  },
+  {
+    "mod": "+# to Level of all Minion Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 100,
+    "values": "[3]"
+  },
+  {
+    "mod": "+# to Level of all Projectile Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 5,
+    "weight": 500,
+    "values": "[1]"
+  },
+  {
+    "mod": "+# to Level of all Projectile Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 41,
+    "weight": 250,
+    "values": "[2]"
+  },
+  {
+    "mod": "+# to Level of all Projectile Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 100,
+    "values": "[3]"
+  },
+  {
+    "mod": "+# to Level of all Skills",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[1]"
+  },
+  {
+    "mod": "+# to Level of all Spell Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 10,
+    "weight": 500,
+    "values": "[1]"
+  },
+  {
+    "mod": "+# to Level of all Spell Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 41,
+    "weight": 250,
+    "values": "[2]"
+  },
+  {
+    "mod": "+# to Level of all Spell Skills",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 75,
+    "weight": 100,
+    "values": "[3]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 10,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[8,14]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 9,
+    "ilvl": 11,
+    "weight": 1000,
+    "values": "[[15,20]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[21,24]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 25,
+    "weight": 1000,
+    "values": "[[25,33]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[34,41]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[42,51]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 54,
+    "weight": 1000,
+    "values": "[[52,61]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 65,
+    "weight": 1000,
+    "values": "[[62,70]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 70,
+    "weight": 1000,
+    "values": "[[71,79]]"
+  },
+  {
+    "mod": "+# to maximum Energy Shield",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 80,
+    "weight": 1000,
+    "values": "[[80,89]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 9,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[10,19]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 6,
+    "weight": 1000,
+    "values": "[[20,29]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[30,39]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 24,
+    "weight": 1000,
+    "values": "[[40,59]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[60,69]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 38,
+    "weight": 1000,
+    "values": "[[70,84]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[85,99]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 54,
+    "weight": 1000,
+    "values": "[[100,119]]"
+  },
+  {
+    "mod": "+# to maximum Life",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 60,
+    "weight": 1000,
+    "values": "[[120,149]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 13,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[10,14]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 12,
+    "ilvl": 6,
+    "weight": 1000,
+    "values": "[[15,24]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 11,
+    "ilvl": 16,
+    "weight": 1000,
+    "values": "[[25,34]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 10,
+    "ilvl": 25,
+    "weight": 1000,
+    "values": "[[35,54]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 9,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[55,64]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 38,
+    "weight": 1000,
+    "values": "[[65,79]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 46,
+    "weight": 1000,
+    "values": "[[80,89]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 54,
+    "weight": 1000,
+    "values": "[[90,104]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 60,
+    "weight": 1000,
+    "values": "[[105,124]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 65,
+    "weight": 1000,
+    "values": "[[125,149]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 70,
+    "weight": 1000,
+    "values": "[[150,164]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 75,
+    "weight": 1000,
+    "values": "[[165,179]]"
+  },
+  {
+    "mod": "+# to maximum Mana",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 82,
+    "weight": 1000,
+    "values": "[[180,189]]"
+  },
+  {
+    "mod": "+# to Spirit",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 16,
+    "weight": 500,
+    "values": "[[30,33]]"
+  },
+  {
+    "mod": "+# to Spirit",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 25,
+    "weight": 500,
+    "values": "[[34,37]]"
+  },
+  {
+    "mod": "+# to Spirit",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 33,
+    "weight": 500,
+    "values": "[[38,42]]"
+  },
+  {
+    "mod": "+# to Spirit",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 46,
+    "weight": 500,
+    "values": "[[43,46]]"
+  },
+  {
+    "mod": "+# to Spirit",
+    "affix": "prefix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 54,
+    "weight": 400,
+    "values": "[[47,50]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[5,8]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 11,
+    "weight": 1000,
+    "values": "[[9,12]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 22,
+    "weight": 1000,
+    "values": "[[13,16]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 33,
+    "weight": 1000,
+    "values": "[[17,20]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 44,
+    "weight": 1000,
+    "values": "[[21,24]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 55,
+    "weight": 1000,
+    "values": "[[25,27]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 66,
+    "weight": 1000,
+    "values": "[[28,30]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 74,
+    "weight": 1000,
+    "values": "[[31,33]]"
+  },
+  {
+    "mod": "+# to Strength",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[10,15]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 12,
+    "weight": 800,
+    "values": "[[3,5]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 26,
+    "weight": 800,
+    "values": "[[6,8]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 40,
+    "weight": 800,
+    "values": "[[9,11]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 54,
+    "weight": 800,
+    "values": "[[12,14]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 68,
+    "weight": 800,
+    "values": "[[15,16]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 80,
+    "weight": 800,
+    "values": "[[17,18]]"
+  },
+  {
+    "mod": "+#% to all Elemental Resistances",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[5,10]]"
+  },
+  {
+    "mod": "+#% to all Maximum Elemental Resistances",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[1]"
+  },
+  {
+    "mod": "+#% to Chaos Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 16,
+    "weight": 250,
+    "values": "[[4,7]]"
+  },
+  {
+    "mod": "+#% to Chaos Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 30,
+    "weight": 250,
+    "values": "[[8,11]]"
+  },
+  {
+    "mod": "+#% to Chaos Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 44,
+    "weight": 250,
+    "values": "[[12,15]]"
+  },
+  {
+    "mod": "+#% to Chaos Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 56,
+    "weight": 250,
+    "values": "[[16,19]]"
+  },
+  {
+    "mod": "+#% to Chaos Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 68,
+    "weight": 250,
+    "values": "[[20,23]]"
+  },
+  {
+    "mod": "+#% to Chaos Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 81,
+    "weight": 250,
+    "values": "[[24,27]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[6,10]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 14,
+    "weight": 1000,
+    "values": "[[11,15]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 26,
+    "weight": 1000,
+    "values": "[[16,20]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 38,
+    "weight": 1000,
+    "values": "[[21,25]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 50,
+    "weight": 1000,
+    "values": "[[26,30]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 60,
+    "weight": 1000,
+    "values": "[[31,35]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 71,
+    "weight": 1000,
+    "values": "[[36,40]]"
+  },
+  {
+    "mod": "+#% to Cold Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 82,
+    "weight": 1000,
+    "values": "[[41,45]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[6,10]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 12,
+    "weight": 1000,
+    "values": "[[11,15]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 24,
+    "weight": 1000,
+    "values": "[[16,20]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 36,
+    "weight": 1000,
+    "values": "[[21,25]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 48,
+    "weight": 1000,
+    "values": "[[26,30]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 60,
+    "weight": 1000,
+    "values": "[[31,35]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 71,
+    "weight": 1000,
+    "values": "[[36,40]]"
+  },
+  {
+    "mod": "+#% to Fire Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 82,
+    "weight": 1000,
+    "values": "[[41,45]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 8,
+    "ilvl": 1,
+    "weight": 1000,
+    "values": "[[6,10]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 7,
+    "ilvl": 13,
+    "weight": 1000,
+    "values": "[[11,15]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 6,
+    "ilvl": 25,
+    "weight": 1000,
+    "values": "[[16,20]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 5,
+    "ilvl": 37,
+    "weight": 1000,
+    "values": "[[21,25]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 4,
+    "ilvl": 49,
+    "weight": 1000,
+    "values": "[[26,30]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 3,
+    "ilvl": 60,
+    "weight": 1000,
+    "values": "[[31,35]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 2,
+    "ilvl": 71,
+    "weight": 1000,
+    "values": "[[36,40]]"
+  },
+  {
+    "mod": "+#% to Lightning Resistance",
+    "affix": "suffix",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 82,
+    "weight": 1000,
+    "values": "[[41,45]]"
+  },
+  {
+    "mod": "Charms gain # charges per Second",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[0.08,0.17]]"
+  },
+  {
+    "mod": "Leech #% of Physical Attack Damage as Life",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[3]"
+  },
+  {
+    "mod": "Leech #% of Physical Attack Damage as Mana",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[2]"
+  },
+  {
+    "mod": "Life Flasks gain # charges per Second",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[0.08,0.17]]"
+  },
+  {
+    "mod": "Mana Flasks gain # charges per Second",
+    "affix": "corrupted",
+    "group": "Base",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 1,
+    "values": "[[0.08,0.17]]"
+  },
+  {
+    "mod": "#% chance for Skills to retain 40% of Glory on use",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[20,30]]"
+  },
+  {
+    "mod": "#% increased Armour from Equipped Body Armour",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[35,50]]"
+  },
+  {
+    "mod": "#% increased Attack Damage while on Low Life",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[15,25]]"
+  },
+  {
+    "mod": "#% increased Cooldown Recovery Rate",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[8,12]]"
+  },
+  {
+    "mod": "#% increased Deflection Rating",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[10,20]]"
+  },
+  {
+    "mod": "#% increased Energy Shield from Equipped Body Armour",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[35,50]]"
+  },
+  {
+    "mod": "#% increased Evasion Rating from Equipped Body Armour",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[35,50]]"
+  },
+  {
+    "mod": "#% increased Exposure Effect",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[10,15]]"
+  },
+  {
+    "mod": "#% increased Global Armour, Evasion and Energy Shield",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[15,25]]"
+  },
+  {
+    "mod": "#% increased Reservation Efficiency of Herald Skills",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[10,20]]"
+  },
+  {
+    "mod": "#% increased Skill Effect Duration",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[8,12]]"
+  },
+  {
+    "mod": "#% increased Skill Speed",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[3,6]]"
+  },
+  {
+    "mod": "#% increased Spell Damage while on Full Energy Shield",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[15,25]]"
+  },
+  {
+    "mod": "#% of Damage is taken from Mana before Life",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[8,16]]"
+  },
+  {
+    "mod": "+# to Dexterity and Intelligence",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[9,15]]"
+  },
+  {
+    "mod": "+# to Level of all Skills",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[1]"
+  },
+  {
+    "mod": "+# to Strength and Dexterity",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[9,15]]"
+  },
+  {
+    "mod": "+# to Strength and Intelligence",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[9,15]]"
+  },
+  {
+    "mod": "+#% to Cold and Chaos Resistances",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[13,17]]"
+  },
+  {
+    "mod": "+#% to Fire and Chaos Resistances",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[13,17]]"
+  },
+  {
+    "mod": "+#% to Lightning and Chaos Resistances",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[13,17]]"
+  },
+  {
+    "mod": "+#% to Quality of all Skills",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[3,5]]"
+  },
+  {
+    "mod": "Aura Skills have #% increased Magnitudes",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[8,16]]"
+  },
+  {
+    "mod": "Equipment and Skill Gems have #% reduced Attribute Requirements",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[10,15]]"
+  },
+  {
+    "mod": "Invocated Spells have #% chance to consume half as much Energy",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[10,20]]"
+  },
+  {
+    "mod": "Minions deal #% increased Damage if you've Hit Recently",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[15,25]]"
+  },
+  {
+    "mod": "Minions have #% increased Cooldown Recovery Rate",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[12,20]]"
+  },
+  {
+    "mod": "Recover #% of maximum Life on Kill",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[2,3]]"
+  },
+  {
+    "mod": "Recover #% of maximum Mana on Kill",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[2,3]]"
+  },
+  {
+    "mod": "Remnants can be collected from #% further away",
+    "affix": "suffix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[20,30]]"
+  },
+  {
+    "mod": "Remnants you create have #% increased effect",
+    "affix": "prefix",
+    "group": "Desecrated",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 1,
+    "values": "[[8,15]]"
+  },
+  {
+    "mod": "#% increased Dexterity",
+    "affix": "suffix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 72,
+    "weight": 0,
+    "values": "[[7,10]]"
+  },
+  {
+    "mod": "#% increased Explicit Resistance Modifier magnitudes",
+    "affix": "prefix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 65,
+    "weight": 0,
+    "values": "[[20,30]]"
+  },
+  {
+    "mod": "#% increased Global Defences",
+    "affix": "prefix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 72,
+    "weight": 0,
+    "values": "[[20,30]]"
+  },
+  {
+    "mod": "#% increased Intelligence",
+    "affix": "suffix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 72,
+    "weight": 0,
+    "values": "[[7,10]]"
+  },
+  {
+    "mod": "#% increased maximum Runic Ward",
+    "affix": "prefix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 13,
+    "weight": 0,
+    "values": "[[6,10]]"
+  },
+  {
+    "mod": "#% increased Strength",
+    "affix": "suffix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 72,
+    "weight": 0,
+    "values": "[[7,10]]"
+  },
+  {
+    "mod": "+#% to Maximum Quality",
+    "affix": "prefix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 0,
+    "values": "[20]"
+  },
+  {
+    "mod": "Bears the Mark of the Abyssal Lord",
+    "affix": "prefix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 0,
+    "values": null
+  },
+  {
+    "mod": "Bears the Mark of the Abyssal Lord",
+    "affix": "suffix",
+    "group": "Essence",
+    "tier": 1,
+    "ilvl": 1,
+    "weight": 0,
+    "values": null
+  }
+]
