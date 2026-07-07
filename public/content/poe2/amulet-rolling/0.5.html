@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0f12;--pan:#16181d;--pan2:#131317;--line:#2a2d35;--line-gold:rgba(200,160,79,.28);
+    --gold:#c8a04f;--gold-hi:#d8b667;--gold-dim:#a98a4d;--bone:#e8e2d0;--text:#b8b3a7;--muted:#8f8b81;
+    --green:#7bb26a;--red:#d9605a;--amber:#d9a441;
+    --f-d:'Cinzel',serif;--f-b:'Mulish',system-ui,sans-serif;--f-m:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.4rem clamp(14px,3vw,26px) 3rem;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{color:var(--bone);font-family:var(--f-d);margin:0}
+  h1{font-size:clamp(1.5rem,3.5vw,2rem);letter-spacing:.02em}
+  h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-dim);margin:0 0 .7rem}
+  a{color:var(--gold)}
+  b{color:var(--bone)}
+  .lede{max-width:70ch;margin:.5rem 0 0}
+  .mono{font-family:var(--f-m)}
+
+  .panel{background:linear-gradient(180deg,var(--pan),var(--pan2));border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.15rem;margin-top:1.3rem}
+  .panel.gold{border-color:var(--line-gold);background:linear-gradient(180deg,rgba(34,29,19,.45),rgba(20,21,25,.5))}
+
+  .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin-top:.9rem}
+  .how .step{background:#0e0f12;border:1px solid var(--line);border-radius:9px;padding:.7rem .8rem}
+  .how .n{font-family:var(--f-m);color:var(--gold);font-size:.72rem;letter-spacing:.1em}
+  .how .step p{margin:.25rem 0 0;font-size:.9rem}
+
+  .callout{border-left:2px solid var(--amber);background:rgba(217,164,65,.07);padding:.7rem .9rem;border-radius:0 8px 8px 0;margin-top:1rem;font-size:.93rem}
+  .callout b{color:var(--amber)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:1.1rem 1.6rem;align-items:flex-end}
+  .ctl label{display:block;font-family:var(--f-m);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.35rem}
+  .ctl input,.ctl select{background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:7px;padding:.5rem .6rem;font-family:var(--f-m);font-size:.95rem;outline:none}
+  .ctl input{width:7.5rem}
+  .ctl input:focus,.ctl select:focus{border-color:var(--gold)}
+  .hint{font-size:.74rem;color:var(--muted);margin-top:.3rem}
+
+  .accepts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.2rem}
+  .chip{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--f-m);font-size:.78rem;padding:.35rem .6rem;border:1px solid var(--line);border-radius:999px;cursor:pointer;user-select:none;color:var(--muted)}
+  .chip input{accent-color:var(--gold);margin:0}
+  .chip.on{border-color:var(--gold);color:var(--bone);background:rgba(200,160,79,.08)}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-top:.4rem}
+  .stat{background:#0e0f12;border:1px solid var(--line);border-radius:9px;padding:.7rem .8rem}
+  .stat .k{font-family:var(--f-m);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim)}
+  .stat .v{font-family:var(--f-m);font-size:1.35rem;color:var(--bone);margin-top:.2rem}
+  .stat .v small{font-size:.8rem;color:var(--muted)}
+
+  .tbl-wrap{overflow-x:auto;margin-top:.4rem}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:.9rem}
+  th,td{padding:.5rem .55rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-family:var(--f-m);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-dim);font-weight:500;position:sticky;top:0;background:var(--pan)}
+  th.l,td.l{text-align:left}
+  td.skill{font-family:var(--f-b);color:var(--bone);font-weight:700}
+  td input{width:4.4rem;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.35rem .4rem;font-family:var(--f-m);font-size:.85rem;text-align:right;outline:none}
+  td input:focus{border-color:var(--gold)}
+  td.calc{font-family:var(--f-m);color:var(--text)}
+  td.ev{font-family:var(--f-m);font-weight:600}
+  .pos{color:var(--green)}
+  .neg{color:var(--red)}
+  .muted-col{color:var(--muted)}
+  .foot{margin-top:1.4rem;font-size:.8rem;color:var(--muted);max-width:74ch}
+  .foot code{font-family:var(--f-m);color:var(--gold-dim)}
+</style>
+</head>
+<body>
+
+  <h1>Amulet Rolling — Endgame Profit Craft</h1>
+  <p class="lede">Turn cheap high-item-level amulets into jackpot mods with pure chaos spam. Target the pricey late-game bases (the <b>Absent Amulet</b> from Breach nets the most divine/hour) — but <b>any</b> amulet works. It's genuinely profitable and simple; the only hard part is that it's tiring on the eyes.</p>
+
+  <div class="panel">
+    <h2>The loop</h2>
+    <div class="how">
+      <div class="step"><span class="n">01</span><p>Buy a cheap <b>ilvl 75+</b> amulet base and get it to <b>rare with a single mod</b>.</p></div>
+      <div class="step"><span class="n">02</span><p><b>Chaos-spam</b> it — each orb rerolls one random mod from the pool.</p></div>
+      <div class="step"><span class="n">03</span><p>Stop the instant you hit a <b>jackpot</b>: T1 Spirit or a <b>+3 to a skill type</b>.</p></div>
+      <div class="step"><span class="n">04</span><p><b>Sell in Divine.</b> The hit value dwarfs the chaos you spent → net-positive EV.</p></div>
+    </div>
+    <div class="callout"><b>Why it's tiring, not hard:</b> you must watch every single roll and <b>never chaos over a mod that's already worth selling</b>. That vigilance is the whole skill — the maths below is always in your favour.</div>
+  </div>
+
+  <div class="panel gold">
+    <h2>Set your market</h2>
+    <div class="controls">
+      <div class="ctl">
+        <label>Base item level</label>
+        <select id="ilvl">
+          <option value="75">ilvl 75</option>
+          <option value="78">ilvl 78</option>
+          <option value="79">ilvl 79</option>
+          <option value="80">ilvl 80</option>
+          <option value="81">ilvl 81</option>
+          <option value="82" selected>ilvl 82</option>
+        </select>
+      </div>
+      <div class="ctl">
+        <label>1 Divine = ? Chaos</label>
+        <input id="rate" type="number" min="0" step="0.1" value="8.7">
+        <div class="hint">← set your live rate (sells are Divine, rolls are Chaos)</div>
+      </div>
+      <div class="ctl" style="flex:1 1 260px">
+        <label>Count as a "hit" (jackpot mods)</label>
+        <div class="accepts" id="accepts"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Hit rate at this item level</h2>
+    <div class="stats" id="stats"></div>
+    <div class="callout" id="myth"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Profit per skill amulet</h2>
+    <p class="hint" style="margin-top:-.3rem">Base &amp; sell prices are in <b>Divine</b> — all editable. Green = net profit per successful sale after average rolling cost.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="l">Skill amulet</th>
+            <th>Base</th>
+            <th>Spirit</th>
+            <th>+3 Melee</th>
+            <th>+3 Proj</th>
+            <th>+3 Spell</th>
+            <th>+3 Minion</th>
+            <th>Avg hit</th>
+            <th>Roll cost</th>
+            <th>Net EV</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="hint">“Roll cost” = expected chaos to hit ÷ your Divine:Chaos rate, in Divine. “Net EV” = Avg hit − Base − Roll cost.</p>
+  </div>
+
+  <p class="foot">
+    <b>The ilvl-75 myth.</b> Sellers charge a premium for ilvl-75 bases because the smaller mod pool gives a slightly better jackpot chance. But the pool only grows from <code>163,800</code> (ilvl 75) to <code>173,650</code> (ilvl 82) — about 6% more rolls. Unless the ilvl-75 surcharge is smaller than the “extra rolls” cost shown above, just buy a cheap high-ilvl base.<br><br>
+    Weights are the real 0.5 amulet pool (verified against Craft of Exile / poe2db). T1 Spirit = weight 400 (+47–50), each +3 skill = weight 100. Chance = mod weight ÷ total pool. <i>Phase 2 will add an outcome logger so you can record real spends and sales.</i>
+  </p>
+
+<script>
+(function(){
+  // --- verified 0.5 amulet pool (total spawn weight by base item level) ---
+  var POOL = {75:163800, 78:164800, 79:166300, 80:168600, 81:168850, 82:173650};
+  // jackpot mod weights
+  var JW = {spirit:400, melee:100, proj:100, spell:100, minion:100};
+  var MODS = ['spirit','melee','proj','spell','minion'];
+  var LABEL = {spirit:'T1 Spirit', melee:'+3 Melee', proj:'+3 Proj', spell:'+3 Spell', minion:'+3 Minion'};
+
+  // seed data from the reference sheet (all editable)
+  var SKILLS = [
+    {name:'Cast on Crit',              base:54, sell:{spirit:88, melee:60,  proj:60,  spell:230, minion:60}},
+    {name:'Cast on Dodge',             base:3,  sell:{spirit:37, melee:70,  proj:8,   spell:80,  minion:3}},
+    {name:'Eternal Rage',              base:4,  sell:{spirit:40, melee:64,  proj:105, spell:6,   minion:6}},
+    {name:'Cast on Elemental Ailment', base:6,  sell:{spirit:38, melee:12,  proj:9,   spell:155, minion:10}},
+    {name:'Archmage',                  base:3,  sell:{spirit:29, melee:11,  proj:8,   spell:135, minion:3}},
+    {name:'Trinity',                   base:6,  sell:{spirit:30, melee:130, proj:70,  spell:24,  minion:8}}
+  ];
+
+  var include = {spirit:true, melee:true, proj:true, spell:true, minion:true};
+
+  var $ = function(id){ return document.getElementById(id); };
+  var ilvlEl = $('ilvl'), rateEl = $('rate');
+  var fmt = function(n, d){ if(!isFinite(n)) return '∞'; return n.toLocaleString('en-US',{minimumFractionDigits:d||0, maximumFractionDigits:d||0}); };
+
+  function incWeight(){ var w=0; MODS.forEach(function(k){ if(include[k]) w+=JW[k]; }); return w; }
+  function expChaos(ilvl){ var w=incWeight(); return w? POOL[ilvl]/w : Infinity; }
+  function avgHit(sell){ var num=0,den=0; MODS.forEach(function(k){ if(include[k]){ num+=JW[k]*(+sell[k]||0); den+=JW[k]; } }); return den? num/den : 0; }
+
+  // --- accept chips ---
+  var accepts = $('accepts');
+  MODS.forEach(function(k){
+    var lab=document.createElement('label'); lab.className='chip on'; lab.dataset.k=k;
+    lab.innerHTML='<input type="checkbox" checked> '+LABEL[k]+' <span class="mono" style="color:var(--muted)">·'+JW[k]+'</span>';
+    lab.querySelector('input').addEventListener('change',function(e){ include[k]=e.target.checked; lab.classList.toggle('on',e.target.checked); render(); });
+    accepts.appendChild(lab);
+  });
+
+  // --- build editable rows ---
+  var rowsEl = $('rows');
+  SKILLS.forEach(function(s, i){
+    var tr=document.createElement('tr');
+    var cells='<td class="skill l">'+s.name+'</td>';
+    cells+='<td><input data-i="'+i+'" data-f="base" type="number" min="0" step="0.5" value="'+s.base+'"></td>';
+    MODS.forEach(function(k){ cells+='<td><input data-i="'+i+'" data-f="'+k+'" type="number" min="0" step="1" value="'+s.sell[k]+'"></td>'; });
+    cells+='<td class="calc" data-avg></td><td class="calc muted-col" data-roll></td><td class="ev" data-ev></td>';
+    tr.innerHTML=cells; rowsEl.appendChild(tr);
+  });
+  rowsEl.addEventListener('input', function(e){
+    var t=e.target; if(t.tagName!=='INPUT') return;
+    var s=SKILLS[+t.dataset.i], f=t.dataset.f, v=+t.value||0;
+    if(f==='base') s.base=v; else s.sell[f]=v;
+    render();
+  });
+  ilvlEl.addEventListener('change', render);
+  rateEl.addEventListener('input', render);
+
+  function render(){
+    var ilvl=+ilvlEl.value, rate=+rateEl.value||0, W=incWeight();
+    var pool=POOL[ilvl], ec=expChaos(ilvl), rollDiv=rate? ec/rate : Infinity;
+    var chance= W? (W/pool*100) : 0;
+
+    // summary stats
+    $('stats').innerHTML =
+      stat('Combined weight', fmt(W)+' <small>/ '+fmt(pool)+'</small>') +
+      stat('Hit chance / roll', chance.toFixed(3)+'%') +
+      stat('Expected chaos / hit', fmt(ec,0)) +
+      stat('Roll cost / hit', isFinite(rollDiv)? fmt(rollDiv,2)+' <small>div</small>' : '—');
+
+    // myth-buster vs ilvl 75
+    var ec75=expChaos(75), extra=ec-ec75, extraDiv=rate? extra/rate : Infinity;
+    var m=$('myth');
+    if(W===0){ m.innerHTML='<b>Pick at least one jackpot mod above.</b>'; }
+    else if(ilvl===75){ m.innerHTML='You’re at ilvl 75 — the smallest pool and best hit rate. Compare a cheaper high-ilvl base by switching the item level above.'; }
+    else {
+      m.innerHTML='<b>ilvl 75 vs ilvl '+ilvl+':</b> a higher-ilvl base needs only <b>+'+fmt(extra,0)+' chaos</b> ('+ (isFinite(extraDiv)? '~'+fmt(extraDiv,2)+' div' : '—') +') more per hit. Only pay the ilvl-75 premium if its surcharge is bigger than that — otherwise buy the cheap high-ilvl base.';
+    }
+
+    // per-skill
+    rowsEl.querySelectorAll('tr').forEach(function(tr,i){
+      var s=SKILLS[i], av=avgHit(s.sell), ev=av - s.base - (isFinite(rollDiv)?rollDiv:0);
+      tr.querySelector('[data-avg]').textContent=fmt(av,1);
+      tr.querySelector('[data-roll]').textContent=isFinite(rollDiv)? fmt(rollDiv,2):'—';
+      var evEl=tr.querySelector('[data-ev]');
+      evEl.textContent=(ev>=0?'+':'')+fmt(ev,1);
+      evEl.className='ev '+(ev>=0?'pos':'neg');
+    });
+  }
+  function stat(k,v){ return '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
+
+  render();
+})();
+</script>
+</body>
+</html>
