@@ -57,7 +57,7 @@ Nav is emergent from tags + search. Seed tags: `mechanics, crafting, currency, e
 
 ## Interactive / logging tools
 - Compute-only tools: inline JS, no backend.
-- **Logging tools (persistent, cross-device):** call `/api/*` Pages Functions backed by **D1**.
+- **Logging tools (persistent, cross-device):** call `/api/*` served by a **Worker route** (`worker/index.js`) backed by **D1**. Deferred — ready-made handler is in `functions/api/log.js`; wire it up (add `main` + the `d1_databases` binding in `wrangler.jsonc`) when the first logging tool ships.
   - Single writer for now; guard writes with a shared secret `WRITE_KEY` (env). Reads may be open.
   - Namespace data by `slug` (+ optional `league`) so logs survive restyles and can be segmented.
   - **Tool *code* freezes per version; tool *data* is persistent and shared across versions.** Keep that separation explicit.
@@ -73,7 +73,7 @@ Dark slate bg, warm gold/amber accents, gothic-serif headings + clean sans body,
 CLAUDE.md  AGENTS.md
 astro.config.mjs  package.json  wrangler.jsonc  schema.sql
 src/                   # Astro shell (hub chrome)
-functions/            # Cloudflare Pages Functions (/api/*)
+functions/            # ready-made D1 logging handler (wire into worker/index.js when needed)
 public/content/poe2/<slug>/…  public/content/poe1/<slug>/…
 design/               # briefs, references
 ```
