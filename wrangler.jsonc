@@ -1,18 +1,19 @@
 {
-  // Cloudflare Workers "Static Assets" config for the PoE Knowledge Hub.
+  // Cloudflare Worker (static assets + D1 logging API) for the PoE Knowledge Hub.
   // Deployed by Workers Builds:  Build command: `npm run build`  ->  Deploy command: `npx wrangler deploy`
   // "name" MUST match the Worker created in the dashboard.
   "name": "knowledgehub",
+  "main": "worker/index.js",
   "compatibility_date": "2026-07-07",
   "assets": {
-    "directory": "./dist"
-  }
-
-  // --- Logging (deferred until the first logging tool ships) ---
-  // The D1 database "poe-hub" already exists. When we add persistence, introduce a
-  // Worker entry (e.g. "main": "worker/index.js") that handles /api/* and add:
-  //   "d1_databases": [
-  //     { "binding": "DB", "database_name": "poe-hub", "database_id": "aa9ab8ed-72d0-4195-b11c-aab6a8922772" }
-  //   ]
-  // (the ready-made handler currently lives in functions/api/log.js).
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "poe-hub",
+      "database_id": "aa9ab8ed-72d0-4195-b11c-aab6a8922772"
+    }
+  ]
 }

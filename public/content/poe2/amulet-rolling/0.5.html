@@ -143,6 +143,32 @@
     <p class="hint">“Roll cost” = expected chaos to hit ÷ your Divine:Chaos rate, in Divine. “Net EV” = Avg hit − Base − Roll cost.</p>
   </div>
 
+  <div class="panel" id="logger">
+    <h2>Log your crafts</h2>
+    <p class="hint" style="margin-top:-.3rem">Record real outcomes — profit uses the Divine:Chaos rate set above. Saved to your private cloud log.</p>
+    <form id="logform" class="controls" style="align-items:flex-end;gap:.8rem 1.1rem">
+      <div class="ctl"><label>Skill</label><select id="lg-skill"></select></div>
+      <div class="ctl"><label>Hit</label><select id="lg-hit">
+        <option value="spirit">T1 Spirit</option><option value="melee">+3 Melee</option>
+        <option value="proj">+3 Proj</option><option value="spell">+3 Spell</option>
+        <option value="minion">+3 Minion</option><option value="other">Other sellable</option>
+      </select></div>
+      <div class="ctl"><label>Base paid</label><input id="lg-base" type="number" min="0" step="0.1" value="0"></div>
+      <div class="ctl"><label>Chaos spent</label><input id="lg-chaos" type="number" min="0" step="1" value="0"></div>
+      <div class="ctl"><label>Sold for</label><input id="lg-sell" type="number" min="0" step="0.1" value="0"></div>
+      <div class="ctl" style="flex:1 1 150px"><label>Note</label><input id="lg-note" type="text" style="width:100%" placeholder="optional"></div>
+      <button type="submit" style="background:linear-gradient(180deg,#dcbb6c,#c19a45);color:#1a1206;border:1px solid #e6cf88;border-radius:8px;padding:.55rem 1.1rem;font-family:var(--f-d);font-weight:600;cursor:pointer;font-size:.95rem">Log craft</button>
+    </form>
+    <div id="lg-status" class="hint"></div>
+    <div class="stats" id="lg-totals" style="margin-top:1rem"></div>
+    <div class="tbl-wrap" style="margin-top:.6rem">
+      <table>
+        <thead><tr><th class="l">When</th><th class="l">Skill</th><th class="l">Hit</th><th>Base</th><th>Chaos</th><th>Sold</th><th>Profit</th><th></th></tr></thead>
+        <tbody id="lg-rows"></tbody>
+      </table>
+    </div>
+  </div>
+
   <p class="foot">
     <b>The ilvl-75 myth.</b> Sellers charge a premium for ilvl-75 bases because the smaller mod pool gives a slightly better jackpot chance. But the pool only grows from <code>163,800</code> (ilvl 75) to <code>173,650</code> (ilvl 82) — about 6% more rolls. Unless the ilvl-75 surcharge is smaller than the “extra rolls” cost shown above, just buy a cheap high-ilvl base.<br><br>
     Weights are the real 0.5 amulet pool (verified against Craft of Exile / poe2db). T1 Spirit = weight 400 (+47–50), each +3 skill = weight 100. Chance = mod weight ÷ total pool. <i>Phase 2 will add an outcome logger so you can record real spends and sales.</i>
@@ -239,6 +265,77 @@
   function stat(k,v){ return '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
 
   render();
+})();
+</script>
+
+<script>
+(function(){
+  var TOOL='amulet-rolling', LEAGUE='0.5', API='/api/log';
+  var SKILLS=['Cast on Crit','Cast on Dodge','Eternal Rage','Cast on Elemental Ailment','Archmage','Trinity','Other'];
+  var HITLABEL={spirit:'T1 Spirit',melee:'+3 Melee',proj:'+3 Proj',spell:'+3 Spell',minion:'+3 Minion',other:'Other'};
+  var $=function(id){return document.getElementById(id);};
+  var sk=$('lg-skill'); SKILLS.forEach(function(s){var o=document.createElement('option');o.textContent=s;sk.appendChild(o);});
+  var rows=$('lg-rows'), totals=$('lg-totals'), status=$('lg-status');
+  var rate=function(){ return +($('rate').value)||0; };
+  var fmt=function(n,d){ if(!isFinite(n))return '—'; return n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); };
+  var profitOf=function(v){ var r=v.rate||rate(); return (+v.sell||0)-(+v.base||0)-(r?(+v.chaos||0)/r:0); };
+  var st=function(k,v){ return '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; };
+
+  function render(data){
+    rows.innerHTML=''; var tP=0,tC=0,n=0;
+    data.forEach(function(row){
+      var v; try{v=JSON.parse(row.value_json);}catch(_){v={};}
+      var p=profitOf(v); tP+=p; tC+=(+v.chaos||0); n++;
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td class="l muted-col mono" style="font-size:.78rem">'+String(row.created_at||'').slice(5,16)+'</td>'
+        +'<td class="l">'+(v.skill||'')+'</td>'
+        +'<td class="l">'+(HITLABEL[v.hit]||v.hit||'')+'</td>'
+        +'<td class="calc">'+fmt(+v.base||0,1)+'</td>'
+        +'<td class="calc muted-col">'+fmt(+v.chaos||0)+'</td>'
+        +'<td class="calc">'+fmt(+v.sell||0,1)+'</td>'
+        +'<td class="ev '+(p>=0?'pos':'neg')+'">'+(p>=0?'+':'')+fmt(p,1)+'</td>'
+        +'<td><button data-id="'+row.id+'" class="del" title="Delete" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem">✕</button></td>';
+      rows.appendChild(tr);
+    });
+    totals.innerHTML=st('Crafts logged',fmt(n))
+      +st('Net profit',(tP>=0?'+':'')+fmt(tP,1)+' <small>div</small>')
+      +st('Chaos spent',fmt(tC))
+      +st('Avg / craft', n?((tP/n>=0?'+':'')+fmt(tP/n,1)+' <small>div</small>'):'—');
+  }
+
+  async function load(){
+    try{
+      var res=await fetch(API+'?tool='+TOOL);
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      render(await res.json()); status.textContent='';
+    }catch(e){
+      status.innerHTML='<span style="color:var(--amber)">Log store offline — it activates once the site is deployed.</span>';
+      render([]);
+    }
+  }
+
+  rows.addEventListener('click', async function(e){
+    var b=e.target.closest('.del'); if(!b)return;
+    if(!confirm('Delete this log entry?'))return;
+    try{ await fetch(API+'?tool='+TOOL+'&id='+b.dataset.id,{method:'DELETE'}); load(); }catch(_){}
+  });
+
+  $('logform').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var v={ skill:$('lg-skill').value, hit:$('lg-hit').value,
+      base:+$('lg-base').value||0, chaos:+$('lg-chaos').value||0, sell:+$('lg-sell').value||0,
+      rate:rate(), note:$('lg-note').value.trim() };
+    status.textContent='Saving…';
+    try{
+      var res=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({tool:TOOL,league:LEAGUE,key:v.skill,value:v})});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      ['lg-base','lg-chaos','lg-sell','lg-note'].forEach(function(id){$(id).value= id==='lg-note'?'':0;});
+      status.textContent=''; load();
+    }catch(err){ status.innerHTML='<span style="color:var(--amber)">Save failed — the log activates once deployed.</span>'; }
+  });
+
+  load();
 })();
 </script>
 </body>

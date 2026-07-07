@@ -5,10 +5,10 @@
   "tags": ["crafting", "currency", "tool"],
   "summary": "Chaos-spam cheap high-ilvl amulets into jackpot mods. Live EV per skill amulet with editable prices and a real-time Divine:Chaos rate.",
   "type": "tool",
-  "interactive": false,
+  "interactive": true,
   "currentVersion": "0.5",
   "updatedForLeague": "0.5",
   "versions": [
-    { "league": "0.5", "leagueName": "Rune of Aldurs", "patch": "0.5.4b", "file": "0.5.html", "updated": "2026-07-07", "changelog": "Phase 1 — profit calculator. Weights verified against the 0.5 amulet mod pool. Outcome logger comes in Phase 2." }
+    { "league": "0.5", "leagueName": "Rune of Aldurs", "patch": "0.5.4b", "file": "0.5.html", "updated": "2026-07-07", "changelog": "Profit calculator + D1-backed outcome logger. Weights verified against the 0.5 amulet mod pool." }
   ]
 }
