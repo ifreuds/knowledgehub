@@ -29,15 +29,17 @@ export const SEED_TAGS = [
 ];
 
 // PoE item-rarity palette, reused as a functional color system for tags/badges.
+// Mapping matches the Ornate design handoff.
 export const RARITY: Record<string, string> = {
-  mechanics: '#8888ff', // magic blue
-  skills: '#8888ff',
-  crafting: '#aa9e82',  // currency tan
-  currency: '#aa9e82',
+  mechanics: '#c8c8c8', // normal grey
+  note: '#c8c8c8',
+  build: '#8888ff',     // magic blue
+  tool: '#8888ff',
   endgame: '#ffff77',   // rare yellow
-  build: '#ffff77',
+  league: '#ffff77',
   bossing: '#af6025',   // unique orange
-  league: '#af6025',
-  tool: '#1ba29b',      // gem teal
-  note: '#c8c8c8',      // normal grey
+  crafting: '#af6025',
+  currency: '#aa9e82',  // currency tan
+  skills: '#1ba29b',    // gem teal
+  gem: '#1ba29b',
 };

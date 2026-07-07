@@ -14,106 +14,423 @@ const review = getReviewQueue(game);
 const tags = getTags(game);
 const upToDate = pages.length - review.length;
 const cl = meta.currentLeague;
+
+// --- helpers -------------------------------------------------------------
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// Short date ("Jul 2") from the version whose league === currentVersion.
+function cardDate(page: (typeof pages)[number]): string {
+  const v = page.versions.find((ver) => ver.league === page.currentVersion);
+  if (!v?.updated) return '';
+  const d = new Date(v.updated);
+  if (Number.isNaN(d.getTime())) return '';
+  return `${MONTHS[d.getMonth()]} ${d.getDate()}`;
+}
+
+// hex -> rgba(...) for tinted tag chips / active filter backgrounds.
+function rgba(hex: string, a: number): string {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+}
+const tagColor = (t: string) => RARITY[t] ?? '#c8c8c8';
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// Tag counts for the sidebar (how many pages carry each tag).
+const tagCounts: Record<string, number> = {};
+for (const t of tags) tagCounts[t] = 0;
+for (const p of pages) for (const t of p.tags) if (t in tagCounts) tagCounts[t]++;
+
+// Per-card view model.
+const cards = pages.map((p) => ({
+  page: p,
+  isTool: p.type === 'tool' || !!p.interactive,
+  date: cardDate(p),
+  statusLabel:
+    p.status === 'current'
+      ? `Up to date · ${p.currentLeagueLabel}`
+      : `Needs review · ${p.updatedForLeague}`,
+}));
 ---
 <Shell game={game} title={`${meta.label} Hub`}>
+  {/* ---------- HERO ---------- */}
   <section class="hero">
-    <div class="hero-label">Current League</div>
-    <h1>{cl.league} — {cl.name}</h1>
-    {cl.patch && <span class="patch">patch {cl.patch}</span>}
+    <div class="hero-watermark" aria-hidden="true">
+      <svg width="360" height="360" viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="0.6">
+        <path d="M16 1.5 L30.5 16 L16 30.5 L1.5 16 Z"></path>
+        <path d="M16 8 L24 16 L16 24 L8 16 Z"></path>
+        <circle cx="16" cy="16" r="4"></circle>
+      </svg>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="hair left"></span>
+        <span class="eyebrow-txt">Current League</span>
+        <span class="hair right"></span>
+      </div>
+      <h1 class="hero-title">
+        <span class="league-num">{cl.league}</span>
+        {cl.name && <> <span class="dash">—</span> {cl.name.toUpperCase()}</>}
+      </h1>
+      <div class="hero-meta">
+        {cl.patch && (
+          <span class="patch-pill"><span class="patch-dot"></span>patch {cl.patch}</span>
+        )}
+        <span class="hero-sub">Frozen archive · pick any entry's version</span>
+      </div>
+    </div>
   </section>
 
-  <section class="status">
-    <span class="dot green"></span> {upToDate} up to date
-    <span class="sep">·</span>
-    <span class="dot amber"></span> {review.length} need review for {cl.league}
-    {review.length > 0 && <a class="review-btn" href="#review">⟳ Review Queue</a>}
-  </section>
-
-  {tags.length > 0 && (
-    <section class="tags">
-      <button class="tag active" data-tag="*">all</button>
-      {tags.map((t) => (
-        <button class="tag" data-tag={t} style={`--c:${RARITY[t] ?? '#c8c8c8'}`}>{t}</button>
-      ))}
-    </section>
-  )}
-
-  <section class="grid">
-    {pages.map((p) => (
-      <a class="card" href={p.url} data-tags={p.tags.join(',')}>
-        <div class="card-top">
-          <h3>{p.title}{(p.interactive || p.type === 'tool') && <span class="gear">⚙</span>}</h3>
-          <span class={`badge ${p.status}`}>
-            {p.status === 'current' ? `🟢 ${p.currentLeagueLabel}` : `🟡 last ${p.updatedForLeague}`}
-          </span>
+  {/* ---------- STATUS BAR ---------- */}
+  <section class="statusbar-wrap">
+    <div class="statusbar filigree">
+      <div class="status-left">
+        <span class="status-eyebrow">CODEX STATUS · {cl.league}</span>
+        <div class="status-counts">
+          <span class="count"><span class="cdot green"></span><b>{upToDate}</b> up to date</span>
+          <span class="mid">·</span>
+          <span class="count"><span class="cdot amber-ring"></span><b>{review.length}</b> need review for {cl.league}</span>
         </div>
-        <div class="card-tags">
-          {p.tags.map((t) => <span class="chip" style={`--c:${RARITY[t] ?? '#c8c8c8'}`}>{t}</span>)}
-        </div>
-      </a>
-    ))}
-    {pages.length === 0 && <p class="empty">No articles yet for {meta.label}. Add one and it appears here.</p>}
+      </div>
+      <span class="status-flex"></span>
+      <button type="button" class="rq-btn" data-review-trigger aria-label="Show review queue">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h13a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3z"></path><path d="M8 9h8M8 13h6"></path></svg>
+        Review Queue
+        <span class="rq-count">{review.length}</span>
+      </button>
+    </div>
   </section>
 
-  {review.length > 0 && (
-    <section id="review" class="review">
-      <h2>Review Queue — {cl.league}</h2>
-      <ul>
-        {review.map((p) => (
-          <li><a href={p.url}>{p.title}</a> — last updated for {p.updatedForLeague}</li>
+  {/* ---------- TWO-COLUMN BODY ---------- */}
+  <div class="body">
+    {/* sidebar */}
+    <aside class="sidebar">
+      <div class="side-head">
+        <span class="side-title">FILTER</span>
+        <span class="side-rule"></span>
+      </div>
+      <div class="side-list">
+        <button type="button" class="fbtn active" data-filter="all" data-accent="gold">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+          <span class="fbtn-label">All entries</span>
+          <span class="fbtn-count">{pages.length}</span>
+        </button>
+        <button type="button" class="fbtn" data-filter="__review" data-accent="amber" data-review-trigger>
+          <span class="review-bullet"></span>
+          <span class="fbtn-label">Review queue</span>
+          <span class="fbtn-count amber">{review.length}</span>
+        </button>
+        {tags.length > 0 && <div class="side-divider"></div>}
+        {tags.map((t) => (
+          <button
+            type="button"
+            class="fbtn tag"
+            data-filter={t}
+            data-color={tagColor(t)}
+            style={`--tc:${tagColor(t)};--tc-bg:${rgba(tagColor(t), 0.13)}`}
+          >
+            <span class="tag-bullet" style={`background:${tagColor(t)}`}></span>
+            <span class="fbtn-label cap">{t}</span>
+            <span class="fbtn-count">{tagCounts[t]}</span>
+          </button>
         ))}
-      </ul>
+      </div>
+    </aside>
+
+    {/* results column */}
+    <section class="results">
+      <div class="results-head">
+        <h2 class="results-title" data-heading>All Entries</h2>
+        <span class="results-count"><span data-count>{pages.length}</span> entries</span>
+        <button type="button" class="clear-btn" data-clear hidden>Clear filter ✕</button>
+      </div>
+
+      <div class="grid" data-grid>
+        {cards.map(({ page: p, isTool, date, statusLabel }) => (
+          <a
+            class="card filigree"
+            href={p.url}
+            data-card
+            data-tags={p.tags.join(',')}
+            data-status={p.status}
+            data-title={p.title}
+            data-summary={p.summary ?? ''}
+          >
+            {p.image && (
+              <div class="card-art">
+                <img src={p.image} alt="" loading="lazy" />
+                {isTool && (
+                  <span class="art-tool" title="Interactive tool">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2.1 2.1M16.9 16.9L19 19M19 5l-2.1 2.1M7.1 16.9L5 19"></path></svg>
+                    TOOL
+                  </span>
+                )}
+              </div>
+            )}
+            <div class="card-tags">
+              {!p.image && isTool && (
+                <span class="chip tool-chip" title="Interactive tool">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2.1 2.1M16.9 16.9L19 19M19 5l-2.1 2.1M7.1 16.9L5 19"></path></svg>
+                  TOOL
+                </span>
+              )}
+              {p.tags.map((t) => (
+                <span
+                  class="chip"
+                  style={`color:${tagColor(t)};background:${rgba(tagColor(t), 0.1)};border-color:${rgba(tagColor(t), 0.3)}`}
+                >{t}</span>
+              ))}
+            </div>
+            <h3 class="card-title">{p.title}</h3>
+            {p.summary && <p class="card-summary">{p.summary}</p>}
+            <div class="card-foot">
+              <span class={`badge ${p.status}`}><span class="dot"></span>{statusLabel}</span>
+              <span class="card-flex"></span>
+              {date && <span class="card-date">{date}</span>}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="empty" data-empty hidden>
+        <div class="empty-title">NO ENTRIES FOUND</div>
+        <p class="empty-sub">The archives hold nothing matching that query.</p>
+        <button type="button" class="empty-reset" data-clear>Reset filters</button>
+      </div>
     </section>
-  )}
+  </div>
 </Shell>
 
 <style>
-  /* minimal engine styling — final look comes from the chosen mock */
-  .hero { padding:1.5rem 0 1rem; border-bottom:1px solid var(--line); margin-bottom:1rem; }
-  .hero-label { color:var(--gold); text-transform:uppercase; letter-spacing:.15em; font-size:.72rem; }
-  .hero h1 { color:var(--bone); font-size:2rem; margin:.2rem 0; display:inline-block; margin-right:.75rem; }
-  .patch { color:var(--grey); border:1px solid var(--line); padding:.1rem .5rem; border-radius:4px; font-size:.8rem; }
-  .status { display:flex; align-items:center; gap:.5rem; margin-bottom:1rem; font-size:.95rem; }
-  .dot { width:.6rem; height:.6rem; border-radius:50%; display:inline-block; }
-  .dot.green { background:var(--green); } .dot.amber { background:var(--amber); }
-  .sep { color:#555; }
-  .review-btn { margin-left:1rem; border:1px solid var(--gold); padding:.15rem .6rem; border-radius:6px; }
-  .tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.25rem; }
-  .tag { background:transparent; border:1px solid var(--line); color:var(--grey); padding:.2rem .6rem;
-    border-radius:999px; cursor:pointer; font-size:.8rem; }
-  .tag.active { border-color:var(--c, var(--gold)); color:var(--bone); }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:1rem; display:block; }
-  .card:hover { border-color:var(--gold); }
-  .card-top { display:flex; justify-content:space-between; gap:.5rem; align-items:flex-start; }
-  .card h3 { color:var(--bone); margin:0 0 .5rem; font-size:1.05rem; }
-  .gear { color:var(--gold); margin-left:.35rem; }
-  .badge { font-size:.75rem; white-space:nowrap; }
-  .card-tags { display:flex; flex-wrap:wrap; gap:.35rem; }
-  .chip { font-size:.7rem; color:var(--c); border:1px solid var(--c); opacity:.85; padding:.05rem .45rem; border-radius:999px; }
-  .empty { color:var(--grey); }
-  .review { margin-top:2rem; border-top:1px solid var(--line); padding-top:1rem; }
-  .review h2 { color:var(--bone); font-size:1.2rem; }
+  /* ===================== HERO ===================== */
+  .hero { position:relative; text-align:center; padding:clamp(46px,8vw,84px) 0 clamp(30px,5vw,48px); }
+  .hero-watermark { position:absolute; top:50%; left:50%; transform:translate(-50%,-54%); z-index:0; pointer-events:none; opacity:.05; }
+  .hero-inner { position:relative; z-index:1; }
+  .hero-eyebrow { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:22px; }
+  .hero-eyebrow .hair { height:1px; width:clamp(28px,10vw,90px); }
+  .hero-eyebrow .hair.left { background:linear-gradient(90deg,transparent,rgba(200,160,79,.55)); }
+  .hero-eyebrow .hair.right { background:linear-gradient(90deg,rgba(200,160,79,.55),transparent); }
+  .eyebrow-txt { font-family:var(--f-display); font-weight:500; font-size:12px; letter-spacing:.44em; color:var(--gold-dim); }
+  .hero-title { margin:0; font-family:var(--f-display); font-weight:700; font-size:clamp(2.3rem,7vw,5rem); line-height:1.02; letter-spacing:.02em; color:var(--bone); text-shadow:0 2px 30px rgba(0,0,0,.6); }
+  .league-num { background:linear-gradient(180deg,#f0d88f,#c8a04f); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero-title .dash { color:var(--faint); font-weight:500; }
+  .hero-meta { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; flex-wrap:wrap; }
+  .patch-pill { display:inline-flex; align-items:center; gap:8px; font-family:var(--f-mono); font-size:12px; color:#aa9e82; padding:5px 12px; background:rgba(170,158,130,.08); border:1px solid rgba(170,158,130,.28); border-radius:20px; letter-spacing:.03em; }
+  .patch-dot { width:6px; height:6px; border-radius:50%; background:#aa9e82; box-shadow:0 0 8px #aa9e82; }
+  .hero-sub { font-family:var(--f-body); font-size:13px; color:#8a857b; }
+
+  /* ===================== STATUS BAR ===================== */
+  .statusbar-wrap { margin:0 0 40px; }
+  .statusbar {
+    display:flex; flex-wrap:wrap; align-items:center; gap:16px 26px; padding:19px 24px;
+    background:linear-gradient(180deg,rgba(34,29,19,.5),rgba(20,21,25,.55));
+    border:1px solid var(--line-gold); border-radius:13px;
+    box-shadow:inset 0 1px 0 rgba(200,160,79,.1),0 14px 40px rgba(0,0,0,.35);
+  }
+  /* stronger gold corner brackets than the default .filigree */
+  .statusbar.filigree::before { top:9px; left:9px; width:18px; height:18px; border-top:1px solid rgba(200,160,79,.6); border-left:1px solid rgba(200,160,79,.6); border-top-left-radius:6px; }
+  .statusbar.filigree::after  { bottom:9px; right:9px; width:18px; height:18px; border-bottom:1px solid rgba(200,160,79,.6); border-right:1px solid rgba(200,160,79,.6); border-bottom-right-radius:6px; }
+  .status-left { display:flex; flex-direction:column; gap:11px; }
+  .status-eyebrow { font-family:var(--f-display); font-weight:600; font-size:11.5px; letter-spacing:.28em; color:var(--gold-dim); }
+  .status-counts { display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px; font-family:var(--f-body); font-size:14.5px; color:var(--text); }
+  .status-counts .count { display:inline-flex; align-items:center; gap:9px; }
+  .status-counts b { color:var(--bone); font-weight:700; }
+  .status-counts .mid { color:#3f3c35; }
+  .cdot { width:10px; height:10px; border-radius:50%; flex:none; }
+  .cdot.green { background:var(--green); box-shadow:0 0 9px rgba(123,178,106,.8); }
+  .cdot.amber-ring { border:2px solid var(--amber); background:transparent; box-shadow:0 0 9px rgba(217,164,65,.45); }
+  .status-flex { flex:1; }
+  .rq-btn {
+    display:inline-flex; align-items:center; gap:11px; padding:12px 20px;
+    background:linear-gradient(180deg,#dcbb6c,#c19a45); color:#1a1206;
+    border:1px solid #e6cf88; border-radius:10px;
+    font-family:var(--f-display); font-weight:600; font-size:14.5px; letter-spacing:.05em;
+    cursor:pointer; animation:rqPulse 3.4s ease-in-out infinite; transition:.15s;
+  }
+  .rq-btn:hover { filter:brightness(1.07); transform:translateY(-1px); }
+  .rq-count { display:inline-flex; align-items:center; justify-content:center; min-width:21px; height:21px; padding:0 6px; background:#1a1206; color:#eac876; border-radius:11px; font-family:var(--f-mono); font-size:11.5px; }
+
+  /* ===================== BODY LAYOUT ===================== */
+  .body { display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start; }
+
+  /* sidebar */
+  .sidebar { flex:1 1 210px; max-width:250px; min-width:190px; position:sticky; top:82px; }
+  .side-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .side-title { font-family:var(--f-display); font-weight:600; font-size:12px; letter-spacing:.24em; color:var(--gold-dim); }
+  .side-rule { flex:1; height:1px; background:linear-gradient(90deg,rgba(200,160,79,.4),transparent); }
+  .side-list { display:flex; flex-direction:column; gap:3px; }
+  .fbtn {
+    display:flex; align-items:center; gap:9px; width:100%; text-align:left; padding:8px 11px;
+    border:none; border-left:2px solid transparent; border-radius:0 7px 7px 0;
+    background:transparent; color:#9a958a; font-family:var(--f-body); font-weight:600; font-size:13px;
+    cursor:pointer; transition:.15s;
+  }
+  .fbtn.tag { font-weight:400; padding:7px 11px; gap:10px; }
+  .fbtn:hover { background:rgba(255,255,255,.04); }
+  .fbtn-label { flex:1; }
+  .fbtn-label.cap { text-transform:capitalize; }
+  .fbtn-count { font-family:var(--f-mono); font-size:11px; color:var(--muted-2); }
+  .fbtn-count.amber { color:var(--amber); }
+  .review-bullet { width:9px; height:9px; border-radius:50%; border:2px solid var(--amber); flex:none; margin:0 2px; }
+  .tag-bullet { width:8px; height:8px; border-radius:2px; transform:rotate(45deg); flex:none; }
+  .side-divider { height:1px; background:rgba(255,255,255,.06); margin:8px 0; }
+  /* active states, driven by data-accent / --tc */
+  .fbtn.active[data-accent="gold"]  { border-left-color:var(--gold);  background:rgba(200,160,79,.13); color:var(--bone); }
+  .fbtn.active[data-accent="amber"] { border-left-color:var(--amber); background:rgba(217,164,65,.13); color:var(--bone); }
+  .fbtn.tag.active { border-left-color:var(--tc); background:var(--tc-bg); color:var(--bone); }
+
+  /* results column */
+  .results { flex:999 1 460px; min-width:min(100%,300px); }
+  .results-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:16px; }
+  .results-title { margin:0; font-family:var(--f-display); font-weight:600; font-size:18px; letter-spacing:.08em; color:var(--bone); }
+  .results-count { font-family:var(--f-mono); font-size:12px; color:var(--muted-2); }
+  .clear-btn {
+    margin-left:auto; padding:4px 10px; background:transparent; border:1px solid rgba(255,255,255,.14);
+    border-radius:20px; color:#9a958a; font-family:var(--f-body); font-size:11.5px; cursor:pointer; transition:.15s;
+  }
+  .clear-btn:hover { border-color:rgba(200,160,79,.5); color:var(--gold-hi); }
+
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fill,minmax(min(100%,268px),1fr)); }
+
+  /* ===================== CARD ===================== */
+  .card {
+    position:relative; display:flex; flex-direction:column; gap:11px; padding:16px 16px 14px;
+    background:linear-gradient(180deg,#17181d,#131317);
+    border:1px solid var(--line); border-radius:11px; color:var(--text); transition:.18s;
+  }
+  .card:hover { border-color:rgba(200,160,79,.5); transform:translateY(-3px); box-shadow:0 14px 34px rgba(0,0,0,.45); }
+  /* smaller inner corner brackets than the default .filigree */
+  .card.filigree::before { top:7px; left:7px; width:12px; height:12px; border-top:1px solid rgba(200,160,79,.5); border-left:1px solid rgba(200,160,79,.5); }
+  .card.filigree::after  { bottom:7px; right:7px; width:12px; height:12px; border-bottom:1px solid rgba(200,160,79,.5); border-right:1px solid rgba(200,160,79,.5); }
+
+  .card-art { position:relative; height:146px; border-radius:7px; border:1px solid rgba(200,160,79,.22); overflow:hidden; background:#0c0d10; }
+  .card-art img { width:100%; height:100%; object-fit:cover; display:block; }
+  .art-tool {
+    position:absolute; top:8px; left:8px; z-index:3; display:inline-flex; align-items:center; gap:4px;
+    padding:3px 7px; background:rgba(12,13,16,.84); border:1px solid rgba(200,160,79,.42); border-radius:5px;
+    color:#e8c37a; font-family:var(--f-mono); font-size:9px; letter-spacing:.07em; pointer-events:none;
+  }
+
+  .card-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.07em; text-transform:uppercase;
+    padding:3px 7px; border-radius:4px; border:1px solid transparent;
+  }
+  .tool-chip { color:#e8c37a; background:rgba(200,160,79,.1); border-color:rgba(200,160,79,.42); display:inline-flex; align-items:center; gap:4px; }
+
+  .card-title {
+    margin:0; font-family:var(--f-display); font-weight:600; font-size:16.5px; line-height:1.28;
+    letter-spacing:.01em; color:var(--bone);
+    min-height:calc(1.28em * 2); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card-summary {
+    margin:0; font-size:12.5px; line-height:1.5; color:var(--muted);
+    min-height:calc(1.5em * 2); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card-foot { margin-top:auto; display:flex; flex-wrap:nowrap; align-items:center; gap:8px; padding-top:11px; border-top:1px solid rgba(255,255,255,.055); }
+  .card-flex { flex:1; }
+  .card-date { font-family:var(--f-mono); font-size:10px; color:var(--muted-2); white-space:nowrap; flex:none; }
+
+  /* ===================== EMPTY STATE ===================== */
+  .empty { text-align:center; padding:60px 20px; border:1px dashed rgba(200,160,79,.24); border-radius:12px; color:#8a857b; }
+  .empty-title { font-family:var(--f-display); font-size:16px; color:var(--gold-dim); letter-spacing:.1em; margin-bottom:8px; }
+  .empty-sub { margin:0 0 14px; font-size:13px; }
+  .empty-reset { padding:8px 16px; background:transparent; border:1px solid rgba(200,160,79,.4); border-radius:8px; color:var(--gold-hi); font-family:var(--f-body); font-size:13px; cursor:pointer; }
+
+  /* stack sidebar above grid on narrow widths */
+  @media (max-width:720px) {
+    .sidebar { position:static; max-width:none; flex-basis:100%; }
+  }
 </style>
 
 <script>
-  const cards = [...document.querySelectorAll('.card')] as HTMLElement[];
-  document.querySelectorAll('.tag').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tag').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      const tag = btn.getAttribute('data-tag');
-      cards.forEach((c) => {
-        const tags = (c.getAttribute('data-tags') || '').split(',');
-        c.style.display = tag === '*' || tags.includes(tag!) ? '' : 'none';
-      });
-    });
-  });
+  type Filter = 'all' | '__review' | string;
+
+  const grid = document.querySelector<HTMLElement>('[data-grid]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-card]'));
+  const fbtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.fbtn'));
+  const heading = document.querySelector<HTMLElement>('[data-heading]');
+  const countEl = document.querySelector<HTMLElement>('[data-count]');
+  const clearBtns = Array.from(document.querySelectorAll<HTMLElement>('[data-clear]'));
+  const emptyEl = document.querySelector<HTMLElement>('[data-empty]');
   const search = document.getElementById('hub-search') as HTMLInputElement | null;
+
+  let filter: Filter = 'all';
+  let query = '';
+
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  function matches(card: HTMLElement): boolean {
+    const status = card.dataset.status || '';
+    const tags = (card.dataset.tags || '').split(',').filter(Boolean);
+
+    if (filter === '__review' && status !== 'needs-review') return false;
+    if (filter !== 'all' && filter !== '__review' && !tags.includes(filter)) return false;
+
+    if (query) {
+      const hay = [
+        card.dataset.title || '',
+        card.dataset.summary || '',
+        tags.join(' '),
+      ].join(' ').toLowerCase();
+      if (!hay.includes(query)) return false;
+    }
+    return true;
+  }
+
+  function headingLabel(): string {
+    if (filter === '__review') return 'Review Queue';
+    if (filter === 'all') return 'All Entries';
+    return cap(filter);
+  }
+
+  function apply(): void {
+    let visible = 0;
+    for (const card of cards) {
+      const show = matches(card);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    }
+
+    if (heading) heading.textContent = headingLabel();
+    if (countEl) countEl.textContent = String(visible);
+
+    const isFiltered = filter !== 'all' || query.length > 0;
+    for (const btn of clearBtns) {
+      if (btn.classList.contains('clear-btn')) btn.hidden = !isFiltered;
+    }
+
+    // active sidebar states
+    for (const btn of fbtns) {
+      btn.classList.toggle('active', (btn.dataset.filter || '') === filter);
+    }
+
+    // empty state
+    const isEmpty = visible === 0;
+    if (emptyEl) emptyEl.hidden = !isEmpty;
+    if (grid) grid.style.display = isEmpty ? 'none' : '';
+  }
+
+  function setFilter(next: Filter): void {
+    filter = next;
+    apply();
+  }
+
+  // sidebar + any element carrying a data-filter
+  for (const btn of fbtns) {
+    btn.addEventListener('click', () => setFilter((btn.dataset.filter as Filter) || 'all'));
+  }
+  // status-bar Review Queue button + sidebar review button
+  for (const el of Array.from(document.querySelectorAll<HTMLElement>('[data-review-trigger]'))) {
+    el.addEventListener('click', () => setFilter('__review'));
+  }
+  // clear / reset
+  for (const btn of clearBtns) {
+    btn.addEventListener('click', () => { setFilter('all'); });
+  }
+  // search
   search?.addEventListener('input', () => {
-    const q = search.value.toLowerCase();
-    cards.forEach((c) => {
-      c.style.display = (c.textContent || '').toLowerCase().includes(q) ? '' : 'none';
-    });
+    query = search.value.trim().toLowerCase();
+    apply();
   });
+
+  apply();
 </script>

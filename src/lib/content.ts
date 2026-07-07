@@ -20,6 +20,8 @@ export type Meta = {
   slug: string;
   game: string;
   tags: string[];
+  summary?: string;
+  image?: string;
   type: 'article' | 'tool';
   interactive?: boolean;
   currentVersion: string;

@@ -23,19 +23,34 @@ const versions = [...page.versions].sort((a, b) =>
 const current = page.currentVersion;
 const basePath = `/content/${game}/${slug}`;
 const activeVersion = versions.find((v) => v.league === current);
+
+// Derive fg/bg/border for a tag chip from its rarity hex (matches the Ornate handoff).
+const rgba = (hex, a) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+};
+const chipVars = (t) => {
+  const c = RARITY[t] ?? '#c8c8c8';
+  return `--c:${c};--c-bg:${rgba(c, 0.1)};--c-brd:${rgba(c, 0.3)}`;
+};
 ---
 <Shell game={game} title={page.title}>
   <nav class="crumbs"><a href={`/${game}`}>← {gameMeta.label} Hub</a></nav>
 
-  <header class="page-head">
+  <header class="page-head filigree">
+    <span class="eyebrow">CODEX ENTRY · {cl.league}</span>
     <h1>{page.title}</h1>
+
     <div class="meta-row">
       <span class={`badge ${page.status}`}>
+        <span class="dot"></span>
         {page.status === 'current'
-          ? `🟢 Up to date · ${cl.league}`
-          : `🟡 Needs review · last ${page.updatedForLeague}`}
+          ? `Up to date · ${cl.league}`
+          : `Needs review · last ${page.updatedForLeague}`}
       </span>
-      <label class="ver">Version
+
+      <label class="ver">
+        <span class="ver-label">VERSION</span>
         <select id="ver-select">
           {versions.map((v) => (
             <option value={v.league} selected={v.league === current}>
@@ -45,24 +60,152 @@ const activeVersion = versions.find((v) => v.league === current);
         </select>
       </label>
     </div>
-    <div class="tags">{page.tags.map((t) => <span class="chip" style={`--c:${RARITY[t] ?? '#c8c8c8'}`}>{t}</span>)}</div>
+
+    <div class="tags">
+      {page.tags.map((t) => <span class="chip" style={chipVars(t)}>{t}</span>)}
+    </div>
+
     {activeVersion?.changelog && <p class="changelog">{activeVersion.changelog}</p>}
   </header>
 
-  <iframe id="body-frame" src={`${basePath}/${current}.html`} title={page.title}></iframe>
+  <div class="body-shell filigree">
+    <iframe id="body-frame" src={`${basePath}/${current}.html`} title={page.title}></iframe>
+  </div>
 </Shell>
 
 <style>
-  .crumbs { margin:.5rem 0 1rem; }
-  .page-head { border-bottom:1px solid var(--line); padding-bottom:1rem; margin-bottom:1rem; }
-  .page-head h1 { color:var(--bone); margin:.2rem 0; }
-  .meta-row { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
-  .ver select { background:var(--panel); color:var(--bone); border:1px solid var(--line);
-    border-radius:6px; padding:.2rem .4rem; margin-left:.4rem; }
-  .tags { margin-top:.6rem; display:flex; gap:.35rem; flex-wrap:wrap; }
-  .chip { font-size:.7rem; color:var(--c); border:1px solid var(--c); opacity:.85; padding:.05rem .45rem; border-radius:999px; }
-  .changelog { margin:.75rem 0 0; color:#8f8b81; font-size:.85rem; font-style:italic; }
-  #body-frame { width:100%; border:1px solid var(--line); border-radius:10px; min-height:320px; background:transparent; }
+  .crumbs {
+    margin: .6rem 0 1.1rem;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: .04em;
+  }
+  .crumbs a { color: var(--gold); }
+  .crumbs a:hover { color: var(--gold-hi); }
+
+  /* ornate header panel */
+  .page-head {
+    background: linear-gradient(180deg, rgba(34,29,19,.42), rgba(20,21,25,.5));
+    border: 1px solid var(--line-gold);
+    border-radius: 13px;
+    padding: clamp(18px, 3vw, 26px) clamp(18px, 3.5vw, 30px);
+    margin-bottom: 22px;
+    box-shadow: inset 0 1px 0 rgba(200,160,79,.08), 0 14px 40px rgba(0,0,0,.32);
+  }
+  .page-head.filigree::before { top: 9px; left: 9px; }
+  .page-head.filigree::after  { bottom: 9px; right: 9px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: .28em;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+  }
+  .page-head h1 {
+    margin: 0 0 .85rem;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    line-height: 1.12;
+    letter-spacing: .01em;
+    color: var(--bone);
+    text-shadow: 0 2px 22px rgba(0,0,0,.5);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 14px 18px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* version picker — dark panel, gold-tinted border, mono */
+  .ver {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .ver-label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .18em;
+    color: var(--gold-dim);
+  }
+  .ver select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--panel-a)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7' fill='none' stroke='%23a98a4d' stroke-width='1.4'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E")
+      no-repeat right 11px center;
+    color: var(--bone);
+    border: 1px solid var(--line-gold);
+    border-radius: 7px;
+    padding: 7px 30px 7px 11px;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: .02em;
+    cursor: pointer;
+    outline: none;
+    transition: .15s;
+  }
+  .ver select:hover { border-color: rgba(200,160,79,.5); }
+  .ver select:focus { border-color: rgba(200,160,79,.65); background-color: #15161b; }
+  .ver select option { background: var(--panel-b); color: var(--bone); }
+
+  /* tag chips — mono, uppercase, rarity-colored (fg/bg/border via inline vars) */
+  .tags {
+    margin-top: 1rem;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 4px;
+    color: var(--c);
+    background: var(--c-bg);
+    border: 1px solid var(--c-brd);
+  }
+
+  .changelog {
+    margin: 1rem 0 0;
+    color: var(--muted);
+    font-size: .88rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ornate frame around the frozen body */
+  .body-shell {
+    background: linear-gradient(180deg, var(--panel-a), var(--panel-b));
+    border: 1px solid var(--line-gold);
+    border-radius: 13px;
+    padding: 10px;
+    box-shadow: inset 0 1px 0 rgba(200,160,79,.06), 0 14px 40px rgba(0,0,0,.3);
+  }
+  .body-shell.filigree::before { top: 9px; left: 9px; }
+  .body-shell.filigree::after  { bottom: 9px; right: 9px; }
+  #body-frame {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 8px;
+    min-height: 320px;
+    background: transparent;
+  }
+
+  @media (max-width: 480px) {
+    .meta-row { gap: 12px; }
+    .ver { width: 100%; }
+    .ver select { flex: 1; }
+  }
 </style>
 
 <script define:vars={{ basePath, current, leagues: versions.map((v) => v.league) }}>

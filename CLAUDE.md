@@ -32,6 +32,8 @@ public/content/<game>/<slug>/     # under public/ so frozen bodies are served as
   "slug": "waystone-sustain",
   "game": "poe2",
   "tags": ["endgame", "mechanics"],
+  "summary": "one-line description shown on the hub card (optional)",
+  "image": "/content/poe2/<slug>/thumb.webp — optional card art (optional)",
   "type": "article",
   "interactive": false,
   "currentVersion": "0.5",

@@ -3,6 +3,7 @@
   "slug": "res-capping",
   "game": "poe2",
   "tags": ["mechanics", "tool"],
+  "summary": "Reach the elemental resistance cap fast — includes a live shortfall calculator.",
   "type": "tool",
   "interactive": false,
   "currentVersion": "0.5",
