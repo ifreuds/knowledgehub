@@ -219,13 +219,31 @@ const chipVars = (t) => {
   const frame = document.getElementById('body-frame');
   const select = document.getElementById('ver-select');
 
+  let ro = null;
   function resize() {
     try {
       const doc = frame.contentWindow.document;
-      frame.style.height = doc.documentElement.scrollHeight + 'px';
+      const h = doc.documentElement.scrollHeight + 'px';
+      if (frame.style.height !== h) frame.style.height = h;
     } catch (_) { /* same-origin expected; ignore if not ready */ }
   }
-  frame.addEventListener('load', () => { resize(); setTimeout(resize, 200); });
+  // Track the frozen body's height as its interactive content grows/shrinks
+  // (loading rows, logging crafts, switching versions), not just on first load.
+  function observe() {
+    try {
+      const doc = frame.contentWindow.document;
+      resize();
+      if (ro) ro.disconnect();
+      ro = new ResizeObserver(() => resize());
+      ro.observe(doc.documentElement);
+      ro.observe(doc.body);
+    } catch (_) { /* ignore until same-origin doc is ready */ }
+  }
+  frame.addEventListener('load', () => { observe(); setTimeout(resize, 200); });
+  // If the iframe finished loading before this script ran, the load event was missed.
+  try {
+    if (frame.contentDocument && frame.contentDocument.readyState === 'complete') observe();
+  } catch (_) { /* ignore */ }
   window.addEventListener('resize', resize);
 
   function load(league) {
