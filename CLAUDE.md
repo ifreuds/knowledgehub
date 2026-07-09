@@ -3,7 +3,7 @@
 Governance + conventions for this project. **Any AI or MCP working in this repo MUST follow this file.** `AGENTS.md` is a pointer to it.
 
 ## What this is
-A private, online **Path of Exile 1 & 2** personal knowledge hub — a *freeze-everything* archive of what the owner learns each league, plus some interactive/logging tools. Read-mostly, shared by private link. The owner authors by asking an AI (me) to add/update pages; changes ship via `git push` → Cloudflare Pages.
+A private, online **Path of Exile 1 & 2** personal knowledge hub — a *freeze-everything* archive of what the owner learns each league, plus some interactive/logging tools. Read-mostly, shared by private link. The owner authors by asking an AI (me) to add/update pages; changes ship via `git push` to `main` → **Vercel** auto-deploys (seconds).
 
 ## Non-negotiable architecture
 1. **Content-as-code.** No CMS, no runtime database for *content*. Content lives as files in git.
@@ -12,7 +12,7 @@ A private, online **Path of Exile 1 & 2** personal knowledge hub — a *freeze-e
    - The **shell** (Astro) renders only hub chrome: nav, theme, game toggle, league banner, review queue, search. Restyle it freely, anytime.
    - A **content page** is a **self-contained HTML body** embedded in the shell via `<iframe>`. The shell must never re-render or restyle a frozen body.
 4. **Freeze everything, per league version** — text, images, icons, layout, AND interactive tool code. A saved version is immutable.
-5. **Hosting:** Cloudflare **Workers static assets** (deployed by Workers Builds from GitHub — Build `npm run build` → Deploy `npx wrangler deploy`; static output in `dist/`). **Source:** GitHub. **Logging persistence:** Cloudflare D1 via a Worker route in `worker/index.js`, added when the first logging tool ships (the `poe-hub` DB already exists). No Supabase.
+5. **Hosting:** the **static Astro site is on Vercel** — connected to the GitHub repo, so **any push to `main` auto-deploys** (Framework: Astro, build `astro build`, output `dist/`). **Source:** GitHub. Cache-busting: `[slug].astro` appends a content hash (`?h=…`) to each iframe body URL so edits always show. **Logging persistence:** stays on **Cloudflare D1** via the existing Worker at `https://knowledgehub.nanthachartlao.workers.dev` (`worker/index.js`, DB `poe-hub`). The Vercel site reaches it through an `/api/*` → Worker rewrite in `vercel.json` (same-origin to the browser, so no CORS). No Supabase. The old Cloudflare Workers-static-assets hosting + `wrangler.jsonc` deploy remain only to keep that API Worker running — the site itself is served by Vercel now.
 
 ## Content page layout
 ```
