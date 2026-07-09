@@ -3,10 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Self-hosted latin subset of Cinzel, Mulish, JetBrains Mono — frozen with this body (no external font host). Source: Google Fonts. */
+  @font-face{font-family:'Cinzel';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/Cinzel-600.woff2) format('woff2')}
+  @font-face{font-family:'Cinzel';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/Cinzel-700.woff2) format('woff2')}
+  @font-face{font-family:'Mulish';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/Mulish-400.woff2) format('woff2')}
+  @font-face{font-family:'Mulish';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/Mulish-600.woff2) format('woff2')}
+  @font-face{font-family:'Mulish';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/Mulish-700.woff2) format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/JetBrainsMono-400.woff2) format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/JetBrainsMono-500.woff2) format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/JetBrainsMono-600.woff2) format('woff2')}
   :root{
     --bg:#0e0f12;--pan:#16181d;--pan2:#131317;--line:#2a2d35;--line-gold:rgba(200,160,79,.28);
     --gold:#c8a04f;--gold-hi:#d8b667;--gold-dim:#a98a4d;--bone:#e8e2d0;--text:#b8b3a7;--muted:#8f8b81;
@@ -15,19 +21,50 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.4rem clamp(14px,3vw,26px) 3rem;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.4rem clamp(14px,3vw,26px) 3rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   h1,h2,h3{color:var(--bone);font-family:var(--f-d);margin:0}
   h1{font-size:clamp(1.5rem,3.5vw,2rem);letter-spacing:.02em}
   h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-dim);margin:0 0 .7rem}
+  h3{font-size:.95rem;color:var(--bone)}
   a{color:var(--gold)}
   b{color:var(--bone)}
   .lede{max-width:70ch;margin:.5rem 0 0}
   .mono{font-family:var(--f-m)}
+  .sub{color:var(--muted);font-size:.7rem;text-transform:none;letter-spacing:0}
+
+  /* divine-orb profitability rating */
+  .rating{display:inline-flex;align-items:center;gap:.55rem;margin-top:.9rem;padding:.4rem .7rem;border:1px solid var(--line-gold);border-radius:999px;background:rgba(200,160,79,.06)}
+  .rating .lbl{font-family:var(--f-m);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim)}
+  .orbs{position:relative;display:inline-block;line-height:0}
+  .orbs .track{display:flex;gap:3px;width:max-content}
+  .orbs .track img{flex:none;width:20px;height:20px;display:block}
+  .orbs .base img{filter:grayscale(1) brightness(.5);opacity:.6}
+  .orbs .fill{position:absolute;top:0;left:0;height:100%;overflow:hidden}
+  .orbs .fill img{filter:drop-shadow(0 0 3px rgba(216,182,103,.55))}
+  .rating .num{font-family:var(--f-m);font-size:.8rem;color:var(--bone)}
+  .rating .num small{color:var(--muted)}
+
+  /* two-column layout: sticky table-of-contents rail + main */
+  .layout{display:grid;grid-template-columns:190px minmax(0,1fr);gap:1.5rem;margin-top:1.3rem}
+  .toc-col{position:relative}
+  .toc{position:relative;padding-top:.2rem}
+  .toc .toc-h{font-family:var(--f-d);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);margin:0 0 .5rem;padding-left:.6rem}
+  .toc a{display:block;font-family:var(--f-b);font-size:.83rem;color:var(--muted);text-decoration:none;padding:.34rem .6rem;border-left:2px solid transparent;border-radius:0 6px 6px 0;cursor:pointer;transition:.12s}
+  .toc a:hover{color:var(--bone);background:rgba(255,255,255,.03)}
+  .toc a.active{color:var(--bone);border-left-color:var(--gold);background:rgba(200,160,79,.1)}
+  .main{min-width:0}
+  .main>:first-child{margin-top:0}
 
   .panel{background:linear-gradient(180deg,var(--pan),var(--pan2));border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.15rem;margin-top:1.3rem}
   .panel.gold{border-color:var(--line-gold);background:linear-gradient(180deg,rgba(34,29,19,.45),rgba(20,21,25,.5))}
 
-  .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin-top:.9rem}
+  /* top myth / quick-read box */
+  .mythbox{border:1px solid var(--line-gold);background:linear-gradient(180deg,rgba(48,34,12,.55),rgba(20,21,25,.5));border-radius:12px;padding:.95rem 1.15rem}
+  .mythbox h2{color:var(--amber);margin-bottom:.45rem}
+  .mythbox p{margin:.25rem 0 0;font-size:.92rem;max-width:80ch}
+  .mythbox .tag{display:inline-block;font-family:var(--f-m);font-size:.6rem;letter-spacing:.1em;color:#1a1206;background:linear-gradient(180deg,#dcbb6c,#c19a45);border-radius:4px;padding:1px 6px;margin-left:.4rem;vertical-align:middle}
+
+  .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.7rem;margin-top:.9rem}
   .how .step{background:#0e0f12;border:1px solid var(--line);border-radius:9px;padding:.7rem .8rem}
   .how .n{font-family:var(--f-m);color:var(--gold);font-size:.72rem;letter-spacing:.1em}
   .how .step p{margin:.25rem 0 0;font-size:.9rem}
@@ -35,156 +72,362 @@
   .callout{border-left:2px solid var(--amber);background:rgba(217,164,65,.07);padding:.7rem .9rem;border-radius:0 8px 8px 0;margin-top:1rem;font-size:.93rem}
   .callout b{color:var(--amber)}
 
-  .controls{display:flex;flex-wrap:wrap;gap:1.1rem 1.6rem;align-items:flex-end}
+  /* breach base gallery */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:.7rem;margin-top:.5rem}
+  .amu-card{position:relative;background:#0e0f12;border:1px solid var(--line);border-radius:10px;padding:.7rem .5rem .5rem;text-align:center}
+  .amu-card.breach{border-color:rgba(175,96,37,.5);background:linear-gradient(180deg,rgba(45,25,12,.4),#0e0f12)}
+  .amu-card.delirium{border-color:rgba(136,136,255,.32);background:linear-gradient(180deg,rgba(24,24,45,.4),#0e0f12)}
+  .amu-card img{width:54px;height:54px;object-fit:contain}
+  .amu-card .nm{font-family:var(--f-b);font-size:.72rem;color:var(--bone);margin-top:.35rem;line-height:1.2}
+  .amu-card .im{font-family:var(--f-m);font-size:.6rem;color:var(--muted);margin-top:.15rem;line-height:1.35}
+  .amu-card .btag{position:absolute;top:5px;right:5px;font-family:var(--f-m);font-size:.55rem;letter-spacing:.06em;border-radius:4px;padding:1px 4px}
+  .amu-card .btag.breach{color:#e0a06a;background:rgba(45,25,12,.85);border:1px solid rgba(175,96,37,.6)}
+  .amu-card .btag.delirium{color:#a9a9ff;background:rgba(24,24,45,.85);border:1px solid rgba(136,136,255,.5)}
+
+  /* proof: item + sales reference images */
+  .refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:.5rem;align-items:start}
+  .ref{margin:0;background:#0e0f12;border:1px solid var(--line);border-radius:10px;padding:.6rem;text-align:center}
+  .ref img{max-width:100%;height:auto;border-radius:6px;display:block;margin:0 auto;border:1px solid var(--line)}
+  .ref figcaption{font-size:.8rem;color:var(--muted);margin-top:.55rem;line-height:1.5}
+  .ref .ph{border:1px dashed var(--line-gold);border-radius:8px;padding:2.4rem 1rem;color:var(--muted);font-family:var(--f-m);font-size:.74rem;line-height:1.7}
+  .ref .ph code{color:var(--gold-dim)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:1rem 1.4rem;align-items:flex-end}
   .ctl label{display:block;font-family:var(--f-m);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.35rem}
   .ctl input,.ctl select{background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:7px;padding:.5rem .6rem;font-family:var(--f-m);font-size:.95rem;outline:none}
   .ctl input{width:7.5rem}
+  .ctl input.narrow{width:5.5rem}
   .ctl input:focus,.ctl select:focus{border-color:var(--gold)}
   .hint{font-size:.74rem;color:var(--muted);margin-top:.3rem}
 
-  .accepts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.2rem}
-  .chip{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--f-m);font-size:.78rem;padding:.35rem .6rem;border:1px solid var(--line);border-radius:999px;cursor:pointer;user-select:none;color:var(--muted)}
-  .chip input{accent-color:var(--gold);margin:0}
-  .chip.on{border-color:var(--gold);color:var(--bone);background:rgba(200,160,79,.08)}
-
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-top:.4rem}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem;margin-top:.4rem}
   .stat{background:#0e0f12;border:1px solid var(--line);border-radius:9px;padding:.7rem .8rem}
   .stat .k{font-family:var(--f-m);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim)}
   .stat .v{font-family:var(--f-m);font-size:1.35rem;color:var(--bone);margin-top:.2rem}
   .stat .v small{font-size:.8rem;color:var(--muted)}
 
-  .tbl-wrap{overflow-x:auto;margin-top:.4rem}
-  table{border-collapse:collapse;width:100%;min-width:720px;font-size:.9rem}
-  th,td{padding:.5rem .55rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
-  th{font-family:var(--f-m);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-dim);font-weight:500;position:sticky;top:0;background:var(--pan)}
-  th.l,td.l{text-align:left}
-  td.skill{font-family:var(--f-b);color:var(--bone);font-weight:700}
-  td input{width:4.4rem;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.35rem .4rem;font-family:var(--f-m);font-size:.85rem;text-align:right;outline:none}
-  td input:focus{border-color:var(--gold)}
-  td.calc{font-family:var(--f-m);color:var(--text)}
-  td.ev{font-family:var(--f-m);font-weight:600}
+  /* editable amulet cards (no horizontal scroll) */
+  .amu-list{display:flex;flex-direction:column;gap:.85rem}
+  .amu{background:#0e0f12;border:1px solid var(--line);border-radius:11px;padding:.85rem .95rem}
+  .amu-top{display:flex;flex-wrap:wrap;gap:.6rem .9rem;align-items:flex-end}
+  .amu-top .f label{display:block;font-family:var(--f-m);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.25rem}
+  .amu-top .f.grow{flex:1 1 170px;min-width:130px}
+  .amu-top .f.w-il{width:4.6rem}
+  .amu-top .f.w-base{width:6rem}
+  .amu-top input{width:100%;background:#131317;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.42rem .5rem;font-family:var(--f-m);font-size:.9rem;outline:none}
+  .amu-top .name-in{font-family:var(--f-b);font-weight:700;color:var(--bone)}
+  .amu-top input:focus{border-color:var(--gold)}
+  .amu-del{margin-left:auto;align-self:center;background:none;border:1px solid var(--line);color:var(--muted);border-radius:7px;cursor:pointer;font-size:.9rem;padding:.35rem .55rem}
+  .amu-del:hover{color:var(--red);border-color:var(--red)}
+
+  .amu-mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:.45rem;margin-top:.75rem}
+  .mod{display:flex;flex-direction:column;gap:.35rem;border:1px solid var(--line);border-radius:8px;padding:.4rem .5rem;background:#131317}
+  .mod.on{border-color:rgba(200,160,79,.4);background:rgba(200,160,79,.05)}
+  .mod-h{display:flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--bone);cursor:pointer;user-select:none}
+  .mod-h input{accent-color:var(--gold);width:14px;height:14px;margin:0;cursor:pointer;flex:none}
+  .mod-h .w{font-family:var(--f-m);font-size:.6rem;color:var(--muted);margin-left:auto}
+  .mod-p{display:flex;align-items:center;gap:.3rem}
+  .mod-p .sell-in{width:100%;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:5px;padding:.3rem .4rem;font-family:var(--f-m);font-size:.82rem;text-align:right;outline:none}
+  .mod-p .sell-in:focus{border-color:var(--gold)}
+  .mod-p .u{font-family:var(--f-m);font-size:.58rem;color:var(--muted)}
+  .mod.off{opacity:.62}
+  .mod.off .sell-in{opacity:.45}
+
+  .amu-stats{display:flex;flex-wrap:wrap;gap:.55rem 1.3rem;margin-top:.75rem;padding-top:.65rem;border-top:1px solid var(--line)}
+  .st{display:flex;flex-direction:column;gap:.12rem}
+  .st i{font-family:var(--f-m);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-dim);font-style:normal}
+  .st b{font-family:var(--f-m);font-size:.96rem;color:var(--text);font-weight:500}
+  .st.ev-st{margin-left:auto;text-align:right}
+  .st.ev-st b{font-size:1.1rem;font-weight:700}
   .pos{color:var(--green)}
   .neg{color:var(--red)}
   .muted-col{color:var(--muted)}
-  .foot{margin-top:1.4rem;font-size:.8rem;color:var(--muted);max-width:74ch}
+  .lockmark{font-size:.6rem;color:var(--muted);opacity:.6}
+
+  .btn{background:linear-gradient(180deg,#dcbb6c,#c19a45);color:#1a1206;border:1px solid #e6cf88;border-radius:8px;padding:.5rem 1rem;font-family:var(--f-d);font-weight:600;cursor:pointer;font-size:.9rem}
+  .btn:hover{filter:brightness(1.06)}
+  .btn:disabled{opacity:.5;cursor:default;filter:none}
+  .btn.ghost{background:transparent;color:var(--gold-hi);border:1px solid var(--line-gold)}
+  .btn.ghost:hover{border-color:var(--gold)}
+  .btn.sm{padding:.35rem .65rem;font-size:.8rem}
+  .toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+
+  /* log records table (compact; contained scroll only if truly needed) */
+  .tbl-wrap{overflow-x:auto;margin-top:.4rem}
+  table{border-collapse:collapse;width:100%;font-size:.88rem}
+  th,td{padding:.45rem .5rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-family:var(--f-m);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold-dim);font-weight:500}
+  th.l,td.l{text-align:left}
+  td input{width:4.2rem;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.32rem .4rem;font-family:var(--f-m);font-size:.84rem;text-align:right;outline:none}
+  td input:focus{border-color:var(--gold)}
+  td.ev{font-family:var(--f-m);font-weight:600}
+  .rowdel{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:.2rem .4rem}
+  .rowdel:hover{color:var(--red)}
+
+  .banner{margin-top:.6rem;font-size:.8rem}
+  .banner.off{color:var(--amber)}
+  .empty{padding:1.2rem;border:1px dashed var(--line-gold);border-radius:10px;color:var(--muted);text-align:center;margin-top:.6rem}
+
+  .foot{margin-top:1.4rem;font-size:.8rem;color:var(--muted);max-width:78ch}
   .foot code{font-family:var(--f-m);color:var(--gold-dim)}
+
+  @media (max-width:820px){
+    .layout{grid-template-columns:1fr;gap:0}
+    .toc-col{display:none}
+    .st.ev-st{margin-left:0}
+  }
 </style>
 </head>
 <body>
 
   <h1>Amulet Rolling — Endgame Profit Craft</h1>
-  <p class="lede">Turn cheap high-item-level amulets into jackpot mods with pure chaos spam. Target the pricey late-game bases (the <b>Absent Amulet</b> from Breach nets the most divine/hour) — but <b>any</b> amulet works. It's genuinely profitable and simple; the only hard part is that it's tiring on the eyes.</p>
+  <p class="lede">Turn cheap high-item-level amulets into jackpot mods with pure chaos spam. Target the pricey late-game Breach bases (the <b>Absent Amulet</b> nets the most divine/hour) — but <b>any</b> amulet works. It's genuinely profitable and simple; the only hard part is that it's tiring on the eyes.</p>
 
-  <div class="panel">
-    <h2>The loop</h2>
-    <div class="how">
-      <div class="step"><span class="n">01</span><p>Buy a cheap <b>ilvl 75+</b> amulet base and get it to <b>rare with a single mod</b>.</p></div>
-      <div class="step"><span class="n">02</span><p><b>Chaos-spam</b> it — each orb rerolls one random mod from the pool.</p></div>
-      <div class="step"><span class="n">03</span><p>Stop the instant you hit a <b>jackpot</b>: T1 Spirit or a <b>+3 to a skill type</b>.</p></div>
-      <div class="step"><span class="n">04</span><p><b>Sell in Divine.</b> The hit value dwarfs the chaos you spent → net-positive EV.</p></div>
-    </div>
-    <div class="callout"><b>Why it's tiring, not hard:</b> you must watch every single roll and <b>never chaos over a mod that's already worth selling</b>. That vigilance is the whole skill — the maths below is always in your favour.</div>
+  <div class="rating" title="Profitability rating">
+    <span class="lbl">Profitability</span>
+    <span class="orbs" data-rating="4">
+      <span class="track base"><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""></span>
+      <span class="track fill" data-fill><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""><img src="/assets/poe2/currency/divine-orb.webp" alt=""></span>
+    </span>
+    <span class="num"><b>4</b><small>/5 divine</small></span>
   </div>
 
-  <div class="panel gold">
-    <h2>Set your market</h2>
-    <div class="controls">
-      <div class="ctl">
-        <label>Base item level</label>
-        <select id="ilvl">
-          <option value="75">ilvl 75</option>
-          <option value="78">ilvl 78</option>
-          <option value="79">ilvl 79</option>
-          <option value="80">ilvl 80</option>
-          <option value="81">ilvl 81</option>
-          <option value="82" selected>ilvl 82</option>
-        </select>
+  <div class="layout">
+    <div class="toc-col" id="toc-col">
+      <nav class="toc" id="toc">
+        <div class="toc-h">Contents</div>
+        <a data-to="myth">Skip the ilvl-75 tax</a>
+        <a data-to="loop">The loop</a>
+        <a data-to="bases">Amulet bases</a>
+        <a data-to="proof">What it sells for</a>
+        <a data-to="market">Set your market</a>
+        <a data-to="amulets">Your amulets</a>
+        <a data-to="log">Log your crafts</a>
+        <a data-to="notes">Method &amp; maths</a>
+      </nav>
+    </div>
+
+    <div class="main">
+
+      <div class="mythbox" id="myth">
+        <h2>Skip the ilvl-75 tax<span class="tag">QUICK READ</span></h2>
+        <p id="myth-dyn"></p>
+        <p>Yet sellers price <b>ilvl-75</b> bases roughly <b>25–40 div higher</b> (≈200–350 chaos) for that “better” pool. The premium <b>dwarfs</b> the tiny per-hit difference — so buy the cheap high-ilvl base and pocket the gap. <b>Bonus:</b> top-tier resistance mods only roll at high item level, so if you also want a good res roll, <b>ilvl 82 beats 75 there too</b>.</p>
       </div>
-      <div class="ctl">
-        <label>1 Divine = ? Chaos</label>
-        <input id="rate" type="number" min="0" step="0.1" value="8.7">
-        <div class="hint">← set your live rate (sells are Divine, rolls are Chaos)</div>
+
+      <div class="panel" id="loop">
+        <h2>The loop</h2>
+        <div class="how">
+          <div class="step"><span class="n">01</span><p>Buy a cheap <b>ilvl 75+</b> amulet base and get it to <b>rare with a single mod</b>.</p></div>
+          <div class="step"><span class="n">02</span><p><b>Chaos-spam</b> it — each orb rerolls one random mod from the pool.</p></div>
+          <div class="step"><span class="n">03</span><p>Stop the instant you hit a <b>jackpot</b>: T1 Spirit or a <b>+3 to a skill type</b>.</p></div>
+          <div class="step"><span class="n">04</span><p><b>Sell in Divine.</b> The hit value dwarfs the chaos you spent → net-positive EV.</p></div>
+        </div>
+        <div class="callout"><b>Why it's tiring, not hard:</b> you must watch every single roll and <b>never chaos over a mod that's already worth selling</b>. That vigilance is the whole skill — the maths below is always in your favour.</div>
       </div>
-      <div class="ctl" style="flex:1 1 260px">
-        <label>Count as a "hit" (jackpot mods)</label>
-        <div class="accepts" id="accepts"></div>
+
+      <div class="panel" id="bases">
+        <h2>Amulet bases <span class="mono sub">· Breach drops highlighted</span></h2>
+        <p class="hint" style="margin-top:-.3rem">The high-tier <b>Breach</b> bases carry the most divine — but the craft works on any base. Icons pulled from poe2db.</p>
+        <div class="gallery" id="gallery"></div>
       </div>
+
+      <div class="panel" id="proof">
+        <h2>What you're making <span class="mono sub">· and what it sells for</span></h2>
+        <p class="hint" style="margin-top:-.3rem">A rolled Absent Amulet and real trade history — the hit dwarfs the roll cost.</p>
+        <div class="refs">
+          <figure class="ref">
+            <img src="/assets/poe2/refs/absent-item.webp" alt="A rolled Absent Amulet" onerror="this.style.display='none';var p=this.parentNode.querySelector('.ph');if(p)p.style.display='block'">
+            <div class="ph" style="display:none">Drop the item screenshot at<br><code>public/assets/poe2/refs/absent-item.webp</code></div>
+            <figcaption>A rolled <b>Absent Amulet</b> (ilvl 79) — grants a skill, −1 prefix / −1 suffix, and a jackpot <b>+3 Spell Skills</b>. Asking ~90 div.</figcaption>
+          </figure>
+          <figure class="ref">
+            <img src="/assets/poe2/refs/absent-sales.webp" alt="Absent Amulet sales history" onerror="this.style.display='none';var p=this.parentNode.querySelector('.ph');if(p)p.style.display='block'">
+            <div class="ph" style="display:none">Drop the sales screenshot at<br><code>public/assets/poe2/refs/absent-sales.webp</code></div>
+            <figcaption><b>Sales history</b> — Absent Amulets moving from ~29 up to ~238 div a piece.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="panel gold" id="market">
+        <h2>Set your market</h2>
+        <div class="controls">
+          <div class="ctl">
+            <label>1 Divine = ? Chaos</label>
+            <input id="rate" type="number" min="0" step="0.1" value="8.7">
+            <div class="hint">sells are Divine, rolls are Chaos</div>
+          </div>
+          <div class="ctl">
+            <label>Default item level</label>
+            <input id="defilvl" type="number" min="75" max="86" step="1" value="82">
+            <div class="hint">applied to new amulets (each amulet keeps its own ilvl)</div>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:.9rem"><b>How the EV is built.</b> For each amulet you tick which of the 5 jackpot mods you'd actually <b>sell</b> and enter its Divine sale price. Unticked mods are ignored entirely — they don't inflate your hit chance <i>or</i> your average. The tool then weights each hit by its real spawn weight to give a true <b>EV per craft</b>.</div>
+      </div>
+
+      <div class="panel" id="amulets">
+        <h2>Your amulets</h2>
+        <p class="hint" style="margin-top:-.3rem">Editable. Tick the jackpot mods you'll sell, set the Divine sale price for each, and your Base cost. <span style="color:var(--gold-dim)">The stats row is locked</span> <span class="lockmark">🔒</span> — it recomputes from your prices &amp; the market above.</p>
+        <div class="amu-list" id="amu-list"></div>
+        <div id="amu-empty" class="empty" hidden>No amulets yet. Add one, or load a starter set to see the maths in action.</div>
+        <div class="toolbar">
+          <button type="button" class="btn sm" id="add-amu">+ Add amulet</button>
+          <button type="button" class="btn ghost sm" id="seed-amu">Load starter set</button>
+        </div>
+        <div id="amu-banner" class="banner"></div>
+      </div>
+
+      <div class="panel" id="log">
+        <h2>Log your crafts</h2>
+        <p class="hint" style="margin-top:-.3rem">Pick the amulet and the mod you hit, confirm the chaos you spent, and log it — it records using that amulet's current prices &amp; the market above. Every recorded value is editable afterwards; <span style="color:var(--gold-dim)">Profit is locked</span> <span class="lockmark">🔒</span> and recomputes from the row. Saved to your private cloud log.</p>
+        <form id="logform" class="controls" style="align-items:flex-end;gap:.8rem 1.1rem">
+          <div class="ctl"><label>Amulet</label><select id="lg-amu"></select></div>
+          <div class="ctl"><label>Mod hit</label><select id="lg-hit"></select></div>
+          <div class="ctl"><label>Chaos spent</label><input id="lg-chaos" class="narrow" type="number" min="0" step="1" value="0"><div class="hint" id="lg-chaos-hint">auto-filled with the expected</div></div>
+          <button type="submit" class="btn" id="lg-btn">Log this hit</button>
+        </form>
+        <div id="lg-status" class="hint"></div>
+        <div class="stats" id="lg-totals" style="margin-top:1rem"></div>
+        <div class="tbl-wrap" style="margin-top:.6rem">
+          <table>
+            <thead><tr>
+              <th class="l">When</th><th class="l">Amulet</th><th>ilvl</th><th class="l">Hit</th>
+              <th>Base</th><th>Chaos</th><th>Sold</th><th>Rate</th>
+              <th>Profit <span class="lockmark">🔒</span></th><th class="l">Note</th><th></th>
+            </tr></thead>
+            <tbody id="lg-rows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="foot" id="notes">
+        <b>Method &amp; maths.</b> Weights are the real 0.5 amulet pool (verified against Craft of Exile / poe2db): T1 Spirit = weight 400, each +3 skill = weight 100; the total pool grows from <code>163,800</code> (ilvl 75) to <code>173,650</code> (ilvl 82). Per-roll hit chance = ticked-mod weight ÷ total pool; expected chaos to hit = pool ÷ ticked weight; roll cost (div) = expected chaos ÷ your Divine:Chaos rate; expected win = spawn-weighted average of your ticked sale prices. <b>EV per craft = expected win − base cost − roll cost.</b> Amulet definitions and logs persist in your private D1 store; logged rows snapshot the prices at record time, so later edits to an amulet never rewrite past crafts.
+      </p>
+
     </div>
   </div>
-
-  <div class="panel">
-    <h2>Hit rate at this item level</h2>
-    <div class="stats" id="stats"></div>
-    <div class="callout" id="myth"></div>
-  </div>
-
-  <div class="panel">
-    <h2>Profit per skill amulet</h2>
-    <p class="hint" style="margin-top:-.3rem">Base &amp; sell prices are in <b>Divine</b> — all editable. Green = net profit per successful sale after average rolling cost.</p>
-    <div class="tbl-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="l">Skill amulet</th>
-            <th>Base</th>
-            <th>Spirit</th>
-            <th>+3 Melee</th>
-            <th>+3 Proj</th>
-            <th>+3 Spell</th>
-            <th>+3 Minion</th>
-            <th>Avg hit</th>
-            <th>Roll cost</th>
-            <th>Net EV</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
-    <p class="hint">“Roll cost” = expected chaos to hit ÷ your Divine:Chaos rate, in Divine. “Net EV” = Avg hit − Base − Roll cost.</p>
-  </div>
-
-  <div class="panel" id="logger">
-    <h2>Log your crafts</h2>
-    <p class="hint" style="margin-top:-.3rem">Record real outcomes — profit uses the Divine:Chaos rate set above. Saved to your private cloud log.</p>
-    <form id="logform" class="controls" style="align-items:flex-end;gap:.8rem 1.1rem">
-      <div class="ctl"><label>Skill</label><select id="lg-skill"></select></div>
-      <div class="ctl"><label>Hit</label><select id="lg-hit">
-        <option value="spirit">T1 Spirit</option><option value="melee">+3 Melee</option>
-        <option value="proj">+3 Proj</option><option value="spell">+3 Spell</option>
-        <option value="minion">+3 Minion</option><option value="other">Other sellable</option>
-      </select></div>
-      <div class="ctl"><label>Base paid</label><input id="lg-base" type="number" min="0" step="0.1" value="0"></div>
-      <div class="ctl"><label>Chaos spent</label><input id="lg-chaos" type="number" min="0" step="1" value="0"></div>
-      <div class="ctl"><label>Sold for</label><input id="lg-sell" type="number" min="0" step="0.1" value="0"></div>
-      <div class="ctl" style="flex:1 1 150px"><label>Note</label><input id="lg-note" type="text" style="width:100%" placeholder="optional"></div>
-      <button type="submit" style="background:linear-gradient(180deg,#dcbb6c,#c19a45);color:#1a1206;border:1px solid #e6cf88;border-radius:8px;padding:.55rem 1.1rem;font-family:var(--f-d);font-weight:600;cursor:pointer;font-size:.95rem">Log craft</button>
-    </form>
-    <div id="lg-status" class="hint"></div>
-    <div class="stats" id="lg-totals" style="margin-top:1rem"></div>
-    <div class="tbl-wrap" style="margin-top:.6rem">
-      <table>
-        <thead><tr><th class="l">When</th><th class="l">Skill</th><th class="l">Hit</th><th>Base</th><th>Chaos</th><th>Sold</th><th>Profit</th><th></th></tr></thead>
-        <tbody id="lg-rows"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <p class="foot">
-    <b>The ilvl-75 myth.</b> Sellers charge a premium for ilvl-75 bases because the smaller mod pool gives a slightly better jackpot chance. But the pool only grows from <code>163,800</code> (ilvl 75) to <code>173,650</code> (ilvl 82) — about 6% more rolls. Unless the ilvl-75 surcharge is smaller than the “extra rolls” cost shown above, just buy a cheap high-ilvl base.<br><br>
-    Weights are the real 0.5 amulet pool (verified against Craft of Exile / poe2db). T1 Spirit = weight 400 (+47–50), each +3 skill = weight 100. Chance = mod weight ÷ total pool. <i>Phase 2 will add an outcome logger so you can record real spends and sales.</i>
-  </p>
 
 <script>
 (function(){
-  // --- verified 0.5 amulet pool (total spawn weight by base item level) ---
-  var POOL = {75:163800, 78:164800, 79:166300, 80:168600, 81:168850, 82:173650};
-  // jackpot mod weights
-  var JW = {spirit:400, melee:100, proj:100, spell:100, minion:100};
-  var MODS = ['spirit','melee','proj','spell','minion'];
-  var LABEL = {spirit:'T1 Spirit', melee:'+3 Melee', proj:'+3 Proj', spell:'+3 Spell', minion:'+3 Minion'};
+  // ---------- verified 0.5 amulet pool + jackpot weights ----------
+  var POOL_ANCHORS = [[75,163800],[78,164800],[79,166300],[80,168600],[81,168850],[82,173650]];
+  var JW    = {spirit:400, melee:100, proj:100, spell:100, minion:100};
+  var MODS  = ['spirit','melee','proj','spell','minion'];
+  var LABEL = {spirit:'T1 Spirit', melee:'+3 Melee', proj:'+3 Proj', spell:'+3 Spell', minion:'+3 Minion', other:'Other sellable'};
 
-  // seed data from the reference sheet (all editable)
-  var SKILLS = [
+  // amulet bases (poe2db). grp: 'breach' = high-tier Breach drop, 'delirium', or 'core'.
+  var BASES = [
+    {f:'AbsentAmulet',      n:'Absent',      im:'grants a random skill',   il:50, grp:'breach'},
+    {f:'CoronaAmulet',      n:'Corona',      im:'sockets act as helmet',   il:40, grp:'breach'},
+    {f:'LamentAmulet',      n:'Lament',      im:'grants a random skill',   il:42, grp:'breach'},
+    {f:'PortentAmulet',     n:'Portent',     im:'grants a random skill',   il:42, grp:'breach'},
+    {f:'DistortedAmulet',   n:'Distorted',   im:'−1 suffix allowed',       il:1,  grp:'delirium'},
+    {f:'TwistedAmulet',     n:'Twisted',     im:'−1 prefix allowed',       il:1,  grp:'delirium'},
+    {f:'GoldAmulet',        n:'Gold',        im:'+item rarity',            il:35, grp:'core'},
+    {f:'SolarAmulet',       n:'Solar',       im:'+Spirit',                 il:30, grp:'core'},
+    {f:'StellarAmulet',     n:'Stellar',     im:'+all attributes',         il:25, grp:'core'},
+    {f:'BloodstoneAmulet',  n:'Bloodstone',  im:'+max life',               il:18, grp:'core'},
+    {f:'LunarAmulet',       n:'Lunar',       im:'+max ES',                 il:14, grp:'core'},
+    {f:'AmberAmulet',       n:'Amber',       im:'+Strength',               il:8,  grp:'core'},
+    {f:'JadeAmulet',        n:'Jade',        im:'+Dexterity',              il:8,  grp:'core'},
+    {f:'LapisAmulet',       n:'Lapis',       im:'+Intelligence',           il:8,  grp:'core'},
+    {f:'PearlescentAmulet', n:'Pearlescent', im:'+all elemental res',      il:8,  grp:'core'},
+    {f:'CrimsonAmulet',     n:'Crimson',     im:'life regen',              il:1,  grp:'core'},
+    {f:'AzureAmulet',       n:'Azure',       im:'mana regen',              il:1,  grp:'core'}
+  ];
+
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n,d){ if(!isFinite(n)) return '∞'; return (+n).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); };
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function byId(arr,id){ for(var i=0;i<arr.length;i++){ if(String(arr[i].__id)===String(id)) return arr[i]; } return null; }
+
+  function poolFor(ilvl){
+    ilvl = +ilvl||75; var a=POOL_ANCHORS;
+    if(ilvl<=a[0][0]) return a[0][1];
+    if(ilvl>=a[a.length-1][0]) return a[a.length-1][1];
+    for(var i=0;i<a.length-1;i++){
+      if(ilvl>=a[i][0] && ilvl<=a[i+1][0]){
+        var t=(ilvl-a[i][0])/(a[i+1][0]-a[i][0]);
+        return Math.round(a[i][1]+t*(a[i+1][1]-a[i][1]));
+      }
+    }
+    return a[a.length-1][1];
+  }
+  function amuStats(a, rate){
+    var jw=0, valNum=0, jk=a.jackpot||{}, sell=a.sell||{};
+    MODS.forEach(function(k){ if(jk[k]){ jw+=JW[k]; valNum+=JW[k]*(+sell[k]||0); } });
+    var pool=poolFor(a.ilvl);
+    var expChaos = jw? pool/jw : Infinity;
+    var rollDiv = (rate>0 && isFinite(expChaos))? expChaos/rate : Infinity;
+    var expWin = jw? valNum/jw : 0;
+    // If you can never hit (no jackpots) or rolling costs infinite divine (rate 0), EV is undefined (−∞), not expWin−base.
+    var ev = isFinite(rollDiv)? (expWin - (+a.base||0) - rollDiv) : -Infinity;
+    return {jw:jw, pool:pool, hit: jw? jw/pool*100 : 0, expChaos:expChaos, rollDiv:rollDiv, expWin:expWin, ev:ev};
+  }
+  function rate(){ return +($('rate').value)||0; }
+  function defIlvl(){ return +($('defilvl').value)||82; }
+
+  // ---------- persistence: D1 with graceful offline fallback ----------
+  var API='/api/log', T_DEF='amulet-rolling-defs', T_LOG='amulet-rolling-log', LEAGUE='0.5';
+  var online=true, localSeq=0;
+  function lid(){ return 'L'+(++localSeq); }
+  async function apiGet(tool){
+    var r=await fetch(API+'?tool='+tool); if(!r.ok) throw new Error('HTTP '+r.status);
+    return (await r.json()).map(function(row){ var v={}; try{v=JSON.parse(row.value_json);}catch(_){} v.__id=row.id; v.__at=row.created_at; return v; });
+  }
+  async function apiPost(tool,value){
+    var r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({tool:tool,league:LEAGUE,key:value.name||null,value:value})});
+    if(!r.ok) throw new Error('HTTP '+r.status); return (await r.json()).id;
+  }
+  async function apiPut(tool,id,value){
+    if(String(id).charAt(0)==='L') return; // local-only row, nothing to persist
+    var r=await fetch(API+'?tool='+tool+'&id='+id,{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({value:value})});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+  }
+  async function apiDel(tool,id){
+    if(String(id).charAt(0)==='L') return;
+    var r=await fetch(API+'?tool='+tool+'&id='+id,{method:'DELETE'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+  }
+
+  // ---------- state ----------
+  var amulets=[], logs=[];
+  var saveTimers={};
+  function scheduleSave(tool,obj){
+    if(!online) return;
+    var k=tool+':'+obj.__id; clearTimeout(saveTimers[k]);
+    saveTimers[k]=setTimeout(function(){ apiPut(tool,obj.__id,strip(obj)).catch(function(){ online=false; banner(); }); },600);
+  }
+  function strip(o){ var c={}; for(var k in o){ if(k.indexOf('__')!==0) c[k]=o[k]; } return c; }
+
+  // ---------- gallery ----------
+  (function(){
+    var g=$('gallery');
+    g.innerHTML=BASES.map(function(b){
+      var tag = b.grp==='breach'? '<span class="btag breach">BREACH</span>'
+              : b.grp==='delirium'? '<span class="btag delirium">DELIRIUM</span>' : '';
+      return '<div class="amu-card '+b.grp+'">'+tag
+        +'<img loading="lazy" src="/assets/poe2/items/amulets/base/'+b.f+'.webp" alt="'+b.n+' Amulet">'
+        +'<div class="nm">'+b.n+'</div><div class="im">'+b.im+'<br><span style="opacity:.7">ilvl '+b.il+'</span></div></div>';
+    }).join('');
+  })();
+
+  // ---------- divine rating fill ----------
+  (function(){
+    document.querySelectorAll('.orbs').forEach(function(o){
+      var r=+o.dataset.rating||0; var f=o.querySelector('[data-fill]');
+      if(f) f.style.width=(r/5*100)+'%';
+    });
+  })();
+
+  // ---------- amulet cards ----------
+  function newAmulet(){
+    return {name:'New amulet', ilvl:defIlvl(), base:0,
+      jackpot:{spirit:true,melee:true,proj:true,spell:true,minion:true},
+      sell:{spirit:0,melee:0,proj:0,spell:0,minion:0}};
+  }
+  var STARTER=[
     {name:'Cast on Crit',              base:54, sell:{spirit:88, melee:60,  proj:60,  spell:230, minion:60}},
     {name:'Cast on Dodge',             base:3,  sell:{spirit:37, melee:70,  proj:8,   spell:80,  minion:3}},
     {name:'Eternal Rage',              base:4,  sell:{spirit:40, melee:64,  proj:105, spell:6,   minion:6}},
@@ -193,149 +436,282 @@
     {name:'Trinity',                   base:6,  sell:{spirit:30, melee:130, proj:70,  spell:24,  minion:8}}
   ];
 
-  var include = {spirit:true, melee:true, proj:true, spell:true, minion:true};
-
-  var $ = function(id){ return document.getElementById(id); };
-  var ilvlEl = $('ilvl'), rateEl = $('rate');
-  var fmt = function(n, d){ if(!isFinite(n)) return '∞'; return n.toLocaleString('en-US',{minimumFractionDigits:d||0, maximumFractionDigits:d||0}); };
-
-  function incWeight(){ var w=0; MODS.forEach(function(k){ if(include[k]) w+=JW[k]; }); return w; }
-  function expChaos(ilvl){ var w=incWeight(); return w? POOL[ilvl]/w : Infinity; }
-  function avgHit(sell){ var num=0,den=0; MODS.forEach(function(k){ if(include[k]){ num+=JW[k]*(+sell[k]||0); den+=JW[k]; } }); return den? num/den : 0; }
-
-  // --- accept chips ---
-  var accepts = $('accepts');
-  MODS.forEach(function(k){
-    var lab=document.createElement('label'); lab.className='chip on'; lab.dataset.k=k;
-    lab.innerHTML='<input type="checkbox" checked> '+LABEL[k]+' <span class="mono" style="color:var(--muted)">·'+JW[k]+'</span>';
-    lab.querySelector('input').addEventListener('change',function(e){ include[k]=e.target.checked; lab.classList.toggle('on',e.target.checked); render(); });
-    accepts.appendChild(lab);
-  });
-
-  // --- build editable rows ---
-  var rowsEl = $('rows');
-  SKILLS.forEach(function(s, i){
-    var tr=document.createElement('tr');
-    var cells='<td class="skill l">'+s.name+'</td>';
-    cells+='<td><input data-i="'+i+'" data-f="base" type="number" min="0" step="0.5" value="'+s.base+'"></td>';
-    MODS.forEach(function(k){ cells+='<td><input data-i="'+i+'" data-f="'+k+'" type="number" min="0" step="1" value="'+s.sell[k]+'"></td>'; });
-    cells+='<td class="calc" data-avg></td><td class="calc muted-col" data-roll></td><td class="ev" data-ev></td>';
-    tr.innerHTML=cells; rowsEl.appendChild(tr);
-  });
-  rowsEl.addEventListener('input', function(e){
-    var t=e.target; if(t.tagName!=='INPUT') return;
-    var s=SKILLS[+t.dataset.i], f=t.dataset.f, v=+t.value||0;
-    if(f==='base') s.base=v; else s.sell[f]=v;
-    render();
-  });
-  ilvlEl.addEventListener('change', render);
-  rateEl.addEventListener('input', render);
-
-  function render(){
-    var ilvl=+ilvlEl.value, rate=+rateEl.value||0, W=incWeight();
-    var pool=POOL[ilvl], ec=expChaos(ilvl), rollDiv=rate? ec/rate : Infinity;
-    var chance= W? (W/pool*100) : 0;
-
-    // summary stats
-    $('stats').innerHTML =
-      stat('Combined weight', fmt(W)+' <small>/ '+fmt(pool)+'</small>') +
-      stat('Hit chance / roll', chance.toFixed(3)+'%') +
-      stat('Expected chaos / hit', fmt(ec,0)) +
-      stat('Roll cost / hit', isFinite(rollDiv)? fmt(rollDiv,2)+' <small>div</small>' : '—');
-
-    // myth-buster vs ilvl 75
-    var ec75=expChaos(75), extra=ec-ec75, extraDiv=rate? extra/rate : Infinity;
-    var m=$('myth');
-    if(W===0){ m.innerHTML='<b>Pick at least one jackpot mod above.</b>'; }
-    else if(ilvl===75){ m.innerHTML='You’re at ilvl 75 — the smallest pool and best hit rate. Compare a cheaper high-ilvl base by switching the item level above.'; }
-    else {
-      m.innerHTML='<b>ilvl 75 vs ilvl '+ilvl+':</b> a higher-ilvl base needs only <b>+'+fmt(extra,0)+' chaos</b> ('+ (isFinite(extraDiv)? '~'+fmt(extraDiv,2)+' div' : '—') +') more per hit. Only pay the ilvl-75 premium if its surcharge is bigger than that — otherwise buy the cheap high-ilvl base.';
-    }
-
-    // per-skill
-    rowsEl.querySelectorAll('tr').forEach(function(tr,i){
-      var s=SKILLS[i], av=avgHit(s.sell), ev=av - s.base - (isFinite(rollDiv)?rollDiv:0);
-      tr.querySelector('[data-avg]').textContent=fmt(av,1);
-      tr.querySelector('[data-roll]').textContent=isFinite(rollDiv)? fmt(rollDiv,2):'—';
-      var evEl=tr.querySelector('[data-ev]');
-      evEl.textContent=(ev>=0?'+':'')+fmt(ev,1);
-      evEl.className='ev '+(ev>=0?'pos':'neg');
+  function amuCardHtml(a){
+    var id=a.__id;
+    var mods=MODS.map(function(k){
+      var on=!!(a.jackpot&&a.jackpot[k]);
+      return '<label class="mod'+(on?' on':' off')+'" data-mod="'+k+'">'
+        +'<span class="mod-h"><input type="checkbox" data-id="'+id+'" data-jk="'+k+'"'+(on?' checked':'')+'> '+LABEL[k]+' <span class="w">·'+JW[k]+'</span></span>'
+        +'<span class="mod-p"><input class="sell-in" data-id="'+id+'" data-sell="'+k+'" type="number" min="0" step="1" value="'+(+((a.sell||{})[k])||0)+'"><span class="u">div</span></span>'
+        +'</label>';
+    }).join('');
+    return '<div class="amu" data-id="'+id+'">'
+      +'<div class="amu-top">'
+        +'<div class="f grow"><label>Amulet / skill</label><input class="name-in" data-id="'+id+'" data-f="name" value="'+esc(a.name)+'"></div>'
+        +'<div class="f w-il"><label>ilvl</label><input data-id="'+id+'" data-f="ilvl" type="number" min="75" max="86" step="1" value="'+(+a.ilvl||82)+'"></div>'
+        +'<div class="f w-base"><label>Base · div</label><input data-id="'+id+'" data-f="base" type="number" min="0" step="0.5" value="'+(+a.base||0)+'"></div>'
+        +'<button type="button" class="amu-del" data-del="'+id+'" title="Delete amulet">✕ delete</button>'
+      +'</div>'
+      +'<div class="amu-mods">'+mods+'</div>'
+      +'<div class="amu-stats">'
+        +'<span class="st"><i>Weight</i><b data-c="jw"></b></span>'
+        +'<span class="st"><i>Hit / roll</i><b data-c="hit"></b></span>'
+        +'<span class="st"><i>Exp chaos</i><b data-c="ec"></b></span>'
+        +'<span class="st"><i>Roll cost</i><b data-c="rd"></b></span>'
+        +'<span class="st"><i>Exp win · div</i><b data-c="win"></b></span>'
+        +'<span class="st ev-st"><i>EV / craft · div</i><b data-c="ev"></b></span>'
+      +'</div>'
+    +'</div>';
+  }
+  function renderAmulets(){
+    var wrap=$('amu-list'); wrap.innerHTML='';
+    amulets.forEach(function(a){ var d=document.createElement('div'); d.innerHTML=amuCardHtml(a); wrap.appendChild(d.firstChild); });
+    $('amu-empty').hidden = amulets.length>0;
+    recalcAmuCards();
+    refreshLogControls();
+  }
+  function recalcAmuCards(){
+    var r=rate();
+    amulets.forEach(function(a){
+      var card=$('amu-list').querySelector('.amu[data-id="'+a.__id+'"]'); if(!card) return;
+      var s=amuStats(a,r);
+      card.querySelector('[data-c="jw"]').textContent=fmt(s.jw);
+      card.querySelector('[data-c="hit"]').textContent=s.hit.toFixed(3)+'%';
+      card.querySelector('[data-c="ec"]').textContent=fmt(s.expChaos,0);
+      card.querySelector('[data-c="rd"]').textContent=isFinite(s.rollDiv)?fmt(s.rollDiv,2):'—';
+      card.querySelector('[data-c="win"]').textContent=fmt(s.expWin,1);
+      var ev=card.querySelector('[data-c="ev"]');
+      if(isFinite(s.ev)){ ev.textContent=(s.ev>=0?'+':'')+fmt(s.ev,1); ev.className='ev '+(s.ev>=0?'pos':'neg'); }
+      else { ev.textContent='—'; ev.className='ev muted-col'; }
     });
+  }
+
+  var list=$('amu-list');
+  list.addEventListener('input', function(e){
+    var t=e.target; if(t.tagName!=='INPUT') return;
+    var a=byId(amulets,t.dataset.id); if(!a) return;
+    if(t.dataset.f==='name') a.name=t.value;
+    else if(t.dataset.f==='ilvl') a.ilvl=+t.value||75;
+    else if(t.dataset.f==='base') a.base=+t.value||0;
+    else if(t.dataset.sell){ a.sell=a.sell||{}; a.sell[t.dataset.sell]=+t.value||0; }
+    recalcAmuCards(); scheduleSave(T_DEF,a);
+    if(t.dataset.f==='name'||t.dataset.f==='ilvl'){ refreshLogControls(); setChaosDefault(); }
+  });
+  list.addEventListener('change', function(e){
+    var t=e.target; if(t.type!=='checkbox') return;
+    var a=byId(amulets,t.dataset.id); if(!a) return;
+    a.jackpot=a.jackpot||{}; a.jackpot[t.dataset.jk]=t.checked;
+    var tile=t.closest('.mod'); if(tile) tile.classList.toggle('on',t.checked), tile.classList.toggle('off',!t.checked);
+    recalcAmuCards(); scheduleSave(T_DEF,a); refreshLogControls(); setChaosDefault();
+  });
+  list.addEventListener('click', function(e){
+    var b=e.target.closest('[data-del]'); if(!b) return;
+    var a=byId(amulets,b.dataset.del); if(!a) return;
+    if(!confirm('Delete "'+a.name+'"? (logged crafts are kept)')) return;
+    var k=T_DEF+':'+a.__id; clearTimeout(saveTimers[k]); delete saveTimers[k];
+    var snapshot=amulets;
+    amulets=amulets.filter(function(x){return x!==a;});
+    renderAmulets(); repin();
+    apiDel(T_DEF,a.__id).catch(function(){ amulets=snapshot; renderAmulets(); online=false; banner(); });
+  });
+
+  var adding=false;
+  async function addAmulet(data){
+    if(adding) return; // guard against double-click / re-entry inserting duplicate defs
+    adding=true; $('add-amu').disabled=true; $('seed-amu').disabled=true;
+    try{
+      var a=data||newAmulet();
+      if(!a.jackpot) a.jackpot={spirit:true,melee:true,proj:true,spell:true,minion:true};
+      if(a.ilvl==null) a.ilvl=defIlvl();
+      if(online){ try{ a.__id=await apiPost(T_DEF,strip(a)); }catch(_){ online=false; a.__id=lid(); banner(); } }
+      else a.__id=lid();
+      amulets.push(a); renderAmulets(); repin();
+    } finally { adding=false; $('add-amu').disabled=false; $('seed-amu').disabled=false; }
+  }
+  $('add-amu').addEventListener('click', function(){ addAmulet(); });
+  $('seed-amu').addEventListener('click', async function(){
+    for(var i=0;i<STARTER.length;i++){
+      var s=STARTER[i];
+      await addAmulet({name:s.name, ilvl:defIlvl(), base:s.base,
+        jackpot:{spirit:true,melee:true,proj:true,spell:true,minion:true}, sell:s.sell});
+    }
+  });
+
+  // ---------- top myth box (dynamic figure) ----------
+  function renderMyth(){
+    var il=defIlvl(), r=rate();
+    var jw=JW.spirit+JW.melee+JW.proj+JW.spell+JW.minion;
+    var ec=poolFor(il)/jw, ec75=POOL_ANCHORS[0][1]/jw, extra=Math.max(0,ec-ec75), extraDiv=r? extra/r : Infinity;
+    var dyn = il<=75
+      ? 'You’re at <b>ilvl 75</b> — the smallest pool and the best headline hit rate. Raise the default item level to see how little a cheaper high-ilvl base actually costs per hit.'
+      : 'At <b>ilvl '+il+'</b>, hitting a jackpot takes only <b>~'+fmt(extra,0)+' more chaos</b> than at ilvl 75'+(isFinite(extraDiv)?' (≈'+fmt(extraDiv,2)+' div)':'')+' — a rounding error.';
+    $('myth-dyn').innerHTML=dyn;
+  }
+
+  // ---------- logger ----------
+  function refreshLogControls(){
+    var sel=$('lg-amu'), prev=sel.value;
+    sel.innerHTML=amulets.map(function(a){ return '<option value="'+a.__id+'">'+esc(a.name)+' · ilvl '+(+a.ilvl||82)+'</option>'; }).join('');
+    if(prev && byId(amulets,prev)) sel.value=prev;
+    refreshHitOptions();
+    var none=amulets.length===0;
+    $('lg-btn').disabled=none; $('lg-amu').disabled=none; $('lg-hit').disabled=none; $('lg-chaos').disabled=none;
+    if(none){ $('lg-status').textContent='Add an amulet above to start logging.'; }
+    else{
+      if($('lg-status').textContent.indexOf('Add an amulet')===0) $('lg-status').textContent='';
+      // auto-fill the chaos default when it's still blank, without clobbering a value the user typed
+      if(!(+$('lg-chaos').value)) setChaosDefault();
+    }
+  }
+  function refreshHitOptions(){
+    var a=byId(amulets,$('lg-amu').value), hit=$('lg-hit');
+    var opts=[];
+    if(a){ MODS.forEach(function(k){ if(a.jackpot&&a.jackpot[k]) opts.push([k,LABEL[k]]); }); }
+    opts.push(['other','Other sellable']);
+    hit.innerHTML=opts.map(function(o){ return '<option value="'+o[0]+'">'+o[1]+'</option>'; }).join('');
+  }
+  function expChaosFor(a){ var s=amuStats(a,rate()); return isFinite(s.expChaos)? Math.round(s.expChaos):0; }
+  function setChaosDefault(){
+    var a=byId(amulets,$('lg-amu').value);
+    $('lg-chaos').value = a? expChaosFor(a) : 0;
+  }
+  $('lg-amu').addEventListener('change', function(){ refreshHitOptions(); setChaosDefault(); });
+
+  function makeRecord(a, hit, r, chaos){
+    return { name:a.name, ilvl:+a.ilvl||82, hit:hit, base:+a.base||0,
+      chaos: (+chaos||0),
+      sell: hit==='other'? 0 : (+((a.sell||{})[hit])||0),
+      rate:r, note:'' };
+  }
+  function logProfit(v){ var r=+v.rate||0; return (+v.sell||0)-(+v.base||0)-(r>0?(+v.chaos||0)/r:0); }
+
+  function logRowHtml(v){
+    var id=v.__id, p=logProfit(v);
+    return '<td class="l muted-col mono" style="font-size:.78rem">'+String(v.__at||'now').slice(5,16)+'</td>'
+      +'<td class="l">'+esc(v.name)+'</td><td class="muted-col">'+(+v.ilvl||'')+'</td>'
+      +'<td class="l">'+(LABEL[v.hit]||v.hit||'')+'</td>'
+      +'<td><input data-id="'+id+'" data-f="base" type="number" min="0" step="0.5" value="'+(+v.base||0)+'"></td>'
+      +'<td><input data-id="'+id+'" data-f="chaos" type="number" min="0" step="1" value="'+(+v.chaos||0)+'"></td>'
+      +'<td><input data-id="'+id+'" data-f="sell" type="number" min="0" step="0.5" value="'+(+v.sell||0)+'"></td>'
+      +'<td><input data-id="'+id+'" data-f="rate" type="number" min="0" step="0.1" value="'+(+v.rate||0)+'"></td>'
+      +'<td class="ev '+(p>=0?'pos':'neg')+'" data-c="p">'+(p>=0?'+':'')+fmt(p,1)+'</td>'
+      +'<td class="l"><input data-id="'+id+'" data-f="note" value="'+esc(v.note||'')+'" placeholder="—" style="width:8rem;text-align:left"></td>'
+      +'<td><button type="button" class="rowdel" data-del="'+id+'" title="Delete record">✕</button></td>';
+  }
+  function renderLogs(){
+    var tb=$('lg-rows'); tb.innerHTML='';
+    logs.forEach(function(v){ var tr=document.createElement('tr'); tr.dataset.id=v.__id; tr.innerHTML=logRowHtml(v); tb.appendChild(tr); });
+    renderTotals();
+  }
+  function renderTotals(){
+    var tP=0,tC=0,n=logs.length;
+    logs.forEach(function(v){ tP+=logProfit(v); tC+=(+v.chaos||0); });
+    $('lg-totals').innerHTML=stat('Crafts logged',fmt(n))
+      +stat('Net profit',(tP>=0?'+':'')+fmt(tP,1)+' <small>div</small>')
+      +stat('Chaos spent',fmt(tC))
+      +stat('Avg / craft', n?((tP/n>=0?'+':'')+fmt(tP/n,1)+' <small>div</small>'):'—');
   }
   function stat(k,v){ return '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
 
-  render();
-})();
-</script>
-
-<script>
-(function(){
-  var TOOL='amulet-rolling', LEAGUE='0.5', API='/api/log';
-  var SKILLS=['Cast on Crit','Cast on Dodge','Eternal Rage','Cast on Elemental Ailment','Archmage','Trinity','Other'];
-  var HITLABEL={spirit:'T1 Spirit',melee:'+3 Melee',proj:'+3 Proj',spell:'+3 Spell',minion:'+3 Minion',other:'Other'};
-  var $=function(id){return document.getElementById(id);};
-  var sk=$('lg-skill'); SKILLS.forEach(function(s){var o=document.createElement('option');o.textContent=s;sk.appendChild(o);});
-  var rows=$('lg-rows'), totals=$('lg-totals'), status=$('lg-status');
-  var rate=function(){ return +($('rate').value)||0; };
-  var fmt=function(n,d){ if(!isFinite(n))return '—'; return n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); };
-  var profitOf=function(v){ var r=v.rate||rate(); return (+v.sell||0)-(+v.base||0)-(r?(+v.chaos||0)/r:0); };
-  var st=function(k,v){ return '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; };
-
-  function render(data){
-    rows.innerHTML=''; var tP=0,tC=0,n=0;
-    data.forEach(function(row){
-      var v; try{v=JSON.parse(row.value_json);}catch(_){v={};}
-      var p=profitOf(v); tP+=p; tC+=(+v.chaos||0); n++;
-      var tr=document.createElement('tr');
-      tr.innerHTML='<td class="l muted-col mono" style="font-size:.78rem">'+String(row.created_at||'').slice(5,16)+'</td>'
-        +'<td class="l">'+(v.skill||'')+'</td>'
-        +'<td class="l">'+(HITLABEL[v.hit]||v.hit||'')+'</td>'
-        +'<td class="calc">'+fmt(+v.base||0,1)+'</td>'
-        +'<td class="calc muted-col">'+fmt(+v.chaos||0)+'</td>'
-        +'<td class="calc">'+fmt(+v.sell||0,1)+'</td>'
-        +'<td class="ev '+(p>=0?'pos':'neg')+'">'+(p>=0?'+':'')+fmt(p,1)+'</td>'
-        +'<td><button data-id="'+row.id+'" class="del" title="Delete" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem">✕</button></td>';
-      rows.appendChild(tr);
-    });
-    totals.innerHTML=st('Crafts logged',fmt(n))
-      +st('Net profit',(tP>=0?'+':'')+fmt(tP,1)+' <small>div</small>')
-      +st('Chaos spent',fmt(tC))
-      +st('Avg / craft', n?((tP/n>=0?'+':'')+fmt(tP/n,1)+' <small>div</small>'):'—');
-  }
-
-  async function load(){
-    try{
-      var res=await fetch(API+'?tool='+TOOL);
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      render(await res.json()); status.textContent='';
-    }catch(e){
-      status.innerHTML='<span style="color:var(--amber)">Log store offline — it activates once the site is deployed.</span>';
-      render([]);
-    }
-  }
-
-  rows.addEventListener('click', async function(e){
-    var b=e.target.closest('.del'); if(!b)return;
-    if(!confirm('Delete this log entry?'))return;
-    try{ await fetch(API+'?tool='+TOOL+'&id='+b.dataset.id,{method:'DELETE'}); load(); }catch(_){}
+  $('lg-rows').addEventListener('input', function(e){
+    var t=e.target; if(t.tagName!=='INPUT') return;
+    var v=byId(logs,t.dataset.id); if(!v) return;
+    var f=t.dataset.f; v[f]= f==='note'? t.value : (+t.value||0);
+    var tr=t.closest('tr'), p=logProfit(v), cell=tr.querySelector('[data-c="p"]');
+    cell.textContent=(p>=0?'+':'')+fmt(p,1); cell.className='ev '+(p>=0?'pos':'neg');
+    renderTotals(); scheduleSave(T_LOG,v);
   });
-
+  $('lg-rows').addEventListener('click', function(e){
+    var b=e.target.closest('[data-del]'); if(!b) return;
+    if(!confirm('Delete this log entry?')) return;
+    var k=T_LOG+':'+b.dataset.del; clearTimeout(saveTimers[k]); delete saveTimers[k];
+    var v=byId(logs,b.dataset.del), snapshot=logs;
+    logs=logs.filter(function(x){return x!==v;});
+    renderLogs(); repin();
+    apiDel(T_LOG,b.dataset.del).catch(function(){ logs=snapshot; renderLogs(); online=false; banner(); });
+  });
+  var logging=false;
   $('logform').addEventListener('submit', async function(e){
     e.preventDefault();
-    var v={ skill:$('lg-skill').value, hit:$('lg-hit').value,
-      base:+$('lg-base').value||0, chaos:+$('lg-chaos').value||0, sell:+$('lg-sell').value||0,
-      rate:rate(), note:$('lg-note').value.trim() };
-    status.textContent='Saving…';
+    if(logging) return; // guard against double-submit inserting duplicate crafts
+    var a=byId(amulets,$('lg-amu').value); if(!a){ return; }
+    logging=true; $('lg-btn').disabled=true;
     try{
-      var res=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},
-        body:JSON.stringify({tool:TOOL,league:LEAGUE,key:v.skill,value:v})});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      ['lg-base','lg-chaos','lg-sell','lg-note'].forEach(function(id){$(id).value= id==='lg-note'?'':0;});
-      status.textContent=''; load();
-    }catch(err){ status.innerHTML='<span style="color:var(--amber)">Save failed — the log activates once deployed.</span>'; }
+      var v=makeRecord(a,$('lg-hit').value,rate(),$('lg-chaos').value);
+      if(online){ try{ v.__id=await apiPost(T_LOG,strip(v)); }catch(_){ online=false; v.__id=lid(); banner(); } }
+      else v.__id=lid();
+      v.__at=new Date().toISOString();
+      logs.unshift(v); renderLogs(); repin();
+      setChaosDefault();
+      $('lg-status').textContent='Logged '+(LABEL[v.hit]||v.hit)+' on '+a.name+' for '+fmt(v.chaos)+' chaos.';
+      setTimeout(function(){ if($('lg-status').textContent.indexOf('Logged')===0) $('lg-status').textContent=''; },2500);
+    } finally { logging=false; refreshLogControls(); }
   });
 
-  load();
+  // ---------- market inputs re-render everything price-dependent ----------
+  $('rate').addEventListener('input', function(){ recalcAmuCards(); renderMyth(); setChaosDefault(); });
+  $('defilvl').addEventListener('input', renderMyth);
+
+  function banner(){
+    var b=$('amu-banner');
+    if(online){ b.textContent=''; b.className='banner'; }
+    else { b.className='banner off'; b.textContent='Cloud log offline — the store activates once the site is deployed. Changes this session won’t be saved.'; }
+  }
+
+  // ---------- table of contents: jump + pin + scroll-spy across the iframe ----------
+  var inIframe=false, frameEl=null, pWin=null;
+  try{ frameEl=window.frameElement; pWin=window.parent; inIframe=!!(frameEl && pWin && pWin!==window); }catch(_){ inIframe=false; }
+
+  function absTopInParent(el){ var er=el.getBoundingClientRect(), fr=frameEl.getBoundingClientRect(); return pWin.scrollY + fr.top + er.top; }
+  function jumpTo(id){
+    var el=$(id); if(!el) return;
+    if(inIframe){ try{ pWin.scrollTo({top:Math.max(0,absTopInParent(el)-14), behavior:'smooth'}); return; }catch(_){} }
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  function spy(){
+    var line = inIframe ? (-frameEl.getBoundingClientRect().top + 96) : 96;
+    var cur=null;
+    document.querySelectorAll('#toc a[data-to]').forEach(function(link){
+      var el=$(link.dataset.to); if(!el) return;
+      if(el.getBoundingClientRect().top <= line) cur=link;
+    });
+    document.querySelectorAll('#toc a[data-to]').forEach(function(link){ link.classList.toggle('active', link===cur); });
+  }
+  function repin(){
+    if(!inIframe) return;
+    var col=$('toc-col'), toc=$('toc'); if(!col||!toc) return;
+    try{
+      var scrolledPast=-frameEl.getBoundingClientRect().top;   // iframe-doc Y at parent viewport top
+      var colTop=col.getBoundingClientRect().top;              // iframe-doc Y of the column (iframe never scrolls)
+      var want=scrolledPast+16-colTop;
+      var max=Math.max(0, col.offsetHeight - toc.offsetHeight);
+      toc.style.transform='translateY('+Math.max(0,Math.min(want,max))+'px)';
+    }catch(_){}
+  }
+  var raf=0;
+  function onScroll(){ if(raf) return; raf=(window.requestAnimationFrame||function(f){return setTimeout(f,16);})(function(){ raf=0; repin(); spy(); }); }
+  (function setupToc(){
+    document.querySelectorAll('#toc a[data-to]').forEach(function(link){
+      link.addEventListener('click', function(ev){ ev.preventDefault(); jumpTo(link.dataset.to); });
+    });
+    try{
+      if(inIframe){ pWin.addEventListener('scroll', onScroll, {passive:true}); pWin.addEventListener('resize', onScroll); }
+      else { window.addEventListener('scroll', onScroll, {passive:true}); window.addEventListener('resize', onScroll); }
+    }catch(_){ window.addEventListener('scroll', onScroll, {passive:true}); }
+  })();
+
+  // ---------- init ----------
+  (async function init(){
+    renderMyth();
+    try{
+      var defs=await apiGet(T_DEF); var lg=await apiGet(T_LOG);
+      amulets=defs; logs=lg; online=true; banner();
+    }catch(e){
+      online=false; banner();
+    }
+    renderAmulets(); renderLogs(); setChaosDefault();
+    onScroll(); setTimeout(function(){ repin(); spy(); }, 300);
+  })();
 })();
 </script>
 </body>

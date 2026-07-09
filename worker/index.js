@@ -12,14 +12,15 @@ export default {
 
 const CORS = {
   "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET,POST,DELETE,OPTIONS",
+  "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
   "access-control-allow-headers": "content-type",
 };
 
 // /api/log
-//   GET    ?tool=<slug>[&league=<x>]   -> newest-first rows
-//   POST   { tool, league?, key?, value }   -> insert, returns { ok, id }
-//   DELETE ?tool=<slug>&id=<n>         -> delete one row
+//   GET    ?tool=<slug>[&league=<x>][&key=<k>]   -> newest-first rows
+//   POST   { tool, league?, key?, value }        -> insert, returns { ok, id }
+//   PUT    ?tool=<slug>&id=<n>  { value }         -> replace value_json (+ bump updated_at)
+//   DELETE ?tool=<slug>&id=<n>                    -> delete one row
 // Single-user, private link: writes are open for now (no WRITE_KEY). Easy to gate later.
 async function handleLog(request, env) {
   if (request.method === "OPTIONS") return new Response(null, { headers: CORS });
@@ -28,11 +29,18 @@ async function handleLog(request, env) {
     if (request.method === "GET") {
       const tool = url.searchParams.get("tool");
       const league = url.searchParams.get("league");
+      const key = url.searchParams.get("key");
       if (!tool) return json({ error: "tool is required" }, 400);
-      const stmt = league
-        ? env.DB.prepare("SELECT id, league, key, value_json, created_at FROM entries WHERE tool=? AND league=? ORDER BY id DESC LIMIT 1000").bind(tool, league)
-        : env.DB.prepare("SELECT id, league, key, value_json, created_at FROM entries WHERE tool=? ORDER BY id DESC LIMIT 1000").bind(tool);
-      const { results } = await stmt.all();
+      const where = ["tool=?"];
+      const args = [tool];
+      if (league) { where.push("league=?"); args.push(league); }
+      if (key) { where.push("key=?"); args.push(key); }
+      // Bounded, overridable page size (default high enough that log totals aren't silently truncated).
+      const limit = Math.min(Math.max(parseInt(url.searchParams.get("limit") || "5000", 10) || 5000, 1), 20000);
+      const sql = "SELECT id, league, key, value_json, created_at, updated_at FROM entries WHERE "
+        + where.join(" AND ") + " ORDER BY id DESC LIMIT ?";
+      args.push(limit);
+      const { results } = await env.DB.prepare(sql).bind(...args).all();
       return json(results ?? []);
     }
     if (request.method === "POST") {
@@ -43,6 +51,17 @@ async function handleLog(request, env) {
         .bind(body.tool, body.league ?? null, body.key ?? null, JSON.stringify(body.value ?? {}))
         .run();
       return json({ ok: true, id: res.meta.last_row_id });
+    }
+    if (request.method === "PUT") {
+      const tool = url.searchParams.get("tool");
+      const id = url.searchParams.get("id");
+      if (!tool || !id) return json({ error: "tool and id are required" }, 400);
+      const body = await request.json();
+      const res = await env.DB
+        .prepare("UPDATE entries SET value_json=?, updated_at=datetime('now') WHERE tool=? AND id=?")
+        .bind(JSON.stringify(body?.value ?? {}), tool, id)
+        .run();
+      return json({ ok: true, changed: res.meta.changes });
     }
     if (request.method === "DELETE") {
       const tool = url.searchParams.get("tool");

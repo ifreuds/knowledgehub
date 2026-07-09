@@ -1,0 +1,40 @@
+---
+// Profitability rating rendered as Divine Orbs instead of stars.
+// Supports fractional values (e.g. 4.5) via a clipped fill overlay.
+interface Props {
+  value: number;
+  max?: number;
+  size?: number;
+  showNum?: boolean;
+  label?: string;
+}
+const { value, max = 5, size = 16, showNum = true, label } = Astro.props;
+const pct = Math.max(0, Math.min(1, value / max)) * 100;
+const orbs = Array.from({ length: max });
+const numLabel = Number.isInteger(value) ? String(value) : value.toFixed(1);
+const src = '/assets/poe2/currency/divine-orb.webp';
+---
+<span class="rating" style={`--sz:${size}px;--pct:${pct}%`} title={label ?? `Profitability ${numLabel}/${max} divine`}>
+  {label && <span class="lbl">{label}</span>}
+  <span class="orbs" role="img" aria-label={`${numLabel} out of ${max}`}>
+    <span class="track base">{orbs.map(() => <img src={src} alt="" width={size} height={size} loading="lazy" />)}</span>
+    <span class="track fill">{orbs.map(() => <img src={src} alt="" width={size} height={size} loading="lazy" />)}</span>
+  </span>
+  {showNum && <span class="num">{numLabel}<small>/{max}</small></span>}
+</span>
+
+<style>
+  .rating { display: inline-flex; align-items: center; gap: 7px; }
+  .lbl {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gold-dim);
+  }
+  .orbs { position: relative; display: inline-block; line-height: 0; }
+  .track { display: flex; gap: 2px; width: max-content; }
+  .track img { flex: none; width: var(--sz); height: var(--sz); display: block; }
+  .base img { filter: grayscale(1) brightness(.5); opacity: .5; }
+  .fill { position: absolute; top: 0; left: 0; height: 100%; width: var(--pct); overflow: hidden; }
+  .fill img { filter: drop-shadow(0 0 2px rgba(216,182,103,.55)); }
+  .num { font-family: var(--f-mono); font-size: 11px; color: var(--gold-dim); white-space: nowrap; }
+  .num small { opacity: .6; }
+</style>
