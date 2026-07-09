@@ -6,8 +6,8 @@ automatically (and shows a labelled placeholder until they exist):
 
 | file | what it should show |
 |------|---------------------|
-| `absent-item.png`  | a rolled Absent Amulet tooltip (Grants Skill, −1 prefix/−1 suffix, +Spirit, asking price) |
-| `absent-sales.png` | your trade / sales history for Absent Amulets |
+| `absent-item.webp`  | a rolled Absent Amulet tooltip (Grants Skill, −1 prefix/−1 suffix, jackpot mod, asking price) |
+| `absent-sales.webp` | your trade / sales history for Absent Amulets |
 
-PNG or WebP is fine (if you use `.webp`, update the two `<img src>`/filenames in the 0.5 body).
+Uploaded as PNG and re-encoded to WebP (589 KB → 83 KB for the sales shot) to keep the page light.
 Same append-only rule as the rest of `/assets` — don't rewrite an existing file a frozen body references.
