@@ -3,12 +3,13 @@
   "slug": "amulet-rolling",
   "game": "poe2",
   "tags": ["crafting", "currency", "tool"],
-  "summary": "Chaos-spam cheap high-ilvl amulets into jackpot mods. Live EV per skill amulet with editable prices and a real-time Divine:Chaos rate.",
+  "summary": "Chaos-spam cheap high-ilvl amulets into jackpot mods. Build a per-amulet EV model — pick your sellable jackpots, price them, see true EV per craft — then log hits in one click.",
   "type": "tool",
   "interactive": true,
+  "rating": 4,
   "currentVersion": "0.5",
   "updatedForLeague": "0.5",
   "versions": [
-    { "league": "0.5", "leagueName": "Rune of Aldurs", "patch": "0.5.4b", "file": "0.5.html", "updated": "2026-07-07", "changelog": "Profit calculator + D1-backed outcome logger. Weights verified against the 0.5 amulet mod pool." }
+    { "league": "0.5", "leagueName": "Rune of Aldurs", "patch": "0.5.4b", "file": "0.5.html", "updated": "2026-07-09", "changelog": "Rebuilt calculator: global market (Divine:Chaos + item level), an editable per-amulet list with per-mod jackpot selection and Divine prices, true EV per craft, a Breach/Delirium base gallery from poe2db, and a one-click logger with editable records (locked profit). Amulet defs + logs persist in D1." }
   ]
 }

@@ -1,5 +1,6 @@
 ---
 import Shell from '../../layouts/Shell.astro';
+import Rating from '../../components/Rating.astro';
 import { GAMES, GAME_ORDER, RARITY } from '../../config';
 import { getPages } from '../../lib/content';
 
@@ -64,6 +65,10 @@ const chipVars = (t) => {
     <div class="tags">
       {page.tags.map((t) => <span class="chip" style={chipVars(t)}>{t}</span>)}
     </div>
+
+    {typeof page.rating === 'number' && (
+      <div class="page-rating"><Rating value={page.rating} size={18} label="Profitability" /></div>
+    )}
 
     {activeVersion?.changelog && <p class="changelog">{activeVersion.changelog}</p>}
   </header>
@@ -173,6 +178,8 @@ const chipVars = (t) => {
     background: var(--c-bg);
     border: 1px solid var(--c-brd);
   }
+
+  .page-rating { margin-top: 1rem; }
 
   .changelog {
     margin: 1rem 0 0;

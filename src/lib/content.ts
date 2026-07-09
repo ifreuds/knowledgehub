@@ -24,6 +24,7 @@ export type Meta = {
   image?: string;
   type: 'article' | 'tool';
   interactive?: boolean;
+  rating?: number; // profitability rating 0–5, rendered as Divine Orbs on the hub
   currentVersion: string;
   updatedForLeague: string;
   versions: Version[];
