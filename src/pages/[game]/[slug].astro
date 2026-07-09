@@ -93,7 +93,7 @@ const chipVars = (t) => {
   </header>
 
   <div class="body-shell filigree">
-    <iframe id="body-frame" src={srcFor(current)} title={page.title}></iframe>
+    <iframe id="body-frame" src={srcFor(current)} title={page.title} scrolling="no"></iframe>
   </div>
 </Shell>
 
@@ -225,6 +225,10 @@ const chipVars = (t) => {
     border-radius: 8px;
     min-height: 320px;
     background: transparent;
+    /* The frame is auto-sized to its content (ResizeObserver) and the page scrolls,
+       so the frame must never show its own scrollbar (classic scrollbars otherwise
+       render a phantom vertical bar from sub-pixel rounding). */
+    overflow: hidden;
   }
 
   @media (max-width: 480px) {
