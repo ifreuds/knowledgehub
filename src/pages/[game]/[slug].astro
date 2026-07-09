@@ -1,4 +1,7 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
 import Shell from '../../layouts/Shell.astro';
 import Rating from '../../components/Rating.astro';
 import { GAMES, GAME_ORDER, RARITY } from '../../config';
@@ -24,6 +27,22 @@ const versions = [...page.versions].sort((a, b) =>
 const current = page.currentVersion;
 const basePath = `/content/${game}/${slug}`;
 const activeVersion = versions.find((v) => v.league === current);
+
+// Content hash per version so the iframe URL changes whenever a body is edited.
+// Without this, browsers/CDN cache the frozen body at a static path and keep
+// serving a stale copy after a deploy. Hash busts the cache only when content changes.
+const CONTENT_ROOT = path.join(process.cwd(), 'public', 'content');
+const bodyHash = (file) => {
+  try {
+    const buf = fs.readFileSync(path.join(CONTENT_ROOT, game, slug, file));
+    return crypto.createHash('sha1').update(buf).digest('hex').slice(0, 10);
+  } catch {
+    return '';
+  }
+};
+const vhash = Object.fromEntries(versions.map((v) => [v.league, bodyHash(v.file)]));
+const srcFor = (league) =>
+  `${basePath}/${league}.html${vhash[league] ? `?h=${vhash[league]}` : ''}`;
 
 // Derive fg/bg/border for a tag chip from its rarity hex (matches the Ornate handoff).
 const rgba = (hex, a) => {
@@ -74,7 +93,7 @@ const chipVars = (t) => {
   </header>
 
   <div class="body-shell filigree">
-    <iframe id="body-frame" src={`${basePath}/${current}.html`} title={page.title}></iframe>
+    <iframe id="body-frame" src={srcFor(current)} title={page.title}></iframe>
   </div>
 </Shell>
 
@@ -215,7 +234,7 @@ const chipVars = (t) => {
   }
 </style>
 
-<script define:vars={{ basePath, current, leagues: versions.map((v) => v.league) }}>
+<script define:vars={{ basePath, current, leagues: versions.map((v) => v.league), vhash }}>
   const frame = document.getElementById('body-frame');
   const select = document.getElementById('ver-select');
 
@@ -247,7 +266,7 @@ const chipVars = (t) => {
   window.addEventListener('resize', resize);
 
   function load(league) {
-    frame.src = `${basePath}/${league}.html`;
+    frame.src = `${basePath}/${league}.html` + (vhash[league] ? `?h=${vhash[league]}` : '');
     const u = new URL(location.href);
     if (league === current) u.searchParams.delete('v');
     else u.searchParams.set('v', league);
