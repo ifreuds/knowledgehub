@@ -21,7 +21,7 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.4rem clamp(14px,3vw,30px) 3.5rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.4rem clamp(14px,3vw,30px) 3.5rem;-webkit-font-smoothing:antialiased;overflow-x:clip}
   h1,h2,h3{color:var(--bone);font-family:var(--f-d);margin:0}
   h1{font-size:clamp(1.55rem,3vw,2.05rem);letter-spacing:.02em;line-height:1.15}
   h2{font-size:1.02rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-dim);margin:0;display:flex;align-items:baseline;gap:.6rem}
@@ -824,13 +824,18 @@
   try{ frameEl=window.frameElement; pWin=window.parent; inIframe=!!(frameEl && pWin && pWin!==window); }catch(_){ inIframe=false; }
 
   function absTopInParent(el){ var er=el.getBoundingClientRect(), fr=frameEl.getBoundingClientRect(); return pWin.scrollY + fr.top + er.top; }
+  // Clearance for the shell's sticky top bar, so pinned rails / jump targets don't hide under it.
+  function topInset(){
+    if(inIframe){ try{ var h=pWin.document.querySelector('header'); if(h) return Math.round(h.getBoundingClientRect().height)+14; }catch(_){} }
+    return 16;
+  }
   function jumpTo(id){
     var el=$(id); if(!el) return;
-    if(inIframe){ try{ pWin.scrollTo({top:Math.max(0,absTopInParent(el)-14), behavior:'smooth'}); return; }catch(_){} }
+    if(inIframe){ try{ pWin.scrollTo({top:Math.max(0,absTopInParent(el)-topInset()), behavior:'smooth'}); return; }catch(_){} }
     el.scrollIntoView({behavior:'smooth', block:'start'});
   }
   function spy(){
-    var line = inIframe ? (-frameEl.getBoundingClientRect().top + 96) : 96;
+    var line = inIframe ? (-frameEl.getBoundingClientRect().top + topInset() + 24) : 96;
     var cur=null;
     document.querySelectorAll('#toc a[data-to]').forEach(function(link){
       var el=$(link.dataset.to); if(!el) return;
@@ -844,7 +849,7 @@
     try{
       var scrolledPast=-frameEl.getBoundingClientRect().top;
       var colTop=col.getBoundingClientRect().top;
-      var want=scrolledPast+16-colTop;
+      var want=scrolledPast+topInset()-colTop;
       var max=Math.max(0, col.offsetHeight - inner.offsetHeight);
       inner.style.transform='translateY('+Math.max(0,Math.min(want,max))+'px)';
     }catch(_){}
