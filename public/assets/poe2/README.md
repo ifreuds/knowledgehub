@@ -9,6 +9,10 @@ To respect the *freeze-everything* architecture (see `CLAUDE.md`), **never mutat
 file here** — a frozen body may reference it. Only add new files. If an icon must change, add it under a
 new name. All icons are `WebP`, mostly `108×108` (a few legacy orbs are `80×80`); no resizing was needed.
 
+> Self-hosted webfonts live one level up at `public/assets/fonts/` (Cinzel, Mulish, JetBrains Mono —
+> latin `woff2` subsets, same append-only rule). Frozen bodies `@font-face` them from `/assets/fonts/…`
+> instead of hitting a third-party font host, so a snapshot renders identically offline and forever.
+
 ## Layout
 ```
 items/amulets/base/     17 amulet base-type icons  (PascalCase, e.g. StellarAmulet.webp)

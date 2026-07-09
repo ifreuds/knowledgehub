@@ -35,8 +35,11 @@ async function handleLog(request, env) {
       const args = [tool];
       if (league) { where.push("league=?"); args.push(league); }
       if (key) { where.push("key=?"); args.push(key); }
+      // Bounded, overridable page size (default high enough that log totals aren't silently truncated).
+      const limit = Math.min(Math.max(parseInt(url.searchParams.get("limit") || "5000", 10) || 5000, 1), 20000);
       const sql = "SELECT id, league, key, value_json, created_at, updated_at FROM entries WHERE "
-        + where.join(" AND ") + " ORDER BY id DESC LIMIT 1000";
+        + where.join(" AND ") + " ORDER BY id DESC LIMIT ?";
+      args.push(limit);
       const { results } = await env.DB.prepare(sql).bind(...args).all();
       return json(results ?? []);
     }
@@ -56,7 +59,7 @@ async function handleLog(request, env) {
       const body = await request.json();
       const res = await env.DB
         .prepare("UPDATE entries SET value_json=?, updated_at=datetime('now') WHERE tool=? AND id=?")
-        .bind(JSON.stringify(body && body.value ? body.value : {}), tool, id)
+        .bind(JSON.stringify(body?.value ?? {}), tool, id)
         .run();
       return json({ ok: true, changed: res.meta.changes });
     }

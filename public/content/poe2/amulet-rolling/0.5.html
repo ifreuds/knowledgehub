@@ -3,10 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Self-hosted latin subset of Cinzel, Mulish, JetBrains Mono — frozen with this body (no external font host). Source: Google Fonts. */
+  @font-face{font-family:'Cinzel';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/Cinzel-600.woff2) format('woff2')}
+  @font-face{font-family:'Cinzel';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/Cinzel-700.woff2) format('woff2')}
+  @font-face{font-family:'Mulish';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/Mulish-400.woff2) format('woff2')}
+  @font-face{font-family:'Mulish';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/Mulish-600.woff2) format('woff2')}
+  @font-face{font-family:'Mulish';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/Mulish-700.woff2) format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/JetBrainsMono-400.woff2) format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/JetBrainsMono-500.woff2) format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/JetBrainsMono-600.woff2) format('woff2')}
   :root{
     --bg:#0e0f12;--pan:#16181d;--pan2:#131317;--line:#2a2d35;--line-gold:rgba(200,160,79,.28);
     --gold:#c8a04f;--gold-hi:#d8b667;--gold-dim:#a98a4d;--bone:#e8e2d0;--text:#b8b3a7;--muted:#8f8b81;
@@ -284,7 +290,8 @@
     var expChaos = jw? pool/jw : Infinity;
     var rollDiv = (rate>0 && isFinite(expChaos))? expChaos/rate : Infinity;
     var expWin = jw? valNum/jw : 0;
-    var ev = expWin - (+a.base||0) - (isFinite(rollDiv)? rollDiv : 0);
+    // If you can never hit (no jackpots) or rolling costs infinite divine (rate 0), EV is undefined (−∞), not expWin−base.
+    var ev = isFinite(rollDiv)? (expWin - (+a.base||0) - rollDiv) : -Infinity;
     return {jw:jw, pool:pool, hit: jw? jw/pool*100 : 0, expChaos:expChaos, rollDiv:rollDiv, expWin:expWin, ev:ev};
   }
   function rate(){ return +($('rate').value)||0; }
@@ -309,7 +316,8 @@
   }
   async function apiDel(tool,id){
     if(String(id).charAt(0)==='L') return;
-    await fetch(API+'?tool='+tool+'&id='+id,{method:'DELETE'});
+    var r=await fetch(API+'?tool='+tool+'&id='+id,{method:'DELETE'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
   }
 
   // ---------- state ----------
@@ -318,7 +326,7 @@
   function scheduleSave(tool,obj){
     if(!online) return;
     var k=tool+':'+obj.__id; clearTimeout(saveTimers[k]);
-    saveTimers[k]=setTimeout(function(){ apiPut(tool,obj.__id,strip(obj)).catch(function(){}); },600);
+    saveTimers[k]=setTimeout(function(){ apiPut(tool,obj.__id,strip(obj)).catch(function(){ online=false; banner(); }); },600);
   }
   function strip(o){ var c={}; for(var k in o){ if(k.indexOf('__')!==0) c[k]=o[k]; } return c; }
 
@@ -373,7 +381,7 @@
       +'<td class="calc muted-col" data-c="ec">'+fmt(s.expChaos,0)+'</td>'
       +'<td class="calc muted-col" data-c="rd">'+(isFinite(s.rollDiv)?fmt(s.rollDiv,2):'—')+'</td>'
       +'<td class="calc" data-c="win">'+fmt(s.expWin,1)+'</td>'
-      +'<td class="ev '+(s.ev>=0?'pos':'neg')+'" data-c="ev">'+(s.ev>=0?'+':'')+fmt(s.ev,1)+'</td>'
+      +'<td class="ev '+(isFinite(s.ev)?(s.ev>=0?'pos':'neg'):'muted-col')+'" data-c="ev">'+(isFinite(s.ev)?((s.ev>=0?'+':'')+fmt(s.ev,1)):'—')+'</td>'
       +'<td><button type="button" class="rowdel" data-del="'+id+'" title="Delete amulet">✕</button></td>';
     return cells;
   }
@@ -394,7 +402,9 @@
       tr.querySelector('[data-c="ec"]').textContent=fmt(s.expChaos,0);
       tr.querySelector('[data-c="rd"]').textContent=isFinite(s.rollDiv)?fmt(s.rollDiv,2):'—';
       tr.querySelector('[data-c="win"]').textContent=fmt(s.expWin,1);
-      var ev=tr.querySelector('[data-c="ev"]'); ev.textContent=(s.ev>=0?'+':'')+fmt(s.ev,1); ev.className='ev '+(s.ev>=0?'pos':'neg');
+      var ev=tr.querySelector('[data-c="ev"]');
+      if(isFinite(s.ev)){ ev.textContent=(s.ev>=0?'+':'')+fmt(s.ev,1); ev.className='ev '+(s.ev>=0?'pos':'neg'); }
+      else { ev.textContent='—'; ev.className='ev muted-col'; }
     });
   }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -417,21 +427,29 @@
     var jackSpan=t.closest('.jack'); if(jackSpan) jackSpan.classList.toggle('off',!t.checked);
     recalcAmuRows(); scheduleSave(T_DEF,a); refreshLogControls();
   });
-  $('amurows').addEventListener('click', async function(e){
+  $('amurows').addEventListener('click', function(e){
     var b=e.target.closest('[data-del]'); if(!b) return;
     var a=byId(amulets,b.dataset.del); if(!a) return;
     if(!confirm('Delete "'+a.name+'"? (logged crafts are kept)')) return;
+    var k=T_DEF+':'+a.__id; clearTimeout(saveTimers[k]); delete saveTimers[k];
+    var snapshot=amulets;
     amulets=amulets.filter(function(x){return x!==a;});
-    renderAmulets(); apiDel(T_DEF,a.__id).catch(function(){});
+    renderAmulets();
+    apiDel(T_DEF,a.__id).catch(function(){ amulets=snapshot; renderAmulets(); online=false; banner(); });
   });
 
+  var adding=false;
   async function addAmulet(data){
-    var a=data||newAmulet();
-    if(!a.jackpot) a.jackpot={spirit:true,melee:true,proj:true,spell:true,minion:true};
-    if(a.ilvl==null) a.ilvl=defIlvl();
-    if(online){ try{ a.__id=await apiPost(T_DEF,strip(a)); }catch(_){ online=false; a.__id=lid(); banner(); } }
-    else a.__id=lid();
-    amulets.push(a); renderAmulets();
+    if(adding) return; // guard against double-click / re-entry inserting duplicate defs
+    adding=true; $('add-amu').disabled=true; $('seed-amu').disabled=true;
+    try{
+      var a=data||newAmulet();
+      if(!a.jackpot) a.jackpot={spirit:true,melee:true,proj:true,spell:true,minion:true};
+      if(a.ilvl==null) a.ilvl=defIlvl();
+      if(online){ try{ a.__id=await apiPost(T_DEF,strip(a)); }catch(_){ online=false; a.__id=lid(); banner(); } }
+      else a.__id=lid();
+      amulets.push(a); renderAmulets();
+    } finally { adding=false; $('add-amu').disabled=false; $('seed-amu').disabled=false; }
   }
   $('add-amu').addEventListener('click', function(){ addAmulet(); });
   $('seed-amu').addEventListener('click', async function(){
@@ -522,22 +540,30 @@
     cell.textContent=(p>=0?'+':'')+fmt(p,1); cell.className='ev '+(p>=0?'pos':'neg');
     renderTotals(); scheduleSave(T_LOG,v);
   });
-  $('lg-rows').addEventListener('click', async function(e){
+  $('lg-rows').addEventListener('click', function(e){
     var b=e.target.closest('[data-del]'); if(!b) return;
     if(!confirm('Delete this log entry?')) return;
-    var v=byId(logs,b.dataset.del); logs=logs.filter(function(x){return x!==v;});
-    renderLogs(); apiDel(T_LOG,b.dataset.del).catch(function(){});
+    var k=T_LOG+':'+b.dataset.del; clearTimeout(saveTimers[k]); delete saveTimers[k];
+    var v=byId(logs,b.dataset.del), snapshot=logs;
+    logs=logs.filter(function(x){return x!==v;});
+    renderLogs();
+    apiDel(T_LOG,b.dataset.del).catch(function(){ logs=snapshot; renderLogs(); online=false; banner(); });
   });
+  var logging=false;
   $('logform').addEventListener('submit', async function(e){
     e.preventDefault();
+    if(logging) return; // guard against double-submit inserting duplicate crafts
     var a=byId(amulets,$('lg-amu').value); if(!a){ return; }
-    var v=makeRecord(a,$('lg-hit').value,rate());
-    if(online){ try{ v.__id=await apiPost(T_LOG,strip(v)); }catch(_){ online=false; v.__id=lid(); banner(); } }
-    else v.__id=lid();
-    v.__at=new Date().toISOString();
-    logs.unshift(v); renderLogs();
-    $('lg-status').textContent='Logged '+(LABEL[v.hit]||v.hit)+' on '+a.name+'.';
-    setTimeout(function(){ if($('lg-status').textContent.indexOf('Logged')===0) $('lg-status').textContent=''; },2500);
+    logging=true; $('lg-btn').disabled=true;
+    try{
+      var v=makeRecord(a,$('lg-hit').value,rate());
+      if(online){ try{ v.__id=await apiPost(T_LOG,strip(v)); }catch(_){ online=false; v.__id=lid(); banner(); } }
+      else v.__id=lid();
+      v.__at=new Date().toISOString();
+      logs.unshift(v); renderLogs();
+      $('lg-status').textContent='Logged '+(LABEL[v.hit]||v.hit)+' on '+a.name+'.';
+      setTimeout(function(){ if($('lg-status').textContent.indexOf('Logged')===0) $('lg-status').textContent=''; },2500);
+    } finally { logging=false; refreshLogControls(); }
   });
 
   // ---------- market inputs re-render everything price-dependent ----------
