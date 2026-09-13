@@ -21,7 +21,7 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.4rem clamp(14px,3vw,30px) 3.5rem;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  body{background:var(--bg);color:var(--text);font-family:var(--f-b);line-height:1.6;padding:1.3rem clamp(12px,1.4vw,20px) 3.2rem;-webkit-font-smoothing:antialiased;overflow-x:clip}
   h1,h2,h3{color:var(--bone);font-family:var(--f-d);margin:0}
   h1{font-size:clamp(1.55rem,3vw,2.05rem);letter-spacing:.02em;line-height:1.15}
   h2{font-size:1.02rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-dim);margin:0;display:flex;align-items:baseline;gap:.6rem}
@@ -33,13 +33,13 @@
   .hnum{font-family:var(--f-m);font-size:.72rem;font-weight:500;color:var(--gold);letter-spacing:.08em;background:rgba(200,160,79,.1);border:1px solid var(--line-gold);border-radius:5px;padding:1px 6px;line-height:1.5;position:relative;top:-1px}
 
   /* ---- centered page rail so masthead + content share one edge ---- */
-  .wrap{max-width:1240px;margin:0 auto}
+  .wrap{max-width:none;margin:0 auto}
 
   /* ---- masthead: title/lede left, rating + vitals right ---- */
   .masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:1.6rem 2.4rem;flex-wrap:wrap;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
   .mast-l{flex:1 1 440px;min-width:0}
   .eyebrow{font-family:var(--f-m);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);margin:0 0 .55rem}
-  .lede{max-width:64ch;margin:.7rem 0 0;color:var(--text)}
+  .lede{max-width:78ch;margin:.7rem 0 0;color:var(--text)}
   .mast-r{flex:0 0 auto;display:flex;flex-direction:column;gap:.75rem;align-items:stretch;min-width:214px;max-width:260px}
 
   .rating{display:flex;align-items:center;gap:.6rem;padding:.5rem .8rem;border:1px solid var(--line-gold);border-radius:10px;background:rgba(200,160,79,.06)}
@@ -60,7 +60,7 @@
   .vital .vv{font-size:.82rem;color:var(--bone);text-align:right}
 
   /* ---- 3-zone working grid: TOC rail | content | live ledger rail ---- */
-  .work{display:grid;grid-template-columns:198px minmax(0,1fr) 250px;gap:26px;margin-top:1.5rem}
+  .work{display:grid;grid-template-columns:210px minmax(0,1fr) 272px;gap:28px;margin-top:1.5rem}
   .rail-inner{position:sticky;top:16px}
   .main{min-width:0}
   .main>:first-child{margin-top:0}
@@ -95,13 +95,13 @@
   .panel{background:linear-gradient(180deg,var(--pan),var(--pan2));border:1px solid var(--line);border-radius:12px;padding:1.15rem 1.2rem;margin-top:1.5rem}
   .panel>h2{margin-bottom:.9rem}
   .panel.gold{border-color:var(--line-gold);background:linear-gradient(180deg,rgba(34,29,19,.45),rgba(20,21,25,.5))}
-  .lead{font-size:.9rem;color:var(--muted);margin:0 0 .1rem;max-width:74ch}
+  .lead{font-size:.9rem;color:var(--muted);margin:0 0 .1rem;max-width:96ch}
 
   /* quick-read myth box */
   .mythbox{border:1px solid var(--line-gold);background:linear-gradient(180deg,rgba(48,34,12,.55),rgba(20,21,25,.5));border-radius:12px;padding:1.1rem 1.2rem}
   .mythbox h2{color:var(--amber)}
   .mythbox h2 .hnum{color:var(--amber);background:rgba(217,164,65,.12);border-color:rgba(217,164,65,.4)}
-  .mythbox p{margin:.65rem 0 0;font-size:.94rem;max-width:82ch}
+  .mythbox p{margin:.65rem 0 0;font-size:.94rem;max-width:100ch}
   .mythbox .tag{display:inline-block;font-family:var(--f-m);font-size:.58rem;letter-spacing:.1em;color:#1a1206;background:linear-gradient(180deg,#dcbb6c,#c19a45);border-radius:4px;padding:2px 6px;vertical-align:middle}
 
   .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:.7rem;margin-top:.2rem}
@@ -209,23 +209,48 @@
   .toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.95rem}
 
   .tbl-wrap{overflow-x:auto;margin-top:.2rem}
-  table{border-collapse:collapse;width:100%;font-size:.88rem}
-  th,td{padding:.45rem .5rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  table{border-collapse:collapse;width:100%;font-size:.84rem}
+  th,td{padding:.4rem .42rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  td.when{font-size:.74rem}
+  td.note-td{width:1%}
+  td.note-td input{width:9rem;text-align:left}
+  @media (max-width:1500px){
+    .work{grid-template-columns:176px minmax(0,1fr) 232px;gap:20px}
+    table{font-size:.76rem}
+    th,td{padding:.3rem .24rem}
+    td input{width:3.3rem;font-size:.74rem;padding:.24rem .26rem}
+    td.note-td input{width:5.5rem}
+    td.when{font-size:.68rem}
+  }
   th{font-family:var(--f-m);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold-dim);font-weight:500}
   th.l,td.l{text-align:left}
-  td input{width:4.2rem;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.32rem .4rem;font-family:var(--f-m);font-size:.84rem;text-align:right;outline:none}
+  td input{width:3.9rem;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.32rem .4rem;font-family:var(--f-m);font-size:.84rem;text-align:right;outline:none}
   td input:focus{border-color:var(--gold)}
   td.ev{font-family:var(--f-m);font-weight:600}
   .rowdel{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:.2rem .4rem}
   .rowdel:hover{color:var(--red)}
 
+  .books{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.6rem .8rem;margin-top:1rem;padding:.8rem .9rem;border:1px solid var(--line-gold);border-radius:10px;background:rgba(200,160,79,.05)}
+  .books .ctl{flex:1 1 220px;max-width:340px}
+  .books .ctl select{width:100%}
+  .bk-form{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.7rem}
+  .bk-form[hidden],.hist[hidden]{display:none}
+  .bk-form input{flex:1 1 220px;max-width:340px;background:#0e0f12;border:1px solid var(--line);color:var(--bone);border-radius:6px;padding:.42rem .55rem;font-family:var(--f-b);font-size:.9rem;outline:none}
+  .bk-form input:focus{border-color:var(--gold)}
+  .hist{margin-top:1.4rem}
+  .hist h3{font-family:var(--f-m);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dim);font-weight:500;margin-bottom:.4rem}
+  .hist tr.cur td{background:rgba(200,160,79,.08)}
+  .hist tbody tr{cursor:pointer}
+  .hist tbody tr:hover td{background:rgba(255,255,255,.03)}
+  .hist td.name{color:var(--bone);font-weight:600}
+  .pill{font-family:var(--f-m);font-size:.62rem;letter-spacing:.06em;color:var(--gold);background:rgba(200,160,79,.1);border:1px solid var(--line-gold);border-radius:4px;padding:1px 5px;margin-left:.4rem;vertical-align:middle}
   .banner{margin-top:.6rem;font-size:.8rem}
   .banner.off{color:var(--amber)}
   .empty{padding:1.2rem;border:1px dashed var(--line-gold);border-radius:10px;color:var(--muted);text-align:center;margin-top:.6rem}
 
   .foot{margin-top:1.5rem;font-size:.82rem;color:var(--muted)}
   .foot h2{margin-bottom:.7rem}
-  .foot p{margin:0;max-width:82ch}
+  .foot p{margin:0;max-width:110ch}
   .foot code{font-family:var(--f-m);color:var(--gold-dim)}
 
   @media (max-width:1024px){
@@ -353,6 +378,18 @@
       <section class="panel" id="log">
         <h2><span class="hnum">06</span>Log your crafts</h2>
         <p class="lead">Pick the amulet and mod you hit, confirm the chaos spent, log it. Rows stay editable; <span style="color:var(--gold-dim)">Profit is locked</span> <span class="lockmark">🔒</span> and recomputes. Saved to your private cloud log.</p>
+        <div class="books">
+          <div class="ctl"><label>Log book</label><select id="bk-sel"></select></div>
+          <button type="button" class="btn sm" id="bk-new">+ New log book</button>
+          <button type="button" class="btn ghost sm" id="bk-ren">Rename</button>
+          <button type="button" class="btn ghost sm" id="bk-del">Delete</button>
+          <form id="bk-form" class="bk-form" hidden style="flex-basis:100%">
+            <input id="bk-name" maxlength="60" placeholder="Name this log, e.g. 0.5 · week 2 amulets">
+            <button type="submit" class="btn sm" id="bk-save">Save</button>
+            <button type="button" class="btn ghost sm" id="bk-cancel">Cancel</button>
+          </form>
+          <div class="hint" style="flex-basis:100%;margin-top:0">Each book is a separate history — start one per session or league. Amulet definitions and prices are shared across books.</div>
+        </div>
         <form id="logform" class="controls" style="align-items:flex-end;gap:.8rem 1.1rem;margin-top:1rem">
           <div class="ctl"><label>Amulet</label><select id="lg-amu"></select></div>
           <div class="ctl"><label>Mod hit</label><select id="lg-hit"></select></div>
@@ -371,6 +408,15 @@
             </tr></thead>
             <tbody id="lg-rows"></tbody>
           </table>
+        </div>
+        <div class="hist" id="hist">
+          <h3>History · all log books</h3>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th class="l">Book</th><th class="l">League</th><th class="l">Started</th><th>Crafts</th><th>Chaos</th><th>Net profit</th><th>Avg / craft</th><th>Best hit</th></tr></thead>
+              <tbody id="hist-rows"></tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -402,7 +448,7 @@
           </div>
           <div class="lgr-div"></div>
           <div class="lgr-sec">
-            <div class="lgr-h">This session</div>
+            <div class="lgr-h" id="rail-book">This log</div>
             <div class="lgr-row"><span>Net profit</span><b class="lv" id="rail-net">—</b></div>
             <div class="lgr-row"><span>Crafts logged</span><b id="rail-crafts">0</b></div>
             <div class="lgr-row"><span>Chaos spent</span><b id="rail-chaos">0</b></div>
@@ -476,7 +522,8 @@
   function defIlvl(){ return +($('defilvl').value)||82; }
 
   // ---------- persistence: D1 with graceful offline fallback ----------
-  var API='/api/log', T_DEF='amulet-rolling-defs', T_LOG='amulet-rolling-log', LEAGUE='0.5';
+  var API='/api/log', T_DEF='amulet-rolling-defs', T_LOG='amulet-rolling-log', T_BOOK='amulet-rolling-books', LEAGUE='0.5';
+  var BOOK_LS='amulet-rolling:book';
   var online=true, localSeq=0;
   function lid(){ return 'L'+(++localSeq); }
   async function apiGet(tool){
@@ -499,8 +546,18 @@
   }
 
   // ---------- state ----------
-  var amulets=[], logs=[];
+  var amulets=[], logs=[], books=[], activeBook=null;
   var saveTimers={};
+  // ---------- log books: named histories; a log row belongs to value.book (rows without one = the legacy book) ----------
+  function legacyBook(){ for(var i=0;i<books.length;i++){ if(books[i].legacy) return books[i]; } return null; }
+  function bookOf(v){ if(v.book!=null) return String(v.book); var lb=legacyBook(); return lb? String(lb.__id) : ''; }
+  function bookLogs(id){ id=String(id==null?activeBook:id); return logs.filter(function(v){ return bookOf(v)===id; }); }
+  function curLogs(){ return bookLogs(activeBook); }
+  function bookStats(id){
+    var rows=bookLogs(id), tP=0,tC=0,best=-Infinity;
+    rows.forEach(function(v){ var p=logProfit(v); tP+=p; tC+=(+v.chaos||0); if(p>best) best=p; });
+    return {n:rows.length, net:tP, chaos:tC, avg:rows.length?tP/rows.length:0, best:rows.length?best:null};
+  }
   var repositionLightbox=function(){}; // assigned by the lightbox module; called on parent scroll
   function scheduleSave(tool,obj){
     if(!online) return;
@@ -573,8 +630,9 @@
     else { be.textContent='—'; bn.textContent='add amulets'; bn.className='lv muted-col'; }
   }
   function updateRailSession(){
-    var tP=0,tC=0,n=logs.length;
-    logs.forEach(function(v){ tP+=logProfit(v); tC+=(+v.chaos||0); });
+    var tP=0,tC=0,rows=curLogs(),n=rows.length;
+    rows.forEach(function(v){ tP+=logProfit(v); tC+=(+v.chaos||0); });
+    var bk=byId(books,activeBook); $('rail-book').textContent= bk? bk.name : 'This log';
     var net=$('rail-net'); net.textContent=(tP>=0?'+':'')+fmt(tP,1)+' div'; net.className='lv '+(n?(tP>=0?'pos':'neg'):'muted-col');
     if(!n) net.textContent='—';
     $('rail-crafts').textContent=fmt(n);
@@ -741,13 +799,13 @@
     return { name:a.name, ilvl:+a.ilvl||82, hit:hit, base:+a.base||0,
       chaos: (+chaos||0),
       sell: hit==='other'? 0 : (+((a.sell||{})[hit])||0),
-      rate:r, note:'' };
+      rate:r, note:'', book: activeBook==null? undefined : activeBook };
   }
   function logProfit(v){ var r=+v.rate||0; return (+v.sell||0)-(+v.base||0)-(r>0?(+v.chaos||0)/r:0); }
 
   function logRowHtml(v){
     var id=v.__id, p=logProfit(v);
-    return '<td class="l muted-col mono" style="font-size:.78rem">'+String(v.__at||'now').slice(5,16)+'</td>'
+    return '<td class="l muted-col mono when">'+String(v.__at||'now').slice(5,16)+'</td>'
       +'<td class="l">'+esc(v.name)+'</td><td class="muted-col">'+(+v.ilvl||'')+'</td>'
       +'<td class="l">'+(LABEL[v.hit]||v.hit||'')+'</td>'
       +'<td><input data-id="'+id+'" data-f="base" type="number" min="0" step="0.5" value="'+(+v.base||0)+'"></td>'
@@ -755,22 +813,113 @@
       +'<td><input data-id="'+id+'" data-f="sell" type="number" min="0" step="0.5" value="'+(+v.sell||0)+'"></td>'
       +'<td><input data-id="'+id+'" data-f="rate" type="number" min="0" step="0.1" value="'+(+v.rate||0)+'"></td>'
       +'<td class="ev '+(p>=0?'pos':'neg')+'" data-c="p">'+(p>=0?'+':'')+fmt(p,1)+'</td>'
-      +'<td class="l"><input data-id="'+id+'" data-f="note" value="'+esc(v.note||'')+'" placeholder="—" style="width:8rem;text-align:left"></td>'
+      +'<td class="l note-td"><input data-id="'+id+'" data-f="note" value="'+esc(v.note||'')+'" placeholder="—"></td>'
       +'<td><button type="button" class="rowdel" data-del="'+id+'" title="Delete record">✕</button></td>';
   }
   function renderLogs(){
     var tb=$('lg-rows'); tb.innerHTML='';
-    logs.forEach(function(v){ var tr=document.createElement('tr'); tr.dataset.id=v.__id; tr.innerHTML=logRowHtml(v); tb.appendChild(tr); });
+    curLogs().forEach(function(v){ var tr=document.createElement('tr'); tr.dataset.id=v.__id; tr.innerHTML=logRowHtml(v); tb.appendChild(tr); });
     renderTotals();
   }
   function renderTotals(){
-    var tP=0,tC=0,n=logs.length;
-    logs.forEach(function(v){ tP+=logProfit(v); tC+=(+v.chaos||0); });
+    var tP=0,tC=0,rows=curLogs(),n=rows.length;
+    rows.forEach(function(v){ tP+=logProfit(v); tC+=(+v.chaos||0); });
     $('lg-totals').innerHTML=stat('Crafts logged',fmt(n))
       +stat('Net profit',(tP>=0?'+':'')+fmt(tP,1)+' <small>div</small>')
       +stat('Chaos spent',fmt(tC))
       +stat('Avg / craft', n?((tP/n>=0?'+':'')+fmt(tP/n,1)+' <small>div</small>'):'—');
-    updateRailSession();
+    updateRailSession(); renderHistory();
+  }
+
+  // ---------- log books UI ----------
+  function signed(x,d){ return (x>=0?'+':'')+fmt(x,d); }
+  function renderBooks(){
+    var sel=$('bk-sel');
+    sel.innerHTML=books.map(function(b){ return '<option value="'+b.__id+'">'+esc(b.name)+(b.league?' · '+esc(b.league):'')+'</option>'; }).join('');
+    if(activeBook!=null) sel.value=String(activeBook);
+    var none=books.length===0;
+    $('bk-ren').disabled=none; $('bk-del').disabled=none; sel.disabled=none;
+  }
+  function renderHistory(){
+    var tb=$('hist-rows'); tb.innerHTML='';
+    books.forEach(function(b){
+      var s=bookStats(b.__id), tr=document.createElement('tr');
+      tr.dataset.book=b.__id; if(String(b.__id)===String(activeBook)) tr.className='cur';
+      tr.innerHTML='<td class="l name">'+esc(b.name)+(String(b.__id)===String(activeBook)?'<span class="pill">ACTIVE</span>':'')+'</td>'
+        +'<td class="l mono muted-col">'+esc(b.league||'')+'</td>'
+        +'<td class="l mono muted-col when">'+String(b.__at||'').slice(0,10)+'</td>'
+        +'<td class="mono">'+fmt(s.n)+'</td><td class="mono">'+fmt(s.chaos)+'</td>'
+        +'<td class="ev '+(s.net>=0?'pos':'neg')+'">'+(s.n?signed(s.net,1)+' div':'—')+'</td>'
+        +'<td class="mono">'+(s.n?signed(s.avg,1):'—')+'</td>'
+        +'<td class="mono">'+(s.best==null?'—':signed(s.best,1))+'</td>';
+      tb.appendChild(tr);
+    });
+    $('hist').hidden = books.length<2;
+  }
+  function setActiveBook(id){
+    activeBook = id==null? null : String(id);
+    try{ if(activeBook!=null) localStorage.setItem(BOOK_LS,activeBook); }catch(_){}
+    renderBooks(); renderLogs(); repin();
+  }
+  $('bk-sel').addEventListener('change', function(){ setActiveBook($('bk-sel').value); });
+  $('hist-rows').addEventListener('click', function(e){ var tr=e.target.closest('tr[data-book]'); if(tr) setActiveBook(tr.dataset.book); });
+  var bkMode='new';
+  function openBookForm(mode){
+    bkMode=mode; var f=$('bk-form'), inp=$('bk-name');
+    var cur=byId(books,activeBook);
+    inp.value = mode==='rename' && cur ? cur.name : '';
+    inp.placeholder = mode==='rename' ? 'New name' : 'Name this log, e.g. '+LEAGUE+' · week 2 amulets';
+    $('bk-save').textContent = mode==='rename' ? 'Rename' : 'Create';
+    f.hidden=false; inp.focus(); repin();
+  }
+  $('bk-new').addEventListener('click', function(){ openBookForm('new'); });
+  $('bk-ren').addEventListener('click', function(){ if(byId(books,activeBook)) openBookForm('rename'); });
+  $('bk-cancel').addEventListener('click', function(){ $('bk-form').hidden=true; repin(); });
+  $('bk-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var name=$('bk-name').value.trim(); if(!name) return;
+    $('bk-save').disabled=true;
+    try{
+      if(bkMode==='rename'){
+        var b=byId(books,activeBook); if(!b) return;
+        b.name=name; renderBooks(); renderTotals();
+        if(online){ try{ await apiPut(T_BOOK,b.__id,strip(b)); }catch(_){ online=false; banner(); } }
+      } else {
+        var nb={name:name, league:LEAGUE};
+        if(online){ try{ nb.__id=await apiPost(T_BOOK,nb); }catch(_){ online=false; nb.__id=lid(); banner(); } }
+        else nb.__id=lid();
+        nb.__at=new Date().toISOString();
+        books.unshift(nb); setActiveBook(nb.__id);
+        $('lg-status').textContent='Started log book “'+name+'”. New hits go here.';
+        setTimeout(function(){ if($('lg-status').textContent.indexOf('Started')===0) $('lg-status').textContent=''; },3000);
+      }
+      $('bk-form').hidden=true; repin();
+    } finally { $('bk-save').disabled=false; }
+  });
+  $('bk-del').addEventListener('click', async function(){
+    var b=byId(books,activeBook); if(!b) return;
+    var n=bookLogs(b.__id).length;
+    if(n){ alert('“'+b.name+'” still has '+n+' logged craft'+(n>1?'s':'')+'. Delete or move its rows first — books with history are kept so nothing is lost.'); return; }
+    if(!confirm('Delete the empty log book “'+b.name+'”?')) return;
+    var snapshot=books;
+    books=books.filter(function(x){ return x!==b; });
+    setActiveBook(books.length? books[0].__id : null);
+    apiDel(T_BOOK,b.__id).catch(function(){ books=snapshot; setActiveBook(b.__id); online=false; banner(); });
+  });
+  // Choose the starting book: the one used last on this device, else the newest.
+  async function initBooks(){
+    var hasOrphan=logs.some(function(v){ return v.book==null; });
+    if(hasOrphan && !legacyBook()){
+      var lb={name:LEAGUE+' · original log', league:LEAGUE, legacy:true};
+      if(online){ try{ lb.__id=await apiPost(T_BOOK,lb); }catch(_){ online=false; lb.__id=lid(); banner(); } }
+      else lb.__id=lid();
+      lb.__at = logs.length? logs[logs.length-1].__at : new Date().toISOString();
+      books.push(lb);
+    }
+    var want=null; try{ want=localStorage.getItem(BOOK_LS); }catch(_){}
+    if(!(want && byId(books,want))) want = books.length? books[0].__id : null;
+    activeBook = want==null? null : String(want);
+    renderBooks();
   }
   function stat(k,v){ return '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
 
@@ -796,6 +945,7 @@
     e.preventDefault();
     if(logging) return;
     var a=byId(amulets,$('lg-amu').value); if(!a){ return; }
+    if(activeBook==null){ openBookForm('new'); $('lg-status').textContent='Create a log book first, then log the hit.'; return; }
     logging=true; $('lg-btn').disabled=true;
     try{
       var v=makeRecord(a,$('lg-hit').value,rate(),$('lg-chaos').value);
@@ -879,11 +1029,12 @@
   (async function init(){
     renderMyth();
     try{
-      var defs=await apiGet(T_DEF); var lg=await apiGet(T_LOG);
-      amulets=defs; logs=lg; online=true; banner();
+      var defs=await apiGet(T_DEF); var lg=await apiGet(T_LOG); var bk=await apiGet(T_BOOK);
+      amulets=defs; logs=lg; books=bk; online=true; banner();
     }catch(e){
       online=false; banner();
     }
+    await initBooks();
     renderAmulets(); renderLogs(); setChaosDefault();
     onScroll(); setTimeout(function(){ repin(); spy(); }, 300);
   })();
