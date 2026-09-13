@@ -13,7 +13,7 @@
   --f-display:'Cinzel', serif;
   --f-body:'Mulish', system-ui, -apple-system, sans-serif;
   --f-mono:'JetBrains Mono', ui-monospace, monospace;
-  --wrap:1240px;
+  --wrap:1760px;
 
   /* PoE item-rarity palette — functional colors for tags/badges */
   --r-normal:#c8c8c8; --r-magic:#8888ff; --r-rare:#ffff77;
@@ -47,7 +47,7 @@ input::placeholder { color:var(--muted-2); }
 }
 
 /* horizontal page rail */
-.wrap { max-width:var(--wrap); margin:0 auto; padding:0 clamp(16px,4vw,40px); }
+.wrap { max-width:var(--wrap); margin:0 auto; padding:0 clamp(16px,2.5vw,36px); }
 
 /* gold corner filigree — add to any position:relative box */
 .filigree { position:relative; }

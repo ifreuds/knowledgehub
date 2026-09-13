@@ -2,7 +2,11 @@
   "title": "Amulet Rolling — Endgame Profit Craft",
   "slug": "amulet-rolling",
   "game": "poe2",
-  "tags": ["crafting", "currency", "tool"],
+  "tags": [
+    "crafting",
+    "currency",
+    "tool"
+  ],
   "summary": "Chaos-spam cheap high-ilvl amulets into jackpot mods. Build a per-amulet EV model — pick your sellable jackpots, price them, see true EV per craft — then log hits in one click.",
   "type": "tool",
   "interactive": true,
@@ -10,6 +14,13 @@
   "currentVersion": "0.5",
   "updatedForLeague": "0.5",
   "versions": [
-    { "league": "0.5", "leagueName": "Rune of Aldurs", "patch": "0.5.4b", "file": "0.5.html", "updated": "2026-07-09", "changelog": "Rebuilt calculator: global market (Divine:Chaos + item level), an editable per-amulet list with per-mod jackpot selection and Divine prices, true EV per craft, a Breach/Delirium base gallery from poe2db, and a one-click logger with editable records (locked profit). Amulet defs + logs persist in D1." }
+    {
+      "league": "0.5",
+      "leagueName": "Rune of Aldurs",
+      "patch": "0.5.4b",
+      "file": "0.5.html",
+      "updated": "2026-09-13",
+      "changelog": "Rebuilt calculator: global market (Divine:Chaos + item level), an editable per-amulet list with per-mod jackpot selection and Divine prices, true EV per craft, a Breach/Delirium base gallery from poe2db, and a one-click logger with editable records (locked profit). Amulet defs + logs persist in D1. 2026-09-13: full-width layout (no 1240px cap), single-line log table, and named log books — create/rename/switch separate craft histories per session or league, with a per-book history summary."
+    }
   ]
 }
